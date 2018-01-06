@@ -42,7 +42,7 @@
             <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
             <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
             <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
-            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="-Infinity" prefHeight="4.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
             <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
@@ -100,9 +100,9 @@
             <Label layoutX="226.0" layoutY="17.0" text="S" GridPane.columnIndex="5" GridPane.rowIndex="1" />
             <Label layoutX="226.0" layoutY="149.0" text="B" GridPane.columnIndex="5" GridPane.rowIndex="6" />
             <Label layoutX="226.0" layoutY="179.0" text="A" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-            <StackPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" styleClass="color-rect-border" GridPane.columnIndex="4" GridPane.rowSpan="8">
+            <StackPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="20.0" styleClass="color-rect-border" GridPane.columnIndex="4" GridPane.rowSpan="8">
                <children>
-                  <Pane fx:id="hueBar" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefWidth="20.0" styleClass="hue-bar">
+                  <Pane fx:id="hueBar" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="228.0" prefWidth="20.0" styleClass="hue-bar">
                      <children>
                         <Region id="hue-bar-handle" fx:id="hueBarHandle" layoutY="-5.0" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="26.0" />
                      </children>

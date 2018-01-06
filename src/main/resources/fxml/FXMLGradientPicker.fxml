@@ -57,9 +57,9 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 
-<fx:root maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="325.0" prefWidth="520.0" stylesheets="@../styles/gradient_picker.css" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="325.0" prefWidth="528.0" stylesheets="@../styles/gradient_picker.css" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-      <Separator prefWidth="200.0" />
+      <Separator prefWidth="200.0" styleClass="separator-gradient" />
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
          <children>
           <GridPane hgap="4.0" vgap="4.0">
