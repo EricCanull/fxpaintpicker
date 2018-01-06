@@ -261,30 +261,6 @@ public class PaintDialogController extends AnchorPane {
         });
     }
 
-    public ObjectProperty<Paint> customColorProperty() {
-        return customColorProperty;
-    }
-
-  public  ObjectProperty<Paint> currentColorProperty() {
-        return currentColorProperty;
-    }
-    
-    private Color getCustomColor() {
-        return (Color) customColorProperty.get();
-    }
-
-    private void setCustomColor(Color color) {
-        customColorProperty.set(color);
-    }
-
-    public Color getCurrentColor() {
-        return (Color) currentColorProperty.get();
-    }
-
-    void setCurrentColor(Color color) {
-        currentColorProperty.set(color);
-    }
-
     private final EventHandler<KeyEvent> keyEventListener = e -> {
         if (e.getCode().equals(KeyCode.ESCAPE)) {
             stage.close();
@@ -412,7 +388,31 @@ public class PaintDialogController extends AnchorPane {
         super.layoutChildren(); 
 
         circleHandle.setManaged(false);
-        circleHandle.autosize(); 
+        circleHandle.autosize();
+    }
+
+    public ObjectProperty<Paint> customColorProperty() {
+        return customColorProperty;
+    }
+
+    public ObjectProperty<Paint> currentColorProperty() {
+        return currentColorProperty;
+    }
+
+    private Color getCustomColor() {
+        return (Color) customColorProperty.get();
+    }
+
+    private void setCustomColor(Color color) {
+        customColorProperty.set(color);
+    }
+
+    public Color getCurrentColor() {
+        return (Color) currentColorProperty.get();
+    }
+
+    void setCurrentColor(Color color) {
+        currentColorProperty.set(color);
     }
 
     private boolean changeIsLocal = false;
@@ -500,8 +500,9 @@ public class PaintDialogController extends AnchorPane {
         hueProperty.set(newColor.getHue());
         satProperty.set(newColor.getSaturation() * 100);
         brightProperty.set(newColor.getBrightness() * 100);
+        alphaProperty.set(newColor.getOpacity() * 100);
         customColorProperty.set(newColor);
-          updateSliderColors();
+          updateSlidersTrackColors();
         updateSelectedGradientStop(newColor);
     }
 
@@ -514,13 +515,13 @@ public class PaintDialogController extends AnchorPane {
             redProperty.set(doubleToInt(newColor.getRed()));
             greenProperty.set(doubleToInt(newColor.getGreen()));
             blueProperty.set(doubleToInt(newColor.getBlue()));
+            alphaProperty.set(newColor.getOpacity() * 100);
             customColorProperty.set(newColor);
-             updateSliderColors();
+             updateSlidersTrackColors();
             updateSelectedGradientStop(newColor);
     }
     
-    
-    private void updateSliderColors() {
+    private void updateSlidersTrackColors() {
         double hue = hueProperty.get();
         double sat = satProperty.get() / 100;
         double bright = brightProperty.get() / 100;
@@ -528,8 +529,8 @@ public class PaintDialogController extends AnchorPane {
         int green = greenProperty.get();
         int blue = blueProperty.get();
         double alpha = alphaProperty.get() / 100;
-
-        Color newColor = Color.hsb(hue, sat, bright, alpha);
+    
+        Color newColor = Color.rgb(red, green, blue, alpha);
         sliders[0].setGradientForHueWithSaturation(sat, bright, alpha);
         sliders[1].setGradientForSaturationWithHue(hue, bright, alpha);
         sliders[2].setGradientForBrightnessWithHue(hue, sat, alpha);
@@ -566,12 +567,16 @@ public class PaintDialogController extends AnchorPane {
                 redProperty.set(doubleToInt(getCustomColor().getRed()));
                 greenProperty.set(doubleToInt(getCustomColor().getGreen()));
                 blueProperty.set(doubleToInt(getCustomColor().getBlue()));
+                alphaProperty.set(getCustomColor().getOpacity() * 100);
+                updateSlidersTrackColors();
                 changeIsLocal = false;
             }
         }
 
     /**
-     * Initialize hueProperty, satProperty, brightProperty, color, redProperty, greenProperty and blueProperty
+     * Updates hueProperty, satProperty, brightProperty, color, redProperty, 
+     * greenProperty and blueProperty and slider background colors
+     * whenever the show() method for this dialog gets called.
      */
     private void updateValues() {
         if (getCurrentColor() == null) {
@@ -588,7 +593,7 @@ public class PaintDialogController extends AnchorPane {
         redProperty.set(doubleToInt(getCustomColor().getRed()));
         greenProperty.set(doubleToInt(getCustomColor().getGreen()));
         blueProperty.set(doubleToInt(getCustomColor().getBlue()));
-        updateSliderColors();
+        updateSlidersTrackColors();
         changeIsLocal = false;
     }
     
