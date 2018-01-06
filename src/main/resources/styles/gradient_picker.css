@@ -151,6 +151,8 @@
     -fx-text-fill: #C2C2C3;
 }*/
 
+
+/*
 .gradient-slider .track {
     -fx-background-color: #232629;
     -fx-border-color: #616569;
@@ -172,5 +174,32 @@
 
 .gradient-slider .thumb {
     -fx-fill: #2E3134;
+}*/
+
+.gradient-slider .thumb  {
+    -fx-background-color: transparent;
+    -fx-border-color: #232629, #9899A9;
+    -fx-border-insets: .5;
+    -fx-border-radius: 1.83333333em;
+    -fx-pref-height: 18;
+    -fx-pref-width: 18;
+    /*-fx-background-radius: 1.0em; !* makes sure this remains circular *!*/
+    -fx-padding: 1em; /* !* 7 *!*/
+    -fx-effect: dropshadow(two-pass-box , rgba(0, 0, 0, 0.1), 5, 0.0 , 0, 2);
+}
+.gradient-slider .thumb:hover,
+.gradient-slider .thumb:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: #232323, #0093FF;
+    -fx-border-insets: 0.5;
+    -fx-border-radius: 1.8333333em;
+    /*-fx-background-radius: 1.0em; !* makes sure this remains circular *!*/
 }
 
+.gradient-slider .track {
+    -fx-border-color: #676B6F;
+    -fx-effect: dropshadow(gaussian , #293133 , 5, 0.2 , 0 , .2 );
+    /*-fx-border-color: #31363b;*/
+    /*-fx-border-width: 1;*/
+    /*-fx-border-radius: 5;*/
+}
