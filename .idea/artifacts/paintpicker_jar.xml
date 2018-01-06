@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="paintpicker:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/paintpicker_jar</output-path>
+    <root id="archive" name="paintpicker.jar">
+      <element id="module-output" name="paintpicker" />
+    </root>
+  </artifact>
+</component>

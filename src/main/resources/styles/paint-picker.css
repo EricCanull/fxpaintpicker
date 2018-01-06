@@ -1,0 +1,82 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 21, 2017, 4:40:47 AM
+    Author     : andje22
+*/
+.root {
+     -fx-font-family: "Segoe UI";
+    -fx-font-size: 1em;
+    -fx-base: #31363B;
+    -fx-background: #31363B;
+    -fx-focus-color: #0093FF;
+    -fx-control-inner-background: #232629;
+    -fx-inner-border: linear-gradient(to bottom, derive(-fx-color,85%) 0%, derive(-fx-color,94%) 100%);
+    -fx-body-color: linear-gradient( to bottom, derive(-fx-color, 45.0%) 0%, derive(-fx-color, 34.0%) 50%, derive(-fx-color, -52%) 50.5%, derive(-fx-color, 67%) 100%);
+    -fx-outer-border: derive(-fx-color,56%);
+    -fx-shadow-highlight-color: derive(-fx-background,-26.0%);
+    
+}
+.color-picker {
+    -fx-background-color:
+         linear-gradient(from 100.0% 0.0% to 100.0% 100.0% , REPEAT, #363B40 0.0% , #363B40 1.0% ,  #31363b 100.0% );
+}
+
+
+#color-picker {
+    -fx-skin: "com.paintpicker.scene.control.fields.PaintPickerSkin";
+   
+}
+.color-palette-region {
+    -fx-background-color: #31363B;
+}
+
+.color-picker-grid {
+    -fx-background-color: #31363B;
+}
+
+.color-picker-popover {
+    -fx-skin: "com.paintpicker.scene.control.fields.PaintPickerSkin";
+    -fx-font-size: 10px;
+    -fx-base: #31363B;
+    -fx-background: #31363B;
+    -fx-control-inner-background: #232629;
+}
+
+.label {
+    -fx-text-fill: #C2C2C3;
+}
+
+#BrightnessSlider .track {
+    -fx-background-color:
+        derive(-fx-background,50%),
+        derive(-fx-background,-22%),
+        linear-gradient(to right, black, white);
+    -fx-background-insets: 0 0 -1 0, 0, 1;
+    -fx-background-radius: 8, 8, 7;
+    -fx-padding: 7px;
+    -fx-effect: innershadow(two-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+}
+
+#BrightnessSlider  .thumb{
+    -fx-padding: 7px;
+}
+
+#SaturationSlider .track {
+    -fx-background-color:
+        derive(-fx-background,50%),
+        derive(-fx-background,-22%),
+        linear-gradient(to right, white, picker-color);
+    -fx-background-insets: 0 0 -1 0, 0, 1;
+    -fx-background-radius: 8, 8, 7;
+    -fx-background-radius: 8,7;
+    -fx-padding: 7px;
+    -fx-effect: innershadow(two-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+}
+
+#SaturationSlider .thumb {
+    -fx-padding: 7px;
+}
