@@ -17,22 +17,22 @@
 
 <fx:root stylesheets="@../styles/fxml-dialog.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="colorPickerGrid" hgap="2.0" styleClass="controls-grid-pane" vgap="2.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <GridPane fx:id="colorPickerGrid" hgap="2.0" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="322.0" prefWidth="510.0" styleClass="controls-grid-pane" vgap="2.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
         <columnConstraints>
-            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="15.0" prefWidth="42.5" />
-            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="42.5" />
             <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="42.5" />
-            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="42.5" />
-            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="30.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="42.5" />
+            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="42.5" />
+            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="42.5" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="30.0" />
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="20.0" />
-            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="70.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="70.0" />
             <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="26.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="26.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="26.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="26.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="26.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="26.0" />
-            <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="26.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="26.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
@@ -100,7 +100,7 @@
             <Label layoutX="226.0" layoutY="17.0" text="S" GridPane.columnIndex="5" GridPane.rowIndex="1" />
             <Label layoutX="226.0" layoutY="149.0" text="B" GridPane.columnIndex="5" GridPane.rowIndex="6" />
             <Label layoutX="226.0" layoutY="179.0" text="A" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-            <StackPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="20.0" styleClass="color-rect-border" GridPane.columnIndex="4" GridPane.rowSpan="8">
+             <StackPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="20.0" styleClass="color-rect-border" GridPane.columnIndex="4" GridPane.rowSpan="8">
                <children>
                   <Pane fx:id="hueBar" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="228.0" prefWidth="20.0" styleClass="hue-bar">
                      <children>
@@ -114,12 +114,12 @@
             </StackPane>
             <HBox alignment="CENTER_LEFT" layoutX="238.0" layoutY="289.0" spacing="2.0" GridPane.columnSpan="2" GridPane.rowIndex="11">
                <children>
-                  <Button fx:id="popupButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="85.0" text="Gradient" />
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onGradientButtonAction" prefHeight="35.0" prefWidth="85.0" text="Gradient" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="289.0" spacing="2.0" GridPane.columnIndex="7" GridPane.columnSpan="7" GridPane.rowIndex="11">
                <children>
-                  <Button fx:id="popupButton1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="85.0" text="Save" />
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="35.0" prefWidth="85.0" text="Save" />
                   <Button layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonAction" prefHeight="35.0" prefWidth="85.0" text="Cancel" />
                </children>
             </HBox>

@@ -32,9 +32,17 @@ import javafx.scene.shape.Rectangle;
 public class PaintSliderSkin extends SliderSkin {
     private final StackPane track;
     private final StackPane thumb;
+//    private Point2D dragStart;
+//      private double preDragThumbPos;
+//      private double trackLength;
+//         private boolean trackClicked = false;
 
     public PaintSliderSkin(PaintSlider slider) {
         super(slider);
+          if (slider.getTooltip() != null) {
+            slider.getTooltip().setConsumeAutoHidingEvents(false);
+        }
+
 
         track = (StackPane) getSkinnable().lookup(".track");
         thumb = (StackPane) getSkinnable().lookup(".thumb");
@@ -61,7 +69,46 @@ public class PaintSliderSkin extends SliderSkin {
 
         getChildren().clear();
         getChildren().addAll(alphaImageView, track, thumb);
-
+       
+        
+//        track.setOnMousePressed(me -> {
+//            if (!thumb.isPressed()) {
+//                trackClicked = true;
+//                if (getSkinnable().getOrientation() == Orientation.HORIZONTAL) {
+//                    getBehavior().trackPress(me, (me.getX() / trackLength));
+//                } else {
+//                    getBehavior().trackPress(me, (me.getY() / trackLength));
+//                }
+//                trackClicked = false;
+//            }
+//        });
+//
+//        track.setOnMouseDragged(me -> {
+//            if (!thumb.isPressed()) {
+//                if (getSkinnable().getOrientation() == Orientation.HORIZONTAL) {
+//                    getBehavior().trackPress(me, (me.getX() / trackLength));
+//                } else {
+//                    getBehavior().trackPress(me, (me.getY() / trackLength));
+//                }
+//            }
+//        });
+//
+//        thumb.setOnMousePressed(me -> {
+//            getBehavior().thumbPressed(me, 0.0f);
+//            dragStart = thumb.localToParent(me.getX(), me.getY());
+//            preDragThumbPos = (getSkinnable().getValue() - getSkinnable().getMin())
+//                    / (getSkinnable().getMax() - getSkinnable().getMin());
+//        });
+//
+//        thumb.setOnMouseReleased(me -> {
+//            getBehavior().thumbReleased(me);
+//        });
+//        thumb.setOnMouseDragged(me -> {
+//            Point2D cur = thumb.localToParent(me.getX(), me.getY());
+//            double dragPos = (getSkinnable().getOrientation() == Orientation.HORIZONTAL)
+//                    ? cur.getX() - dragStart.getX() : -(cur.getY() - dragStart.getY());
+//            getBehavior().thumbDragged(me, preDragThumbPos + dragPos / trackLength);
+//        });
         track.backgroundProperty().bind(new ObjectBinding<Background>() {
             {
                 bind(slider.trackFillProperty());
@@ -85,6 +132,10 @@ public class PaintSliderSkin extends SliderSkin {
     @Override
     protected void layoutChildren(double x, double y, double w, double h) {
         super.layoutChildren(x, y, w, h);
+        
+//        dragStart = thumb.localToParent(thumb.getLayoutX(), thumb.getLayoutY());
+//       trackLength = snapSize(w - thumb.getWidth());
+       
     }
 }
 

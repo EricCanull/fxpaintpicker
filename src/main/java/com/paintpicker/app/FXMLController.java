@@ -4,12 +4,11 @@ import com.paintpicker.scene.control.picker.PaintPicker;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.paintpicker.scene.control.picker.comboboxmode.Mode;
+import com.paintpicker.scene.control.picker.mode.Mode;
 import javafx.beans.binding.ObjectBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -17,6 +16,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
+/**
+ * 
+ * @author andje22
+ */
 public class FXMLController implements Initializable {
     
        

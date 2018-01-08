@@ -44,12 +44,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-
 <fx:root alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: transparent;" stylesheets="@../styles/gradient_picker_stop.css" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <Button fx:id="stop_button" mnemonicParsing="false" onKeyPressed="#thumbKeyPressed" onMouseDragged="#thumbMouseDragged" onMousePressed="#thumbMousePressed" onMouseReleased="#thumbMouseReleased" style="-fx-background-color: transparent;" styleClass="gradient-stop-thumb" text="">
       <contextMenu>
-        <ContextMenu fx:id="context_menu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="65.0" styleClass="column-filter">
+        <ContextMenu fx:id="context_menu" autoHide="false" consumeAutoHidingEvents="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="65.0" styleClass="column-filter">
           <items>
             <CustomMenuItem fx:id="custom_menu_item" hideOnClick="false" mnemonicParsing="false" styleClass="column-filter" text="Unspecified Action">
               <content>

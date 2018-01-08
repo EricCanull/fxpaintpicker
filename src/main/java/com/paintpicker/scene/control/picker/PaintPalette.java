@@ -1,15 +1,36 @@
 /*
- * Copyright (c) 2012, 2015, Oracle and/or its affiliates. All rights reserved.
- * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * Copyright (c) 2012, 2016, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
  */
+
 package com.paintpicker.scene.control.picker;
 
 import static com.paintpicker.scene.control.picker.PaintPickerSkin.getString;
-
 import com.sun.javafx.scene.traversal.Algorithm;
 import com.sun.javafx.scene.traversal.Direction;
 import com.sun.javafx.scene.traversal.ParentTraversalEngine;
 import com.sun.javafx.scene.traversal.TraversalContext;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -49,7 +70,7 @@ public class PaintPalette extends Region {
     // package protected for testing purposes
     ColorPickerGrid colorPickerGrid;
     final Hyperlink customColorLink = new Hyperlink(getString("customColorLink"));
-    PaintDialogController customPaintDialog = null;
+    CustomPaintControl customPaintController = null;
 
     private PaintPicker paintPicker;
     private final GridPane customColorGrid = new GridPane();
@@ -62,7 +83,7 @@ public class PaintPalette extends Region {
     private Color mouseDragColor = null;
     private boolean dragDetected = false;
 
-    // Metrics for custom colors
+//    // Metrics for custom colors
     private int customColorNumber = 0;
     private int customColorRows = 0;
     private int customColorLastRowLength = 0;
@@ -73,8 +94,6 @@ public class PaintPalette extends Region {
         getStyleClass().add("color-palette-region");
         getStylesheets().add(PaintPalette.class.getResource("/styles/paint-pallette.css").toExternalForm());
 
-        Separator separator = new Separator();
-        separator.getStyleClass().add("separator");
 
         this.paintPicker = paintPicker;
         colorPickerGrid = new ColorPickerGrid();
@@ -88,46 +107,56 @@ public class PaintPalette extends Region {
         customColorLink.setFocusTraversable(true);
         customColorLink.setVisited(true); // so that it always appears blue
         customColorLink.setOnAction((ActionEvent t) -> {
-            if (customPaintDialog == null) {
-                customPaintDialog = new PaintDialogController(popupControl, paintPicker);
-                customPaintDialog.customColorProperty().addListener((ov, t1, t2) -> {
-                    paintPicker.setValue(customPaintDialog.customColorProperty().get());
+            if (customPaintController == null) {
+                customPaintController = new CustomPaintControl(popupControl, paintPicker);
+                customPaintController.customColorProperty().addListener((ov, t1, t2) -> {
+                    paintPicker.setValue(customPaintController.customColorProperty().get());
                 });
-                customPaintDialog.setOnSave(() -> {
-                    Paint customColor = customPaintDialog.customColorProperty().get();
+                  
+                    customPaintController.setOnSave(() -> {
+                    Paint customColor = customPaintController.customColorProperty().get();
                     buildCustomColors();
                     paintPicker.getCustomColors().add(customColor);
                     updateSelection(customColor);
                     Event.fireEvent(paintPicker, new ActionEvent());
                     paintPicker.hide();
                 });
-                customPaintDialog.setOnUse(() -> {
+                customPaintController.setOnUse(() -> {
                     Event.fireEvent(paintPicker, new ActionEvent());
                     paintPicker.hide();
                 });
             }
-            customPaintDialog.setCurrentColor((Color)paintPicker.valueProperty().get());
+              customPaintController.setCurrentColor((Color)paintPicker.valueProperty().get());
+        
             if (popupControl != null) {
                 popupControl.setAutoHide(false);
                 paintPicker.hide();
-                customPaintDialog.show();
+                customPaintController.show();
             }
 
-            customPaintDialog.setOnHidden(event -> {
+            customPaintController.getPaintDialog().setOnHidden(event -> {
                 if (popupControl != null) {
                     popupControl.setAutoHide(true);
                 }
             });
         });
 
-
-        initNavigation();
+       buildColorPalette();
+        
+    }
+    
+    private void buildColorPalette() {
+         initNavigation();
         customColorGrid.getStyleClass().add("color-picker-grid");
         customColorGrid.setVisible(false);
         buildCustomColors();
         paintPicker.getCustomColors().addListener((ListChangeListener.Change<? extends Paint> change) -> {
             buildCustomColors();
         });
+        
+        
+        Separator separator = new Separator();
+        separator.getStyleClass().add("separator");
 
         VBox paletteBox = new VBox();
         paletteBox.getStyleClass().add("color-palette");
@@ -136,8 +165,6 @@ public class PaintPalette extends Region {
         hoverSquare.setMouseTransparent(true);
         hoverSquare.getStyleClass().addAll("hover-square");
         setFocusedSquare(null);
-        
-      
         getChildren().addAll(paletteBox, hoverSquare);
     }
 
@@ -241,13 +268,16 @@ public class PaintPalette extends Region {
             switch (ke.getCode()) {
                 case SPACE:
                 case ENTER:
-                    processSelectKey(ke);
+                    // select the focused color
+                    if (focusedSquare != null) {
+                        focusedSquare.selectColor(ke);
+                    }
                     ke.consume();
                     break;
                 default: // no-op
             }
         });
-
+        
         setImpl_traversalEngine(new ParentTraversalEngine(this, new Algorithm() {
             @Override
             public Node select(Node owner, Direction dir, TraversalContext context) {
@@ -365,7 +395,7 @@ public class PaintPalette extends Region {
     }
 
     public boolean isCustomColorDialogShowing() {
-        if (customPaintDialog != null) return customPaintDialog.isVisible();
+        if (customPaintController != null) return customPaintController.isVisible();
         return false;
     }
 
@@ -447,7 +477,7 @@ public class PaintPalette extends Region {
         public void selectColor(KeyEvent event) {
             if (rectangle.getFill() != null) {
                 if (rectangle.getFill() instanceof Color) {
-                    paintPicker.setValue((Color) rectangle.getFill());
+                    paintPicker.setValue(rectangle.getFill());
                     paintPicker.fireEvent(new ActionEvent());
                 }
                 event.consume();
@@ -508,17 +538,17 @@ public class PaintPalette extends Region {
                     dragDetected = true;
                     mouseDragColor = (Color) paintPicker.getValue();
                 }
-                int xIndex = com.sun.javafx.util.Utils.clamp(0,
+                int xIndex = clamp(0,
                         (int)t.getX()/(SQUARE_SIZE + 1), NUM_OF_COLUMNS - 1);
-                int yIndex = com.sun.javafx.util.Utils.clamp(0,
+                int yIndex = clamp(0,
                         (int)t.getY()/(SQUARE_SIZE + 1), NUM_OF_ROWS - 1);
                 int index = xIndex + yIndex*NUM_OF_COLUMNS;
-                paintPicker.setValue((Color) squares.get(index).rectangle.getFill());
-                updateSelection((Color) paintPicker.getValue());
+                paintPicker.setValue(squares.get(index).rectangle.getFill());
+                updateSelection(paintPicker.getValue());
             });
             addEventHandler(MouseEvent.MOUSE_RELEASED, t -> {
                 if(colorPickerGrid.getBoundsInLocal().contains(t.getX(), t.getY())) {
-                    updateSelection((Color) paintPicker.getValue());
+                    updateSelection(paintPicker.getValue());
                     paintPicker.fireEvent(new ActionEvent());
                     paintPicker.hide();
                 } else {
@@ -672,4 +702,8 @@ public class PaintPalette extends Region {
 
     private static final int NUM_OF_COLORS = RAW_VALUES.length / 3;
     private static final int NUM_OF_ROWS = NUM_OF_COLORS / NUM_OF_COLUMNS;
+
+    private static int clamp(int min, int value, int max) {
+        return value < min ? min : value > max ? max : value;
+    }
 }

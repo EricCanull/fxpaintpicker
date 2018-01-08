@@ -87,13 +87,16 @@ and open the template in the editor.
 
 #hue-bar-handle {
     -fx-border-radius: 6px;
-    -fx-border-color: white;
+    -fx-border-color: #C2C2C3;
     /*-fx-pref-width: 30px;*/
     -fx-pref-height: 10px;
     -fx-translate-x: -3;
     -fx-translate-y: -5;
     
     -fx-effect: dropshadow(three-pass-box, black, 2, 0.0, 0, 1);
+}
+#hue-bar-handle:pressed {
+     -fx-border-color: #232323, -fx-focus-color;
 }
 
 #current-new-color-border {

@@ -38,7 +38,7 @@ public class ColorSquare extends StackPane {
 
         rectangle.setStrokeType(StrokeType.INSIDE);
 
-        String tooltipStr = PaintPickerSkin.tooltipString((Color) color);
+        String tooltipStr = PaintPickerSkin.tooltipString(color);
         Tooltip.install(this, new Tooltip((tooltipStr == null) ? "" : tooltipStr));
 
         rectangle.getStyleClass().add("color-rect");

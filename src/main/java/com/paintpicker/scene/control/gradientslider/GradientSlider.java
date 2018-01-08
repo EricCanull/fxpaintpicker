@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.paintpicker.scene.control.gradientpicker.GradientPicker;
+import com.paintpicker.scene.control.gradientpicker.GradientControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,7 +74,7 @@ public class GradientSlider extends GridPane {
         try {
             loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(GradientPicker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GradientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         assert slider_label != null;

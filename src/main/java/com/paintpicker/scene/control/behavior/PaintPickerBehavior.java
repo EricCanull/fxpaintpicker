@@ -18,6 +18,10 @@ import java.util.List;
 
 import javafx.scene.paint.Paint;
 
+/**
+ * 
+ * @author 
+ */
 public class PaintPickerBehavior extends ComboBoxBaseBehavior<Paint> {
 
     /***************************************************************************
@@ -50,8 +54,11 @@ public class PaintPickerBehavior extends ComboBoxBaseBehavior<Paint> {
      */
     protected static final String CLOSE_ACTION = "Close";
 
-
+    /**
+     *
+     */
     protected static final List<KeyBinding> COLOR_PICKER_BINDINGS = new ArrayList<KeyBinding>();
+
     static {
         COLOR_PICKER_BINDINGS.addAll(COMBO_BOX_BASE_BINDINGS);
         COLOR_PICKER_BINDINGS.add(new KeyBinding(ESCAPE, KEY_PRESSED, CLOSE_ACTION));
@@ -79,15 +86,30 @@ public class PaintPickerBehavior extends ComboBoxBaseBehavior<Paint> {
      * Mouse Events                                                           *
      *                                                                        *
      *************************************************************************/
-
+    
     @Override public void onAutoHide() {
         // when we click on some non  interactive part of the
         // Color Palette - we do not want to hide.
         PaintPicker paintPicker = (PaintPicker)getControl();
-         PaintPickerSkin cpSkin = (PaintPickerSkin)paintPicker.getSkin();
+        PaintPickerSkin cpSkin = (PaintPickerSkin)paintPicker.getSkin();
         cpSkin.syncWithAutoUpdate();
         // if the ColorPicker is no longer showing, then invoke the super method
         // to keep its show/hide state in sync.
         if (!paintPicker.isShowing()) super.onAutoHide();
     }
+
+//    @Override
+//    public void mouseReleased(MouseEvent e) {
+//        // Overriding to not do the usual on mouseReleased.
+//      // The event is handled by the skin instead, which calls
+//      // the method below.
+//    }
+
+//    public void mouseReleased(MouseEvent e, boolean showHidePopup) {
+//        if (showHidePopup) {
+//            super.mouseReleased(e);
+//        } else {
+//            disarm();
+//        }
+//    }
 }

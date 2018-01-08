@@ -6,12 +6,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+/**
+ * 
+ * @author andje22
+ */
 public class DemoApp extends Application {
 
+    /**
+     * 
+     * @param stage
+     * @throws Exception 
+     */
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
+        Parent root = FXMLLoader.load(FXMLController.class.getResource("/fxml/Scene.fxml"));
         
         Scene scene = new Scene(root);
 

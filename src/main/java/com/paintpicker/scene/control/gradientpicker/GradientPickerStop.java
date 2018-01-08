@@ -33,7 +33,7 @@ package com.paintpicker.scene.control.gradientpicker;
  */
 
 
-import com.paintpicker.scene.control.picker.PaintDialogController;
+import com.paintpicker.scene.control.picker.CustomPaintControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,7 +76,7 @@ public class GradientPickerStop extends VBox {
     private double startDragX;
     private double thumbWidth;
     private final double edgeMargin = 2.0;
-    private final GradientPicker gradientPicker;
+    private final GradientControl gradientPicker;
 
     /*
      * Clamp value to be between min and max.
@@ -87,7 +87,7 @@ public class GradientPickerStop extends VBox {
         return value;
     }
 
-    public GradientPickerStop(GradientPicker ge, double mini, double maxi, double val, Color c) {
+    public GradientPickerStop(GradientControl ge, double mini, double maxi, double val, Color c) {
         gradientPicker = ge;
         min = mini;
         max = maxi;
@@ -136,7 +136,7 @@ public class GradientPickerStop extends VBox {
         try {
             loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(GradientPicker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GradientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         assert offset_textfield != null;
@@ -166,8 +166,8 @@ public class GradientPickerStop extends VBox {
         // Called when moving a gradient stop :
         // - update gradient preview accordingly
         // - update model
-        final PaintDialogController paintPicker
-                = gradientPicker.getPaintPickerController();
+        final CustomPaintControl paintPicker
+                = gradientPicker.getCustomPaintControl();
         final Paint value = gradientPicker.getValue();
         gradientPicker.updatePreview(value);
         // Update model
@@ -181,8 +181,8 @@ public class GradientPickerStop extends VBox {
             // Called when removing a gradient stop :
             // - update gradient preview accordingly
             // - update model
-            final PaintDialogController paintPicker
-                    = gradientPicker.getPaintPickerController();
+            final CustomPaintControl paintPicker
+                    = gradientPicker.getCustomPaintControl();
             final Paint value = gradientPicker.getValue();
             gradientPicker.updatePreview(value);
             // Update model
@@ -202,8 +202,8 @@ public class GradientPickerStop extends VBox {
         // Called when selecting a gradient stop :
         // - update color preview accordingly
         // - do not update the model
-        final PaintDialogController paintPicker
-                = gradientPicker.getPaintPickerController();
+        final CustomPaintControl paintPicker
+                = gradientPicker.getCustomPaintControl();
         paintPicker.customColorProperty().set(this.getColor());
         //final ColorPicker colorPicker = paintPicker.getColorPicker();
         //colorPicker.updateUI(color);
@@ -227,8 +227,8 @@ public class GradientPickerStop extends VBox {
         // Called when moving a gradient stop :
         // - update gradient preview accordingly
         // - update model
-        final PaintDialogController paintPicker
-                = gradientPicker.getPaintPickerController();
+        final CustomPaintControl paintPicker
+                = gradientPicker.getCustomPaintControl();
         final Paint value = gradientPicker.getValue();
         gradientPicker.updatePreview(value);
         // Update model

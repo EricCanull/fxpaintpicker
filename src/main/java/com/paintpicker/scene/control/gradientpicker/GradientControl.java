@@ -33,7 +33,7 @@ package com.paintpicker.scene.control.gradientpicker;
  */
 
 import com.paintpicker.scene.control.gradientslider.GradientSlider;
-import com.paintpicker.scene.control.picker.PaintDialogController;
+import com.paintpicker.scene.control.picker.CustomPaintControl;
 import com.paintpicker.scene.control.rotator.RotatorControl;
 import com.paintpicker.utils.ColorEncoder;
 import javafx.beans.binding.ObjectBinding;
@@ -42,7 +42,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -61,7 +60,7 @@ import javafx.scene.input.MouseButton;
 /**
  * Controller class for the gradient part of the paint editor.
  */
-public class GradientPicker extends VBox {
+public class GradientControl extends VBox {
     public enum GradientType {
         LINEAR, RADIAL
     }
@@ -85,12 +84,12 @@ public class GradientPicker extends VBox {
     }
 
     public static void setGradientType(GradientType gradientType) {
-        GradientPicker.GRADIENT_TYPE.set(gradientType);
+        GradientControl.GRADIENT_TYPE.set(gradientType);
     }
 
     private static final ObjectProperty<GradientType> GRADIENT_TYPE = new SimpleObjectProperty<>(GradientType.LINEAR);
 
-    private final PaintDialogController paintPicker;
+    private final CustomPaintControl paintPicker;
 
     private final RotatorControl focusAngleRotator
             = new RotatorControl("Degree"); //NOI18N
@@ -100,12 +99,12 @@ public class GradientPicker extends VBox {
             = new GradientSlider("Radius", 0.0, 1.0, 0.5); //NOI18N
     private final List<GradientPickerStop> gradientPickerStops = new ArrayList<>();
 
-    public GradientPicker(PaintDialogController pe) {
+    public GradientControl(CustomPaintControl pe) {
         this.paintPicker = pe;
         initialize();
     }
 
-    public final PaintDialogController getPaintPickerController() {
+    public final CustomPaintControl getCustomPaintControl() {
         return paintPicker;
     }
 
@@ -115,14 +114,15 @@ public class GradientPicker extends VBox {
     private void initialize() {
 
         final FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(GradientPicker.class.getResource("/fxml/FXMLGradientPicker.fxml")); //NOI18N
+        loader.setLocation(GradientControl.class.getResource("/fxml/FXMLGradientPicker.fxml")); //NOI18N
         loader.setController(this);
         loader.setRoot(this);
         try {
             loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(GradientPicker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GradientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
 
         assert proportional_checkbox != null;
         assert cycleMethod_choicebox != null;
@@ -147,7 +147,7 @@ public class GradientPicker extends VBox {
 
         cycleMethod_choicebox.setItems(FXCollections.observableArrayList(CycleMethod.values()));
         cycleMethod_choicebox.getSelectionModel().selectFirst();
-        cycleMethod_choicebox.addEventHandler(ActionEvent.ACTION, (EventHandler<Event>) Event::consume);
+        cycleMethod_choicebox.addEventHandler(ActionEvent.ACTION, Event::consume);
         cycleMethod_choicebox.getSelectionModel().selectedItemProperty().addListener(o -> onValueChange());
 
         gradient_choicebox.setItems(FXCollections.observableArrayList(GradientType.values()));
