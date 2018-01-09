@@ -70,7 +70,7 @@ public class PaintPalette extends Region {
     // package protected for testing purposes
     ColorPickerGrid colorPickerGrid;
     final Hyperlink customColorLink = new Hyperlink(getString("customColorLink"));
-    CustomPaintControl customPaintController = null;
+    CustomPaintDialog customPaintDialog = null;
 
     private PaintPicker paintPicker;
     private final GridPane customColorGrid = new GridPane();
@@ -83,7 +83,7 @@ public class PaintPalette extends Region {
     private Color mouseDragColor = null;
     private boolean dragDetected = false;
 
-//    // Metrics for custom colors
+    // Metrics for custom colors
     private int customColorNumber = 0;
     private int customColorRows = 0;
     private int customColorLastRowLength = 0;
@@ -107,34 +107,34 @@ public class PaintPalette extends Region {
         customColorLink.setFocusTraversable(true);
         customColorLink.setVisited(true); // so that it always appears blue
         customColorLink.setOnAction((ActionEvent t) -> {
-            if (customPaintController == null) {
-                customPaintController = new CustomPaintControl(popupControl, paintPicker);
-                customPaintController.customColorProperty().addListener((ov, t1, t2) -> {
-                    paintPicker.setValue(customPaintController.customColorProperty().get());
+            if (customPaintDialog == null) {
+                customPaintDialog = new CustomPaintDialog(popupControl, paintPicker);
+                customPaintDialog.customColorProperty().addListener((ov, t1, t2) -> {
+                    paintPicker.setValue(customPaintDialog.customColorProperty().get());
                 });
                   
-                    customPaintController.setOnSave(() -> {
-                    Paint customColor = customPaintController.customColorProperty().get();
+                    customPaintDialog.setOnSave(() -> {
+                    Paint customColor = customPaintDialog.customColorProperty().get();
                     buildCustomColors();
                     paintPicker.getCustomColors().add(customColor);
                     updateSelection(customColor);
                     Event.fireEvent(paintPicker, new ActionEvent());
                     paintPicker.hide();
                 });
-                customPaintController.setOnUse(() -> {
+                customPaintDialog.setOnUse(() -> {
                     Event.fireEvent(paintPicker, new ActionEvent());
                     paintPicker.hide();
                 });
             }
-              customPaintController.setCurrentColor((Color)paintPicker.valueProperty().get());
+             customPaintDialog.currentColorProperty.set(paintPicker.valueProperty().get());
         
             if (popupControl != null) {
                 popupControl.setAutoHide(false);
                 paintPicker.hide();
-                customPaintController.show();
+                customPaintDialog.show();
             }
 
-            customPaintController.getPaintDialog().setOnHidden(event -> {
+            customPaintDialog.setOnHidden(event -> {
                 if (popupControl != null) {
                     popupControl.setAutoHide(true);
                 }
@@ -142,18 +142,16 @@ public class PaintPalette extends Region {
         });
 
        buildColorPalette();
-        
     }
     
     private void buildColorPalette() {
-         initNavigation();
+        initNavigation();
         customColorGrid.getStyleClass().add("color-picker-grid");
         customColorGrid.setVisible(false);
         buildCustomColors();
         paintPicker.getCustomColors().addListener((ListChangeListener.Change<? extends Paint> change) -> {
             buildCustomColors();
         });
-        
         
         Separator separator = new Separator();
         separator.getStyleClass().add("separator");
@@ -395,7 +393,7 @@ public class PaintPalette extends Region {
     }
 
     public boolean isCustomColorDialogShowing() {
-        if (customPaintController != null) return customPaintController.isVisible();
+        if (customPaintDialog != null) return customPaintDialog.isShowing();
         return false;
     }
 

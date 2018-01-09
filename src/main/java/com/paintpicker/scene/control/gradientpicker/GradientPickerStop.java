@@ -34,6 +34,7 @@ package com.paintpicker.scene.control.gradientpicker;
 
 
 import com.paintpicker.scene.control.picker.CustomPaintControl;
+import com.paintpicker.scene.control.picker.CustomPaintDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -166,12 +167,12 @@ public class GradientPickerStop extends VBox {
         // Called when moving a gradient stop :
         // - update gradient preview accordingly
         // - update model
-        final CustomPaintControl paintPicker
+        final CustomPaintDialog paintPicker
                 = gradientPicker.getCustomPaintControl();
         final Paint value = gradientPicker.getValue();
         gradientPicker.updatePreview(value);
         // Update model
-        paintPicker.outputPaintProperty.set(value);
+       // paintPicker.outputPaintProperty.set(value);
     }
 
     @FXML
@@ -181,13 +182,13 @@ public class GradientPickerStop extends VBox {
             // Called when removing a gradient stop :
             // - update gradient preview accordingly
             // - update model
-            final CustomPaintControl paintPicker
+            final CustomPaintDialog paintPicker
                     = gradientPicker.getCustomPaintControl();
             final Paint value = gradientPicker.getValue();
             gradientPicker.updatePreview(value);
             // Update model
             paintPicker.customColorProperty().set(this.getColor());
-            paintPicker.outputPaintProperty.set(getColor());
+          //  paintPicker.outputPaintProperty.set(getColor());
             e.consume();
         }
     }
@@ -202,7 +203,7 @@ public class GradientPickerStop extends VBox {
         // Called when selecting a gradient stop :
         // - update color preview accordingly
         // - do not update the model
-        final CustomPaintControl paintPicker
+        final CustomPaintDialog paintPicker
                 = gradientPicker.getCustomPaintControl();
         paintPicker.customColorProperty().set(this.getColor());
         //final ColorPicker colorPicker = paintPicker.getColorPicker();
@@ -227,12 +228,12 @@ public class GradientPickerStop extends VBox {
         // Called when moving a gradient stop :
         // - update gradient preview accordingly
         // - update model
-        final CustomPaintControl paintPicker
+        final CustomPaintDialog paintPicker
                 = gradientPicker.getCustomPaintControl();
         final Paint value = gradientPicker.getValue();
         gradientPicker.updatePreview(value);
         // Update model
-        paintPicker.outputPaintProperty.set(value);
+//        paintPicker.outputPaintProperty.set(value);
     }
 
     private void showHUD() {

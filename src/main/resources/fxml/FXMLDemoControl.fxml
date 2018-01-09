@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox stylesheets="@../styles/paint-picker.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.paintpicker.app.FXMLController">
+<VBox stylesheets="@../styles/paint-picker.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.paintpicker.app.DemoControl">
    <children>
       <HBox fx:id="menuBar" spacing="10.0">
          <VBox.margin>

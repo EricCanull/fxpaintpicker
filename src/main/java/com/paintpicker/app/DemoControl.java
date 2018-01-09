@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
  * 
  * @author andje22
  */
-public class FXMLController implements Initializable {
+public class DemoControl implements Initializable {
     
        
     @FXML StackPane rootPane;

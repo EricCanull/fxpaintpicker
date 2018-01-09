@@ -29,9 +29,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+.menu-item .label {
+    -fx-text-fill: white;
+}
 
+.menu-item:focused {
+     -fx-background-color: darkgray;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: blue;
+}
+
+.context-menu {
+    -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
+    -fx-background-color: black;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+/*    -fx-padding: 0.666667em 0.083333em 0.666667em 0.083333em;  8 1 8 1 */
+    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
+}
 .gradient-stop-thumb {
-    -fx-padding: 0.25em 0.25em 0.25em 0.25em;
+    
     -fx-padding: 0;
 }
 
@@ -41,9 +60,11 @@
     -fx-background-size: auto;
 }
 
-.hud-textfield {
+/*.hud-textfield {
     -fx-background-color: #606468, -fx-text-box-border, -fx-control-inner-background;
-    /*    -fx-max-width: 3.25em;*/
+        -fx-max-width: 3.25em;
+    -fx-background-insets: -0.4, 1, 2;
+-fx-background-radius: 3.4, 2, 2;
     -fx-min-width: 65px;
     -fx-pref-width: 65px;
     -fx-pref-height: 28px;
@@ -52,4 +73,8 @@
 -fx-background-color: -fx-focus-color, -fx-text-box-border, -fx-control-inner-background;
 -fx-background-insets: -0.4, 1, 2;
 -fx-background-radius: 3.4, 2, 2;
+}*/
+
+.column-filter {
+    -fx-padding: 0;
 }

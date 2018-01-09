@@ -34,6 +34,7 @@ package com.paintpicker.scene.control.gradientpicker;
 
 import com.paintpicker.scene.control.gradientslider.GradientSlider;
 import com.paintpicker.scene.control.picker.CustomPaintControl;
+import com.paintpicker.scene.control.picker.CustomPaintDialog;
 import com.paintpicker.scene.control.rotator.RotatorControl;
 import com.paintpicker.utils.ColorEncoder;
 import javafx.beans.binding.ObjectBinding;
@@ -89,7 +90,7 @@ public class GradientControl extends VBox {
 
     private static final ObjectProperty<GradientType> GRADIENT_TYPE = new SimpleObjectProperty<>(GradientType.LINEAR);
 
-    private final CustomPaintControl paintPicker;
+    private final CustomPaintDialog customPaintDialog;
 
     private final RotatorControl focusAngleRotator
             = new RotatorControl("Degree"); //NOI18N
@@ -99,13 +100,13 @@ public class GradientControl extends VBox {
             = new GradientSlider("Radius", 0.0, 1.0, 0.5); //NOI18N
     private final List<GradientPickerStop> gradientPickerStops = new ArrayList<>();
 
-    public GradientControl(CustomPaintControl pe) {
-        this.paintPicker = pe;
+    public GradientControl(CustomPaintDialog pe) {
+        this.customPaintDialog = pe;
         initialize();
     }
 
-    public final CustomPaintControl getCustomPaintControl() {
-        return paintPicker;
+    public final CustomPaintDialog getCustomPaintControl() {
+        return customPaintDialog;
     }
 
     /**
@@ -214,7 +215,7 @@ public class GradientControl extends VBox {
         // Update UI
         preview_rect.setFill(value);
         // Update model
-        paintPicker.outputPaintProperty.set(value);
+      //  customPaintDialog.outputPaintProperty.set(value);
     }
 
     public Paint getValue() {
@@ -310,7 +311,7 @@ public class GradientControl extends VBox {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
                 double percentH = ((100.0 / track_pane.getWidth()) * event.getX()) / 100;
-                final Color color = paintPicker.getCurrentColor();
+                final Color color = customPaintDialog.getCurrentColor();
                 addStop(0.0, 1.0, percentH, color);
                 updateAngle();
             }
@@ -327,7 +328,7 @@ public class GradientControl extends VBox {
         // Update gradient preview rectangle
         preview_rect.setFill(value);
         // Update paint picker 
-        paintPicker.outputPaintProperty.set(value);
+     //   customPaintDialog.outputPaintProperty.set(value);
     }
 
     GradientPickerStop addStop(double min, double max, double value, Color color) {
@@ -360,7 +361,7 @@ public class GradientControl extends VBox {
         if (gradientStop != null) {
             gradientStop.setSelected(true);
             if (gradientStop.backgroundProperty().get() != null) {
-                paintPicker.customColorProperty().set(gradientStop.getColor());
+                customPaintDialog.customColorProperty().set(gradientStop.getColor());
             }
         }
     }

@@ -97,19 +97,4 @@ public class PaintPickerBehavior extends ComboBoxBaseBehavior<Paint> {
         // to keep its show/hide state in sync.
         if (!paintPicker.isShowing()) super.onAutoHide();
     }
-
-//    @Override
-//    public void mouseReleased(MouseEvent e) {
-//        // Overriding to not do the usual on mouseReleased.
-//      // The event is handled by the skin instead, which calls
-//      // the method below.
-//    }
-
-//    public void mouseReleased(MouseEvent e, boolean showHidePopup) {
-//        if (showHidePopup) {
-//            super.mouseReleased(e);
-//        } else {
-//            disarm();
-//        }
-//    }
 }
