@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.paintpicker.scene.control.picker.mode.Mode;
-import javafx.beans.binding.ObjectBinding;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -33,17 +33,9 @@ public class DemoControl implements Initializable {
         paintPicker = new PaintPicker(Color.web("#1A4C9C"), Mode.GRADIENT);
 
         menuBar.getChildren().add(paintPicker);
-
-        rootPane.backgroundProperty().bind(new ObjectBinding<Background>() {
-            {
-                bind(paintPicker.valueProperty());
-            }
-
-            @Override
-            protected Background computeValue() {
-                return new Background(new BackgroundFill(paintPicker.getValue(),
-                        CornerRadii.EMPTY, Insets.EMPTY));
-            }
-        });
+        
+        rootPane.backgroundProperty().bind(Bindings.createObjectBinding(()->
+                new Background(new BackgroundFill(paintPicker.getValue(),
+                        CornerRadii.EMPTY, Insets.EMPTY)), paintPicker.valueProperty()));
     }
 }

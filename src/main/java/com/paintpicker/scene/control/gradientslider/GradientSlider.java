@@ -133,15 +133,6 @@ public class GradientSlider extends GridPane {
         double rounded = round(newValue, roundingFactor);
         slider_slider.setValue(rounded);
         tf.setText(Double.toString(newValue));
-        // Avoid using runLater
-        // This should be done somewhere else (need to investigate)
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                // position caret after new value for easy editing
-//                tf.positionCaret(tf.getText().length());
-//            }
-//        });
     }
 
     private double round(double value, int roundingFactor) {

@@ -30,25 +30,36 @@ import com.paintpicker.scene.control.fields.IntegerField;
 import com.paintpicker.scene.control.fields.WebColorField;
 import com.paintpicker.scene.control.gradientpicker.GradientControl;
 import com.paintpicker.scene.control.gradientpicker.GradientPickerStop;
+import com.paintpicker.scene.control.picker.mode.Mode;
 import com.paintpicker.scene.control.slider.PaintSlider;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
+import javafx.scene.Scene;
+import javafx.scene.control.PopupControl;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -65,6 +76,12 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -92,31 +109,56 @@ public class CustomPaintControl extends AnchorPane {
     @FXML private Region previousColorRect;
     @FXML private Region currentColorRect;
     
-    private final PaintSlider[] sliders = new PaintSlider[7];
+    Runnable onSave;
+    private Runnable onSelect;
+    private Runnable onCancel;
 
-    private final CustomPaintDialog customPaintDialog;
+    private final Scene customScene;
+    private final Stage stage = new Stage();
+
+    private PaintSlider[] sliders = new PaintSlider[7];
 
     private GradientDialog gradientDialog = null;
-    
     private GradientControl gradientPicker = null;
 
-    public CustomPaintControl(CustomPaintDialog customPaintDialog) {
-        final FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(CustomPaintControl.class.getResource("/fxml/FXMLCustomPaintControl.fxml"));
-        loader.setController(CustomPaintControl.this);
-        loader.setRoot(CustomPaintControl.this);
+    public CustomPaintControl(PopupControl owner, Mode mode) {
 
-        try {
-            loader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(CustomPaintDialog.class.getName()).log(Level.SEVERE, null, ex);
+        if (owner != null) {
+            stage.initOwner(owner);
         }
-        
-        this.customPaintDialog = customPaintDialog;
         initialize();
+
+        stage.setTitle("Custom Paints");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setResizable(true);
+        stage.addEventHandler(KeyEvent.ANY, keyEventListener);
+
+        customScene = new Scene(this);
+
+        stage.setScene(customScene);
+
+        stage.setOnCloseRequest((WindowEvent e) -> {
+            if (onSave != null) {
+                onSave.run();
+            }
+        });
+
+        if (mode.equals(Mode.GRADIENT)) {
+            createGradientDialog();
+        }
     }
 
     private void initialize() {
+        try {
+            final FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(CustomPaintControl.class.getResource("/fxml/FXMLCustomPaintControl.fxml"));
+            loader.setController(CustomPaintControl.this);
+            loader.setRoot(CustomPaintControl.this);
+            loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(CustomPaintControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         IntStream.range(0, sliders.length).forEachOrdered(index -> {
             sliders[index] = new PaintSlider();
@@ -151,22 +193,13 @@ public class CustomPaintControl extends AnchorPane {
         greenTextField.valueProperty().bindBidirectional(sliders[4].valueProperty());
         blueTextField.valueProperty().bindBidirectional(sliders[5].valueProperty());
         alphaTextField.valueProperty().bindBidirectional(sliders[6].valueProperty());
-        hexTextField.valueProperty().bindBidirectional(customPaintDialog.customColorProperty);
-        
-        customPaintDialog.customColorProperty.addListener(o -> colorChanged());
-        
-        colorRectHue.backgroundProperty().bind(new ObjectBinding<Background>() {
-            {
-                bind(hueProperty);
-            }
+        hexTextField.valueProperty().bindBidirectional(customColorProperty);
 
-            @Override
-            protected Background computeValue() {
-                return new Background(new BackgroundFill(
-                        Color.hsb(hueProperty.getValue(), 1.0, 1.0),
-                        CornerRadii.EMPTY, Insets.EMPTY));
-            }
-        });
+        customColorProperty.addListener(o -> colorChanged());
+        
+        colorRectHue.backgroundProperty().bind(Bindings.createObjectBinding(()->
+                new Background(new BackgroundFill(Color.hsb(hueProperty.getValue(), 1.0, 1.0),
+                        CornerRadii.EMPTY, Insets.EMPTY)), hueProperty));
 
         colorRectOverlayOne.setBackground(new Background(new BackgroundFill(
                 new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
@@ -205,29 +238,179 @@ public class CustomPaintControl extends AnchorPane {
 
         hueBar.setOnMouseDragged(barMouseHandler);
         hueBar.setOnMousePressed(barMouseHandler);
+        
+        currentColorRect.backgroundProperty().bind(Bindings.createObjectBinding(()->
+                new Background(new BackgroundFill(currentColorProperty.get(),
+                        CornerRadii.EMPTY, Insets.EMPTY)), currentColorProperty));
 
-        currentColorRect.backgroundProperty().bind(new ObjectBinding<Background>() {
-            {
-                bind(customPaintDialog.currentColorProperty);
-            }
+        previousColorRect.backgroundProperty().bind(Bindings.createObjectBinding(()->
+                new Background(new BackgroundFill(customColorProperty.get(),
+                        CornerRadii.EMPTY, Insets.EMPTY)), customColorProperty));
+    }
 
-            @Override
-            protected Background computeValue() {
-                return new Background(new BackgroundFill(customPaintDialog.currentColorProperty.get(),
-                        CornerRadii.EMPTY, Insets.EMPTY));
-            }
-        });
-        previousColorRect.backgroundProperty().bind(new ObjectBinding<Background>() {
-            {
-                bind(customPaintDialog.customColorProperty);
-            }
+    public void show() {
+        if (stage.getOwner() != null) {
+            // Workaround of RT-29871: Instead of just invoking fixPosition()
+            // here need to use listener that fixes dialog position once both
+            // width and height are determined
+            stage.widthProperty().addListener(positionAdjuster);
+            stage.heightProperty().addListener(positionAdjuster);
+            positionAdjuster.invalidated(null);
+        }
+        if (stage.getScene() == null) {
+            stage.setScene(customScene);
+        }
+        updateValues();
+        stage.show();
+    }
 
-            @Override
-            protected Background computeValue() {
-                return new Background(new BackgroundFill(customPaintDialog.customColorProperty.get(),
-                        CornerRadii.EMPTY, Insets.EMPTY));
+    private InvalidationListener positionAdjuster = new InvalidationListener() {
+        @Override
+        public void invalidated(Observable ignored) {
+            if (Double.isNaN(stage.getWidth()) || Double.isNaN(stage.getHeight())) {
+                return;
             }
-        });
+            stage.widthProperty().removeListener(positionAdjuster);
+            stage.heightProperty().removeListener(positionAdjuster);
+            fixPosition();
+        }
+    };
+
+    private void fixPosition() {
+        Window w = stage.getOwner();
+        Screen s = com.sun.javafx.util.Utils.getScreen(w);
+        Rectangle2D sb = s.getBounds();
+        double xR = w.getX() + w.getWidth();
+        double xL = w.getX() - stage.getWidth();
+        double x, y;
+        if (sb.getMaxX() >= xR + stage.getWidth()) {
+            x = xR;
+        } else if (sb.getMinX() <= xL) {
+            x = xL;
+        } else {
+            x = Math.max(sb.getMinX(), sb.getMaxX() - stage.getWidth());
+        }
+        y = Math.max(sb.getMinY(), Math.min(sb.getMaxY() - stage.getHeight(), w.getY()));
+        stage.setX(x);
+        stage.setY(y);
+    }
+
+    public ReadOnlyBooleanProperty showingProperty() {
+        return stage.showingProperty();
+    }
+
+    public boolean isShowing() {
+        return stage.isShowing();
+    }
+    
+    private final ObjectProperty<Paint> customColorProperty = new SimpleObjectProperty<>(Color.BLACK);
+
+    public ObjectProperty<Paint> customColorProperty() {
+        return customColorProperty;
+    }
+    
+    public Color getCustomColor() {
+        return (Color) customColorProperty.get();
+    }
+
+    public void setCustomColor(Color color) {
+        customColorProperty.set(color);
+    }
+    
+    private final ObjectProperty<Paint> currentColorProperty = new SimpleObjectProperty<>(Color.WHITE);
+    
+    public ObjectProperty<Paint> currentColorProperty() {
+        return currentColorProperty;
+    }
+    
+    public Color getCurrentColor() {
+        return (Color) currentColorProperty.get();
+    }
+
+    public void setCurrentColor(Color color) {
+        currentColorProperty.set(color);
+    }
+    
+    private final ObjectProperty<Paint> customPaintProperty = new SimpleObjectProperty<>(Color.WHITE);
+
+    public ObjectProperty<Paint> customPaintProperty() {
+        return customPaintProperty;
+    }
+    
+    public Paint getCustomPaint() {
+        return customPaintProperty.get();
+    }
+
+    public void setCustomPaint(Paint paint) {
+        customPaintProperty.set(paint);
+    }
+
+    private final EventHandler<KeyEvent> keyEventListener = e -> {
+        if (e.getCode().equals(KeyCode.ESCAPE)) {
+            stage.close();
+        }
+    };
+
+    public void setOnHidden(EventHandler<WindowEvent> onHidden) {
+        stage.setOnHidden(onHidden);
+    }
+
+    public Stage getDialog() {
+        return stage;
+    }
+
+    public void hide() {
+        if (stage.getOwner() != null) {
+            stage.hide();
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Runnable getOnSave() {
+        return onSave;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Runnable getOnCancel() {
+        return onCancel;
+    }
+
+    /**
+     *
+     * @param onCancel
+     */
+    public void setOnCancel(Runnable onCancel) {
+        this.onCancel = onCancel;
+    }
+
+    /**
+     *
+     * @param onSave
+     */
+    public void setOnSave(Runnable onSave) {
+        this.onSave = onSave;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Runnable getOnUse() {
+        return onSelect;
+    }
+
+    /**
+     *
+     * @param onUse
+     */
+    public void setOnUse(Runnable onUse) {
+        this.onSelect = onUse;
     }
 
     @Override
@@ -237,14 +420,15 @@ public class CustomPaintControl extends AnchorPane {
         circleHandle.setManaged(false);
         circleHandle.autosize();
     }
-    
-     protected void initializeGradientDialog() {
+
+    private void createGradientDialog() {
         if (gradientPicker == null) {
-            gradientPicker = new GradientControl(customPaintDialog);
+            gradientPicker = new GradientControl(this);
         }
-        gradientDialog = new GradientDialog(this.getScene().getWindow(), gradientPicker);
+        gradientDialog = new GradientDialog(this.getScene().getWindow(),
+                gradientPicker);
     }
-     
+
     private final Property[] boundProperties = new Property[7];
 
     private void bindControlsValue(int index, int maxValue, Property<Number> prop) {
@@ -345,7 +529,7 @@ public class CustomPaintControl extends AnchorPane {
         satProperty.set(newColor.getSaturation() * 100);
         brightProperty.set(newColor.getBrightness() * 100);
         alphaProperty.set(newColor.getOpacity() * 100);
-        customPaintDialog.customColorProperty.set(newColor);
+        customColorProperty.set(newColor);
         updateSlidersTrackColors();
         updateSelectedGradientStop(newColor);
     }
@@ -360,7 +544,7 @@ public class CustomPaintControl extends AnchorPane {
         greenProperty.set(doubleToInt(newColor.getGreen()));
         blueProperty.set(doubleToInt(newColor.getBlue()));
         alphaProperty.set(newColor.getOpacity() * 100);
-        customPaintDialog.customColorProperty.set(newColor);
+        customColorProperty.set(newColor);
         updateSlidersTrackColors();
         updateSelectedGradientStop(newColor);
     }
@@ -374,7 +558,7 @@ public class CustomPaintControl extends AnchorPane {
         int blue = blueProperty.get();
         double alpha = alphaProperty.get() / 100;
 
-        Color newColor = Color.rgb(red, green, blue, alpha);
+        final Color newColor = Color.rgb(red, green, blue, alpha);
         sliders[0].setGradientForHueWithSaturation(sat, bright, alpha);
         sliders[1].setGradientForSaturationWithHue(hue, bright, alpha);
         sliders[2].setGradientForBrightnessWithHue(hue, sat, alpha);
@@ -390,15 +574,15 @@ public class CustomPaintControl extends AnchorPane {
      * change.
      */
     private void updateSelectedGradientStop(Color newColor) {
-        if (gradientDialog.isShowing() && gradientDialog != null) {
-            GradientPickerStop gradientPickerStop = gradientPicker.getSelectedStop();
-            if (gradientPickerStop != null) {
-                gradientPickerStop.setColor(newColor);
-                // updateValues(newColor);
-                // Update gradient preview
-                final Paint paint = gradientPicker.getValue();
-                gradientPicker.updatePreview(paint);
-                //gradientPicker.updateUI(paint);
+        if (gradientDialog != null) {
+            if (gradientDialog.isShowing()) {
+                GradientPickerStop gradientPickerStop = gradientPicker.getSelectedStop();
+                if (gradientPickerStop != null) {
+                    gradientPickerStop.setColor(newColor);
+                    // Update gradient preview
+                    final Paint paint = gradientPicker.getValue();
+                    gradientPicker.updatePreview(paint);
+                }
             }
         }
     }
@@ -406,13 +590,13 @@ public class CustomPaintControl extends AnchorPane {
     private void colorChanged() {
         if (!changeIsLocal) {
             changeIsLocal = true;
-            hueProperty.set(customPaintDialog.getCustomColor().getHue());
-            satProperty.set(customPaintDialog.getCustomColor().getSaturation() * 100);
-            brightProperty.set(customPaintDialog.getCustomColor().getBrightness() * 100);
-            redProperty.set(doubleToInt(customPaintDialog.getCustomColor().getRed()));
-            greenProperty.set(doubleToInt(customPaintDialog.getCustomColor().getGreen()));
-            blueProperty.set(doubleToInt(customPaintDialog.getCustomColor().getBlue()));
-            alphaProperty.set(customPaintDialog.getCustomColor().getOpacity() * 100);
+            hueProperty.set(getCustomColor().getHue());
+            satProperty.set(getCustomColor().getSaturation() * 100);
+            brightProperty.set(getCustomColor().getBrightness() * 100);
+            redProperty.set(doubleToInt(getCustomColor().getRed()));
+            greenProperty.set(doubleToInt(getCustomColor().getGreen()));
+            blueProperty.set(doubleToInt(getCustomColor().getBlue()));
+            alphaProperty.set(getCustomColor().getOpacity() * 100);
             updateSlidersTrackColors();
             changeIsLocal = false;
         }
@@ -424,26 +608,30 @@ public class CustomPaintControl extends AnchorPane {
      * show() method for this dialog gets called.
      */
     protected void updateValues() {
-        if (customPaintDialog.getCurrentColor() == null) {
-            customPaintDialog.setCurrentColor(Color.TRANSPARENT);
+        if (getCurrentColor() == null) {
+            setCurrentColor(Color.TRANSPARENT);
         }
         changeIsLocal = true;
         //Initialize hue, sat, bright, color, red, green and blue
-        hueProperty.set(customPaintDialog.getCustomColor().getHue());
-        satProperty.set(customPaintDialog.getCustomColor().getSaturation() * 100);
-        brightProperty.set(customPaintDialog.getCustomColor().getBrightness() * 100);
-        alphaProperty.set(customPaintDialog.getCustomColor().getOpacity() * 100);
-        customPaintDialog.setCustomColor(Color.hsb(hueProperty.get(), 
-                clamp(satProperty.get() / 100), 
+        hueProperty.set(getCustomColor().getHue());
+        satProperty.set(getCustomColor().getSaturation() * 100);
+        brightProperty.set(getCustomColor().getBrightness() * 100);
+        alphaProperty.set(getCustomColor().getOpacity() * 100);
+        setCustomColor(Color.hsb(hueProperty.get(),
+                clamp(satProperty.get() / 100),
                 clamp(brightProperty.get() / 100),
                 clamp(alphaProperty.get() / 100)));
-        redProperty.set(doubleToInt(customPaintDialog.getCustomColor().getRed()));
-        greenProperty.set(doubleToInt(customPaintDialog.getCustomColor().getGreen()));
-        blueProperty.set(doubleToInt(customPaintDialog.getCustomColor().getBlue()));
+        redProperty.set(doubleToInt(getCustomColor().getRed()));
+        greenProperty.set(doubleToInt(getCustomColor().getGreen()));
+        blueProperty.set(doubleToInt(getCustomColor().getBlue()));
         updateSlidersTrackColors();
         changeIsLocal = false;
     }
     
+    public boolean isGradientShowing() {
+        return gradientDialog.isShowing();
+    }
+
     /**
      * @param e
      */
@@ -461,23 +649,23 @@ public class CustomPaintControl extends AnchorPane {
      */
     @FXML
     private void onSaveButtonAction(ActionEvent event) {
-        if (customPaintDialog.onSave != null) {
-            customPaintDialog.onSave.run();
+        if (onSave != null) {
+            onSave.run();
         }
-        customPaintDialog.hide();
+        hide();
     }
 
     /**
-     * 
-     * @param e 
+     *
+     * @param event
      */
     @FXML
-    private void onCancelButtonAction(ActionEvent e) {
-        customPaintDialog.customColorProperty.set(customPaintDialog.getCurrentColor());
-        if (customPaintDialog.getOnCancel() != null) {
-            customPaintDialog.getOnCancel().run();
+    private void onCancelButtonAction(ActionEvent event) {
+        customColorProperty.set(getCurrentColor());
+        if (getOnCancel() != null) {
+            getOnCancel().run();
         }
-        customPaintDialog.hide();
+        hide();
     }
 
     private void setMode(Paint value) {

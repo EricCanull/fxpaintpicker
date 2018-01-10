@@ -36,6 +36,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 /**
+ * 
  */
 public class GradientDialog {
 

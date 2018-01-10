@@ -34,7 +34,6 @@ package com.paintpicker.scene.control.gradientpicker;
 
 
 import com.paintpicker.scene.control.picker.CustomPaintControl;
-import com.paintpicker.scene.control.picker.CustomPaintDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -167,7 +166,7 @@ public class GradientPickerStop extends VBox {
         // Called when moving a gradient stop :
         // - update gradient preview accordingly
         // - update model
-        final CustomPaintDialog paintPicker
+        final CustomPaintControl paintPicker
                 = gradientPicker.getCustomPaintControl();
         final Paint value = gradientPicker.getValue();
         gradientPicker.updatePreview(value);
@@ -182,7 +181,7 @@ public class GradientPickerStop extends VBox {
             // Called when removing a gradient stop :
             // - update gradient preview accordingly
             // - update model
-            final CustomPaintDialog paintPicker
+            final CustomPaintControl paintPicker
                     = gradientPicker.getCustomPaintControl();
             final Paint value = gradientPicker.getValue();
             gradientPicker.updatePreview(value);
@@ -203,7 +202,7 @@ public class GradientPickerStop extends VBox {
         // Called when selecting a gradient stop :
         // - update color preview accordingly
         // - do not update the model
-        final CustomPaintDialog paintPicker
+        final CustomPaintControl paintPicker
                 = gradientPicker.getCustomPaintControl();
         paintPicker.customColorProperty().set(this.getColor());
         //final ColorPicker colorPicker = paintPicker.getColorPicker();
@@ -228,7 +227,7 @@ public class GradientPickerStop extends VBox {
         // Called when moving a gradient stop :
         // - update gradient preview accordingly
         // - update model
-        final CustomPaintDialog paintPicker
+        final CustomPaintControl paintPicker
                 = gradientPicker.getCustomPaintControl();
         final Paint value = gradientPicker.getValue();
         gradientPicker.updatePreview(value);

@@ -25,7 +25,9 @@
 
 package com.paintpicker.scene.control.picker;
 
+import com.paintpicker.scene.control.gradientpicker.GradientDialog;
 import static com.paintpicker.scene.control.picker.PaintPickerSkin.getString;
+import com.paintpicker.scene.control.picker.mode.Mode;
 import com.sun.javafx.scene.traversal.Algorithm;
 import com.sun.javafx.scene.traversal.Direction;
 import com.sun.javafx.scene.traversal.ParentTraversalEngine;
@@ -62,6 +64,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
 import java.util.List;
+import sun.util.calendar.CalendarUtils;
 
 public class PaintPalette extends Region {
 
@@ -70,9 +73,9 @@ public class PaintPalette extends Region {
     // package protected for testing purposes
     ColorPickerGrid colorPickerGrid;
     final Hyperlink customColorLink = new Hyperlink(getString("customColorLink"));
-    CustomPaintDialog customPaintDialog = null;
-
     private PaintPicker paintPicker;
+    private CustomPaintControl customPaintControl = null;
+     
     private final GridPane customColorGrid = new GridPane();
     private final Label customColorLabel = new Label(getString("customColorLabel"));
 
@@ -94,7 +97,6 @@ public class PaintPalette extends Region {
         getStyleClass().add("color-palette-region");
         getStylesheets().add(PaintPalette.class.getResource("/styles/paint-pallette.css").toExternalForm());
 
-
         this.paintPicker = paintPicker;
         colorPickerGrid = new ColorPickerGrid();
         customColorLabel.getStyleClass().add("custom-color-label");
@@ -107,41 +109,48 @@ public class PaintPalette extends Region {
         customColorLink.setFocusTraversable(true);
         customColorLink.setVisited(true); // so that it always appears blue
         customColorLink.setOnAction((ActionEvent t) -> {
-            if (customPaintDialog == null) {
-                customPaintDialog = new CustomPaintDialog(popupControl, paintPicker);
-                customPaintDialog.customColorProperty().addListener((ov, t1, t2) -> {
-                    paintPicker.setValue(customPaintDialog.customColorProperty().get());
+            if (customPaintControl == null) {
+                customPaintControl = new CustomPaintControl(popupControl, paintPicker.getMode());
+                customPaintControl.customColorProperty().addListener((observable) -> {
+                    if(!customPaintControl.isShowing())
+                    paintPicker.setValue(customPaintControl.customColorProperty().get());
+                        });
+
+                customPaintControl.customPaintProperty().addListener((observable) -> {
+                    if (customPaintControl.isGradientShowing())
+                    paintPicker.setValue(customPaintControl.customPaintProperty().get());
                 });
-                  
-                    customPaintDialog.setOnSave(() -> {
-                    Paint customColor = customPaintDialog.customColorProperty().get();
+
+                customPaintControl.setOnSave(() -> {
+                    Paint customColor = customPaintControl.customColorProperty().get();
                     buildCustomColors();
                     paintPicker.getCustomColors().add(customColor);
                     updateSelection(customColor);
                     Event.fireEvent(paintPicker, new ActionEvent());
                     paintPicker.hide();
                 });
-                customPaintDialog.setOnUse(() -> {
+                customPaintControl.setOnUse(() -> {
                     Event.fireEvent(paintPicker, new ActionEvent());
                     paintPicker.hide();
                 });
             }
-             customPaintDialog.currentColorProperty.set(paintPicker.valueProperty().get());
-        
+            
+            customPaintControl.currentColorProperty().set(paintPicker.valueProperty().get());
+
             if (popupControl != null) {
                 popupControl.setAutoHide(false);
                 paintPicker.hide();
-                customPaintDialog.show();
+                customPaintControl.show();
             }
 
-            customPaintDialog.setOnHidden(event -> {
+            customPaintControl.setOnHidden(event -> {
                 if (popupControl != null) {
                     popupControl.setAutoHide(true);
                 }
             });
         });
-
-       buildColorPalette();
+        
+        buildColorPalette();
     }
     
     private void buildColorPalette() {
@@ -393,7 +402,7 @@ public class PaintPalette extends Region {
     }
 
     public boolean isCustomColorDialogShowing() {
-        if (customPaintDialog != null) return customPaintDialog.isShowing();
+        if (customPaintControl != null) return customPaintControl.isShowing();
         return false;
     }
 
