@@ -139,9 +139,9 @@ public class PaintPalette extends Region {
             
             if (paintPicker.valueProperty().get() instanceof LinearGradient
                     || paintPicker.valueProperty().get() instanceof RadialGradient) {
-             
+
             } else {
-                   customPaintControl.currentColorProperty().set(paintPicker.valueProperty().get());
+                customPaintControl.currentColorProperty().set(paintPicker.valueProperty().get());
             }
 
             if (popupControl != null) {
