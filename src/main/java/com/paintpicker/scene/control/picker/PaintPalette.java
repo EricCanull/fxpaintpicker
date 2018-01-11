@@ -62,7 +62,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
 import java.util.List;
-import javafx.beans.Observable;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.RadialGradient;
 
