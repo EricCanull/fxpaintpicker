@@ -143,12 +143,12 @@ public class GradientControl extends VBox {
         
         proportional_checkbox.setSelected(true);
         proportional_checkbox.setOnAction(Event::consume);
-        proportional_checkbox.selectedProperty().addListener(o -> onValueChange());
+        proportional_checkbox.selectedProperty().addListener(observable -> onValueChange());
 
         cycleMethod_choicebox.setItems(FXCollections.observableArrayList(CycleMethod.values()));
         cycleMethod_choicebox.getSelectionModel().selectFirst();
-        cycleMethod_choicebox.addEventHandler(ActionEvent.ACTION, Event::consume);
-        cycleMethod_choicebox.getSelectionModel().selectedItemProperty().addListener(o -> onValueChange());
+        cycleMethod_choicebox.setOnAction(Event::consume);
+        cycleMethod_choicebox.getSelectionModel().selectedItemProperty().addListener(observable -> onValueChange());
 
         gradient_choicebox.setItems(FXCollections.observableArrayList(GradientType.values()));
         gradient_choicebox.setValue(GradientType.LINEAR);
@@ -234,6 +234,8 @@ public class GradientControl extends VBox {
                 paint = null;
                 break;
         }
+        
+         customPaintControl.setCustomPaint(paint);
         return paint;
     }
 
@@ -287,6 +289,7 @@ public class GradientControl extends VBox {
             });
         }
         updatePreview(value);
+        customPaintControl.setCustomPaint(value);
     }
 
     public void updatePreview(Paint value) {

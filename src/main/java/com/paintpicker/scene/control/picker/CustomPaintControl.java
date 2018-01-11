@@ -39,7 +39,6 @@ import java.util.stream.IntStream;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -84,7 +83,6 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
- *
  *
  */
 public class CustomPaintControl extends AnchorPane {
@@ -195,7 +193,7 @@ public class CustomPaintControl extends AnchorPane {
         alphaTextField.valueProperty().bindBidirectional(sliders[6].valueProperty());
         hexTextField.valueProperty().bindBidirectional(customColorProperty);
 
-        customColorProperty.addListener(o -> colorChanged());
+        customColorProperty.addListener(observable -> colorChanged());
         
         colorRectHue.backgroundProperty().bind(Bindings.createObjectBinding(()->
                 new Background(new BackgroundFill(Color.hsb(hueProperty.getValue(), 1.0, 1.0),

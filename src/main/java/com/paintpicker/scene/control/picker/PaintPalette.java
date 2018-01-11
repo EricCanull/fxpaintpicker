@@ -25,9 +25,7 @@
 
 package com.paintpicker.scene.control.picker;
 
-import com.paintpicker.scene.control.gradientpicker.GradientDialog;
 import static com.paintpicker.scene.control.picker.PaintPickerSkin.getString;
-import com.paintpicker.scene.control.picker.mode.Mode;
 import com.sun.javafx.scene.traversal.Algorithm;
 import com.sun.javafx.scene.traversal.Direction;
 import com.sun.javafx.scene.traversal.ParentTraversalEngine;
@@ -64,7 +62,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
 import java.util.List;
-import sun.util.calendar.CalendarUtils;
+import javafx.beans.Observable;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.RadialGradient;
 
 public class PaintPalette extends Region {
 
@@ -111,10 +111,12 @@ public class PaintPalette extends Region {
         customColorLink.setOnAction((ActionEvent t) -> {
             if (customPaintControl == null) {
                 customPaintControl = new CustomPaintControl(popupControl, paintPicker.getMode());
-                customPaintControl.customColorProperty().addListener((observable) -> {
-                    if(!customPaintControl.isShowing())
+                customPaintControl.customColorProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue instanceof LinearGradient || newValue instanceof RadialGradient) {
+                        return;
+                    }
                     paintPicker.setValue(customPaintControl.customColorProperty().get());
-                        });
+                });
 
                 customPaintControl.customPaintProperty().addListener((observable) -> {
                     if (customPaintControl.isGradientShowing())
@@ -135,7 +137,12 @@ public class PaintPalette extends Region {
                 });
             }
             
-            customPaintControl.currentColorProperty().set(paintPicker.valueProperty().get());
+            if (paintPicker.valueProperty().get() instanceof LinearGradient
+                    || paintPicker.valueProperty().get() instanceof RadialGradient) {
+             
+            } else {
+                   customPaintControl.currentColorProperty().set(paintPicker.valueProperty().get());
+            }
 
             if (popupControl != null) {
                 popupControl.setAutoHide(false);
