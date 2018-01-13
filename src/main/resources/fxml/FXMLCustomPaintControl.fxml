@@ -23,7 +23,7 @@
             <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="42.5" />
             <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="42.5" />
             <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="42.5" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="30.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="32.0" />
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="20.0" />
             <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="70.0" />
             <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="26.0" />
@@ -87,12 +87,16 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </StackPane>
-            <HBox GridPane.columnSpan="4" GridPane.rowIndex="9">
+            <AnchorPane GridPane.columnSpan="4" GridPane.rowIndex="9">
                <children>
-                  <Region fx:id="currentColorRect" minWidth="-Infinity" prefWidth="89.0" style="-fx-background-color: black;" styleClass="current-color-rect" HBox.hgrow="ALWAYS" />
-                  <Region fx:id="previousColorRect" minWidth="-Infinity" prefWidth="89.0" style="-fx-background-color: black;" styleClass="previous-color-rect" HBox.hgrow="ALWAYS" />
+                  <HBox minWidth="-Infinity" prefWidth="180.0" styleClass="transparent-pattern">
+                     <children>
+                        <Region fx:id="currentColorRect" minWidth="-Infinity" prefWidth="90.0" style="-fx-background-color: black;" styleClass="current-color-rect" HBox.hgrow="ALWAYS" />
+                        <Region fx:id="previousColorRect" minWidth="-Infinity" prefWidth="90.0" style="-fx-background-color: white;" styleClass="previous-color-rect" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </AnchorPane>
             <Label text="H" GridPane.columnIndex="5" />
             <Label layoutX="226.0" layoutY="17.0" text="G" GridPane.columnIndex="5" GridPane.rowIndex="5" />
             <Label layoutX="226.0" layoutY="17.0" text="R" GridPane.columnIndex="5" GridPane.rowIndex="4" />
@@ -114,7 +118,7 @@
             </StackPane>
             <HBox alignment="CENTER_LEFT" layoutX="238.0" layoutY="289.0" spacing="2.0" GridPane.columnSpan="2" GridPane.rowIndex="11">
                <children>
-                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onGradientButtonAction" prefHeight="35.0" prefWidth="85.0" text="Gradient" />
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onGradientButtonAction" prefHeight="35.0" prefWidth="85.0" text="Gradients" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="289.0" spacing="2.0" GridPane.columnIndex="7" GridPane.columnSpan="7" GridPane.rowIndex="11">

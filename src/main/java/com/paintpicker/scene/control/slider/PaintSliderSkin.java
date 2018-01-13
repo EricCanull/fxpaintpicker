@@ -21,7 +21,7 @@ package com.paintpicker.scene.control.slider;
 
 
 import com.sun.javafx.scene.control.skin.SliderSkin;
-import javafx.beans.binding.ObjectBinding;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,10 +35,7 @@ public class PaintSliderSkin extends SliderSkin {
 
     public PaintSliderSkin(PaintSlider slider) {
         super(slider);
-          if (slider.getTooltip() != null) {
-            slider.getTooltip().setConsumeAutoHidingEvents(false);
-        }
-
+    
         track = (StackPane) getSkinnable().lookup(".track");
         thumb = (StackPane) getSkinnable().lookup(".thumb");
 
@@ -46,14 +43,16 @@ public class PaintSliderSkin extends SliderSkin {
 
         track.getStyleClass().add("color-track");
 
-        track.setBackground(new Background(new BackgroundFill(Color.web("#CCCCCC"), new CornerRadii(5), Insets.EMPTY)));
-        track.setPrefSize(132, 8);
+        track.setBackground(new Background(
+                            new BackgroundFill(Color.web("#CCCCCC"),
+                            new CornerRadii(5), Insets.EMPTY)));
 
         Rectangle alphaRect = new Rectangle();
         alphaRect.setArcHeight(15);
         alphaRect.setArcWidth(15);
 
-        ImageView alphaImageView = new ImageView(new Image("/images/chequers_long_light.png"));
+        ImageView alphaImageView = new ImageView(
+                                   new Image("/images/chequers_long_light.png"));
 
         alphaRect.widthProperty().bind(track.widthProperty());
         alphaRect.heightProperty().bind(track.heightProperty());
@@ -64,19 +63,11 @@ public class PaintSliderSkin extends SliderSkin {
 
         getChildren().clear();
         getChildren().addAll(alphaImageView, track, thumb);
-
-        track.backgroundProperty().bind(new ObjectBinding<Background>() {
-            {
-                bind(slider.trackFillProperty());
-            }
-
-            @Override
-            protected Background computeValue() {
-                return  new Background(
-                        new BackgroundFill(slider.trackFillProperty().get(),
-                        new CornerRadii(5), Insets.EMPTY));
-            }
-        });
+        
+        track.backgroundProperty().bind(Bindings.createObjectBinding(() -> 
+                new Background(
+                new BackgroundFill(slider.trackFillProperty().get(),
+                new CornerRadii(5), Insets.EMPTY)), slider.trackFillProperty()));
     }
 
     @Override
@@ -88,6 +79,8 @@ public class PaintSliderSkin extends SliderSkin {
     @Override
     protected void layoutChildren(double x, double y, double w, double h) {
         super.layoutChildren(x, y, w, h);
+        
+         track.setPrefSize(132, 8);
     }
 }
 

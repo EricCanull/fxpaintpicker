@@ -168,13 +168,13 @@ public class CustomPaintControl extends AnchorPane {
             colorPickerGrid.getChildren().add(sliders[index]);
         });
 
-        bindControlsValue(0, 360, hueProperty);
-        bindControlsValue(1, 100, satProperty);
-        bindControlsValue(2, 100, brightProperty);
-        bindControlsValue(3, 255, redProperty);
-        bindControlsValue(4, 255, greenProperty);
-        bindControlsValue(5, 255, blueProperty);
-        bindControlsValue(6, 100, alphaProperty);
+        bindControlsValue(0, 360, hue);
+        bindControlsValue(1, 100, sat);
+        bindControlsValue(2, 100, bright);
+        bindControlsValue(3, 255, red);
+        bindControlsValue(4, 255, green);
+        bindControlsValue(5, 255, blue);
+        bindControlsValue(6, 100, alpha);
 
         hueTextField.setMaxValue(360);
         satTextField.setMaxValue(100);
@@ -196,42 +196,48 @@ public class CustomPaintControl extends AnchorPane {
         customColorProperty.addListener(observable -> colorChanged());
         
         colorRectHue.backgroundProperty().bind(Bindings.createObjectBinding(()->
-                new Background(new BackgroundFill(Color.hsb(hueProperty.getValue(), 1.0, 1.0),
-                        CornerRadii.EMPTY, Insets.EMPTY)), hueProperty));
+                new Background(
+                new BackgroundFill(Color.hsb(hue.getValue(), 1.0, 1.0),
+                        CornerRadii.EMPTY, Insets.EMPTY)), hue));
 
-        colorRectOverlayOne.setBackground(new Background(new BackgroundFill(
+        colorRectOverlayOne.setBackground(
+                new Background(
+                new BackgroundFill(
                 new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
-                        new Stop(0, Color.rgb(255, 255, 255, 1)),
-                        new Stop(1, Color.rgb(255, 255, 255, 0))),
+                new Stop(0, Color.rgb(255, 255, 255, 1)),
+                new Stop(1, Color.rgb(255, 255, 255, 0))),
                 CornerRadii.EMPTY, Insets.EMPTY)));
 
         EventHandler<MouseEvent> rectMouseHandler = event -> {
             final double x = event.getX();
             final double y = event.getY();
-            satProperty.set(clamp(x / colorRect.getWidth()) * 100);
-            brightProperty.set(100 - (clamp(y / colorRect.getHeight()) * 100));
+            sat.set(clamp(x / colorRect.getWidth()) * 100);
+            bright.set(100 - (clamp(y / colorRect.getHeight()) * 100));
         };
 
-        colorRectOverlayTwo.setBackground(new Background(new BackgroundFill(
+        colorRectOverlayTwo.setBackground(
+                new Background(
+                new BackgroundFill(
                 new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                        new Stop(0, Color.rgb(0, 0, 0, 0)),
-                        new Stop(1, Color.rgb(0, 0, 0, 1))),
+                new Stop(0, Color.rgb(0, 0, 0, 0)),
+                new Stop(1, Color.rgb(0, 0, 0, 1))),
                 CornerRadii.EMPTY, Insets.EMPTY)));
         colorRectOverlayTwo.setOnMouseDragged(rectMouseHandler);
         colorRectOverlayTwo.setOnMousePressed(rectMouseHandler);
 
         // hueProperty bar
-        hueBar.setBackground(new Background(new BackgroundFill(setHueGradient(),
-                CornerRadii.EMPTY, Insets.EMPTY)));
+        hueBar.setBackground(
+                new Background(
+                new BackgroundFill(setHueGradient(), CornerRadii.EMPTY, Insets.EMPTY)));
 
-        circleHandle.layoutXProperty().bind(satProperty.divide(100).multiply(colorRect.widthProperty()));
-        circleHandle.layoutYProperty().bind(Bindings.subtract(1, brightProperty.divide(100)).multiply(colorRect.heightProperty()));
-        hueBarHandle.layoutYProperty().bind(hueProperty.divide(360).multiply(hueBar.heightProperty()));
-        alphaPane.opacityProperty().bind(alphaProperty.divide(100));
+        circleHandle.layoutXProperty().bind(sat.divide(100).multiply(colorRect.widthProperty()));
+        circleHandle.layoutYProperty().bind(Bindings.subtract(1, bright.divide(100)).multiply(colorRect.heightProperty()));
+        hueBarHandle.layoutYProperty().bind(hue.divide(360).multiply(hueBar.heightProperty()));
+        alphaPane.opacityProperty().bind(alpha.divide(100));
 
         EventHandler<MouseEvent> barMouseHandler = event -> {
             final double y = event.getY();
-            hueProperty.set(clamp(y / hueBar.getHeight()) * 360);
+            hue.set(clamp(y / hueBar.getHeight()) * 360);
         };
 
         hueBar.setOnMouseDragged(barMouseHandler);
@@ -443,7 +449,7 @@ public class CustomPaintControl extends AnchorPane {
 
     private boolean changeIsLocal = false;
 
-    private final DoubleProperty hueProperty = new SimpleDoubleProperty(-1) {
+    private final DoubleProperty hue = new SimpleDoubleProperty(-1) {
         @Override
         protected void invalidated() {
             if (!changeIsLocal) {
@@ -453,7 +459,7 @@ public class CustomPaintControl extends AnchorPane {
             }
         }
     };
-    private final DoubleProperty satProperty = new SimpleDoubleProperty(100) {
+    private final DoubleProperty sat = new SimpleDoubleProperty(100) {
         @Override
         protected void invalidated() {
             if (!changeIsLocal) {
@@ -463,7 +469,7 @@ public class CustomPaintControl extends AnchorPane {
             }
         }
     };
-    private final DoubleProperty brightProperty = new SimpleDoubleProperty(100) {
+    private final DoubleProperty bright = new SimpleDoubleProperty(100) {
         @Override
         protected void invalidated() {
             if (!changeIsLocal) {
@@ -473,7 +479,7 @@ public class CustomPaintControl extends AnchorPane {
             }
         }
     };
-    private final IntegerProperty redProperty = new SimpleIntegerProperty(-1) {
+    private final IntegerProperty red = new SimpleIntegerProperty(-1) {
         @Override
         protected void invalidated() {
             if (!changeIsLocal) {
@@ -484,7 +490,7 @@ public class CustomPaintControl extends AnchorPane {
         }
     };
 
-    private final IntegerProperty greenProperty = new SimpleIntegerProperty(-1) {
+    private final IntegerProperty green = new SimpleIntegerProperty(-1) {
         @Override
         protected void invalidated() {
             if (!changeIsLocal) {
@@ -495,7 +501,7 @@ public class CustomPaintControl extends AnchorPane {
         }
     };
 
-    private final IntegerProperty blueProperty = new SimpleIntegerProperty(-1) {
+    private final IntegerProperty blue = new SimpleIntegerProperty(-1) {
         @Override
         protected void invalidated() {
             if (!changeIsLocal) {
@@ -506,7 +512,7 @@ public class CustomPaintControl extends AnchorPane {
         }
     };
 
-    private final DoubleProperty alphaProperty = new SimpleDoubleProperty(100) {
+    private final DoubleProperty alpha = new SimpleDoubleProperty(100) {
         @Override
         protected void invalidated() {
             if (!changeIsLocal) {
@@ -519,14 +525,14 @@ public class CustomPaintControl extends AnchorPane {
 
     private void updateRGBAColor() {
         Color newColor = Color.rgb(
-                redProperty.get(),
-                greenProperty.get(),
-                blueProperty.get(),
-                clamp(alphaProperty.divide(100).get()));
-        hueProperty.set(newColor.getHue());
-        satProperty.set(newColor.getSaturation() * 100);
-        brightProperty.set(newColor.getBrightness() * 100);
-        alphaProperty.set(newColor.getOpacity() * 100);
+                red.get(),
+                green.get(),
+                blue.get(),
+                clamp(alpha.divide(100).get()));
+        hue.set(newColor.getHue());
+        sat.set(newColor.getSaturation() * 100);
+        bright.set(newColor.getBrightness() * 100);
+        alpha.set(newColor.getOpacity() * 100);
         customColorProperty.set(newColor);
         updateSlidersTrackColors();
         updateSelectedGradientStop(newColor);
@@ -534,35 +540,35 @@ public class CustomPaintControl extends AnchorPane {
 
     private void updateHSBColor() {
         Color newColor = Color.hsb(
-                hueProperty.get(),
-                clamp(satProperty.get() / 100),
-                clamp(brightProperty.get() / 100),
-                clamp(alphaProperty.get() / 100));
-        redProperty.set(doubleToInt(newColor.getRed()));
-        greenProperty.set(doubleToInt(newColor.getGreen()));
-        blueProperty.set(doubleToInt(newColor.getBlue()));
-        alphaProperty.set(newColor.getOpacity() * 100);
+                hue.get(),
+                clamp(sat.get() / 100),
+                clamp(bright.get() / 100),
+                clamp(alpha.get() / 100));
+        red.set(doubleToInt(newColor.getRed()));
+        green.set(doubleToInt(newColor.getGreen()));
+        blue.set(doubleToInt(newColor.getBlue()));
+        alpha.set(newColor.getOpacity() * 100);
         customColorProperty.set(newColor);
         updateSlidersTrackColors();
         updateSelectedGradientStop(newColor);
     }
 
     private void updateSlidersTrackColors() {
-        double hue = hueProperty.get();
-        double sat = satProperty.get() / 100;
-        double bright = brightProperty.get() / 100;
-        int red = redProperty.get();
-        int green = greenProperty.get();
-        int blue = blueProperty.get();
-        double alpha = alphaProperty.get() / 100;
+        double hueDouble    = hue.get();
+        double satDouble    = sat.get() / 100;
+        double brightDouble = bright.get() / 100;
+        int redInt          = red.get();
+        int greenInt        = green.get();
+        int blueInt         = blue.get();
+        double alphaDouble  = alpha.get() / 100;
 
-        final Color newColor = Color.rgb(red, green, blue, alpha);
-        sliders[0].setGradientForHueWithSaturation(sat, bright, alpha);
-        sliders[1].setGradientForSaturationWithHue(hue, bright, alpha);
-        sliders[2].setGradientForBrightnessWithHue(hue, sat, alpha);
-        sliders[3].setGradientForRedWithGreen(green, blue, alpha);
-        sliders[4].setGradientForGreenWithRed(blue, red, alpha);
-        sliders[5].setGradientForBlueWithRed(green, red, alpha);
+        final Color newColor = Color.rgb(redInt, greenInt, blueInt, alphaDouble);
+        sliders[0].setGradientForHueWithSaturation(satDouble, brightDouble, alphaDouble);
+        sliders[1].setGradientForSaturationWithHue(hueDouble, brightDouble, alphaDouble);
+        sliders[2].setGradientForBrightnessWithHue(hueDouble, satDouble, alphaDouble);
+        sliders[3].setGradientForRedWithGreen(greenInt, blueInt, alphaDouble);
+        sliders[4].setGradientForGreenWithRed(blueInt, redInt, alphaDouble);
+        sliders[5].setGradientForBlueWithRed(greenInt, redInt, alphaDouble);
         sliders[6].setGradientForAlphaWithCurrentColor(newColor);
     }
 
@@ -588,13 +594,13 @@ public class CustomPaintControl extends AnchorPane {
     private void colorChanged() {
         if (!changeIsLocal) {
             changeIsLocal = true;
-            hueProperty.set(getCustomColor().getHue());
-            satProperty.set(getCustomColor().getSaturation() * 100);
-            brightProperty.set(getCustomColor().getBrightness() * 100);
-            redProperty.set(doubleToInt(getCustomColor().getRed()));
-            greenProperty.set(doubleToInt(getCustomColor().getGreen()));
-            blueProperty.set(doubleToInt(getCustomColor().getBlue()));
-            alphaProperty.set(getCustomColor().getOpacity() * 100);
+            hue.set(getCustomColor().getHue());
+            sat.set(getCustomColor().getSaturation() * 100);
+            bright.set(getCustomColor().getBrightness() * 100);
+            red.set(doubleToInt(getCustomColor().getRed()));
+            green.set(doubleToInt(getCustomColor().getGreen()));
+            blue.set(doubleToInt(getCustomColor().getBlue()));
+            alpha.set(getCustomColor().getOpacity() * 100);
             updateSlidersTrackColors();
             changeIsLocal = false;
         }
@@ -611,17 +617,17 @@ public class CustomPaintControl extends AnchorPane {
         }
         changeIsLocal = true;
         //Initialize hue, sat, bright, color, red, green and blue
-        hueProperty.set(getCustomColor().getHue());
-        satProperty.set(getCustomColor().getSaturation() * 100);
-        brightProperty.set(getCustomColor().getBrightness() * 100);
-        alphaProperty.set(getCustomColor().getOpacity() * 100);
-        setCustomColor(Color.hsb(hueProperty.get(),
-                clamp(satProperty.get() / 100),
-                clamp(brightProperty.get() / 100),
-                clamp(alphaProperty.get() / 100)));
-        redProperty.set(doubleToInt(getCustomColor().getRed()));
-        greenProperty.set(doubleToInt(getCustomColor().getGreen()));
-        blueProperty.set(doubleToInt(getCustomColor().getBlue()));
+        hue.set(getCustomColor().getHue());
+        sat.set(getCustomColor().getSaturation() * 100);
+        bright.set(getCustomColor().getBrightness() * 100);
+        alpha.set(getCustomColor().getOpacity() * 100);
+        setCustomColor(Color.hsb(hue.get(),
+                clamp(sat.get() / 100),
+                clamp(bright.get() / 100),
+                clamp(alpha.get() / 100)));
+        red.set(doubleToInt(getCustomColor().getRed()));
+        green.set(doubleToInt(getCustomColor().getGreen()));
+        blue.set(doubleToInt(getCustomColor().getBlue()));
         updateSlidersTrackColors();
         changeIsLocal = false;
     }
@@ -660,8 +666,8 @@ public class CustomPaintControl extends AnchorPane {
     @FXML
     private void onCancelButtonAction(ActionEvent event) {
         customColorProperty.set(getCurrentColor());
-        if (getOnCancel() != null) {
-            getOnCancel().run();
+        if (onCancel != null) {
+            onCancel.run();
         }
         hide();
     }
@@ -689,11 +695,11 @@ public class CustomPaintControl extends AnchorPane {
      * @param value
      * @return
      */
-    private double clamp(double value) {
+    private static double clamp(double value) {
         return value < 0 ? 0 : value > 1 ? 1 : value;
     }
 
-    private LinearGradient setHueGradient() {
+    private static LinearGradient setHueGradient() {
         Stop[] stops = new Stop[255];
         double offset;
 
@@ -709,7 +715,7 @@ public class CustomPaintControl extends AnchorPane {
      * @param value
      * @return
      */
-    private int doubleToInt(double value) {
+    private static int doubleToInt(double value) {
         return (int) (value * 255 + 0.5); // Adding 0.5 for rounding only
     }
 }
