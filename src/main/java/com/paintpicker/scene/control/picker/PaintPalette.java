@@ -26,10 +26,8 @@
 package com.paintpicker.scene.control.picker;
 
 import static com.paintpicker.scene.control.picker.PaintPickerSkin.getString;
-import com.sun.javafx.scene.traversal.Algorithm;
-import com.sun.javafx.scene.traversal.Direction;
-import com.sun.javafx.scene.traversal.ParentTraversalEngine;
-import com.sun.javafx.scene.traversal.TraversalContext;
+
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -57,13 +55,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
+import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
-
-import java.util.List;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.RadialGradient;
 
 public class PaintPalette extends Region {
 
@@ -160,7 +156,7 @@ public class PaintPalette extends Region {
     }
     
     private void buildColorPalette() {
-        initNavigation();
+       // initNavigation();
         customColorGrid.getStyleClass().add("color-picker-grid");
         customColorGrid.setVisible(false);
         buildCustomColors();
@@ -276,136 +272,137 @@ public class PaintPalette extends Region {
 
     }
 
-    private void initNavigation() {
-        setOnKeyPressed(ke -> {
-            switch (ke.getCode()) {
-                case SPACE:
-                case ENTER:
-                    // select the focused color
-                    if (focusedSquare != null) {
-                        focusedSquare.selectColor(ke);
-                    }
-                    ke.consume();
-                    break;
-                default: // no-op
-            }
-        });
-        
-        setImpl_traversalEngine(new ParentTraversalEngine(this, new Algorithm() {
-            @Override
-            public Node select(Node owner, Direction dir, TraversalContext context) {
-                final Node subsequentNode = context.selectInSubtree(context.getRoot(), owner, dir);
-                switch (dir) {
-                    case NEXT:
-                    case NEXT_IN_LINE:
-                    case PREVIOUS:
-                        return subsequentNode;
-                    // Here, we need to intercept the standard algorithm in a few cases to get the desired traversal
-                    // For right or left direction we want to continue on the next or previous row respectively
-                    // For up and down, the custom color panel might be skipped by the standard algorithm (if not wide enough
-                    // to be between the current color and custom color button), so we need to include it in the path explicitly.
-                    case LEFT:
-                    case RIGHT:
-                    case UP:
-                    case DOWN:
-                        if (owner instanceof ColorSquare) {
-                            Node result =  processArrow((ColorSquare)owner, dir);
-                            return result != null ? result : subsequentNode;
-                        } else {
-                            return subsequentNode;
-                        }
-                }
-                return null;
-            }
-
-            private Node processArrow(ColorSquare owner, Direction dir) {
-                final int row = owner.index / NUM_OF_COLUMNS;
-                final int column = owner.index % NUM_OF_COLUMNS;
-
-                // Adjust the direction according to color picker orientation
-                dir = dir.getDirectionForNodeOrientation(paintPicker.getEffectiveNodeOrientation());
-                // This returns true for all the cases which we need to override
-                if (isAtBorder(dir, row, column, owner.isCustom)) {
-                    // There's no other node in the direction from the square, so we need to continue on some other row
-                    // or cycle
-                    int subsequentRow = row;
-                    int subsequentColumn = column;
-                    boolean subSequentSquareCustom = owner.isCustom;
-                    switch (dir) {
-                        case LEFT:
-                        case RIGHT:
-                            // The next row is either the first or the last, except when cycling in custom colors, the last row
-                            // might have different number of columns
-                            if (owner.isCustom) {
-                                subsequentRow = Math.floorMod(dir == Direction.LEFT ? row - 1 : row + 1, customColorRows);
-                                subsequentColumn = dir == Direction.LEFT ? subsequentRow == customColorRows - 1 ?
-                                        customColorLastRowLength - 1 : NUM_OF_COLUMNS - 1 : 0;
-                            } else {
-                                subsequentRow = Math.floorMod(dir == Direction.LEFT ? row - 1 : row + 1, NUM_OF_ROWS);
-                                subsequentColumn = dir == Direction.LEFT ? NUM_OF_COLUMNS - 1 : 0;
-                            }
-                            break;
-                        case UP: // custom color are not handled here
-                            subsequentRow = NUM_OF_ROWS - 1;
-                            break;
-                        case DOWN: // custom color are not handled here
-                            if (customColorNumber > 0) {
-                                subSequentSquareCustom = true;
-                                subsequentRow = 0;
-                                subsequentColumn = customColorRows > 1 ? column : Math.min(customColorLastRowLength - 1, column);
-                                break;
-                            } else {
-                                return null; // Let the default algorith handle this
-                            }
-
-                    }
-                    if (subSequentSquareCustom) {
-                        return customColorGrid.getChildren().get(subsequentRow * NUM_OF_COLUMNS + subsequentColumn);
-                    } else {
-                        return colorPickerGrid.getChildren().get(subsequentRow * NUM_OF_COLUMNS + subsequentColumn);
-                    }
-                }
-                return null;
-            }
-
-            private boolean isAtBorder(Direction dir, int row, int column, boolean custom) {
-                switch (dir) {
-                    case LEFT:
-                        return column == 0;
-                    case RIGHT:
-                        return custom && row == customColorRows - 1 ?
-                                column == customColorLastRowLength - 1 : column == NUM_OF_COLUMNS - 1;
-                    case UP:
-                        return !custom && row == 0;
-                    case DOWN:
-                        return !custom && row == NUM_OF_ROWS - 1;
-                }
-                return false;
-            }
-
-            @Override
-            public Node selectFirst(TraversalContext context) {
-                return colorPickerGrid.getChildren().get(0);
-            }
-
-            @Override
-            public Node selectLast(TraversalContext context) {
-                return customColorLink;
-            }
-        }));
-    }
-
-    private void processSelectKey(KeyEvent ke) {
-        if (focusedSquare != null) focusedSquare.selectColor(ke);
-    }
-
+//    @SuppressWarnings({ "deprecation", "restriction" })
+//	private void initNavigation() {
+//        setOnKeyPressed(ke -> {
+//            switch (ke.getCode()) {
+//                case SPACE:
+//                case ENTER:
+//                    // select the focused color
+//                    if (focusedSquare != null) {
+//                        focusedSquare.selectColor(ke);
+//                    }
+//                    ke.consume();
+//                    break;
+//                default: // no-op
+//            }
+//        });
+//        
+//        setImpl_traversalEngine(new ParentTraversalEngine(this, new Algorithm() {
+//            @Override
+//            public Node select(Node owner, Direction dir, TraversalContext context) {
+//                final Node subsequentNode = context.selectInSubtree(context.getRoot(), owner, dir);
+//                switch (dir) {
+//                    case NEXT:
+//                    case NEXT_IN_LINE:
+//                    case PREVIOUS:
+//                        return subsequentNode;
+//                    // Here, we need to intercept the standard algorithm in a few cases to get the desired traversal
+//                    // For right or left direction we want to continue on the next or previous row respectively
+//                    // For up and down, the custom color panel might be skipped by the standard algorithm (if not wide enough
+//                    // to be between the current color and custom color button), so we need to include it in the path explicitly.
+//                    case LEFT:
+//                    case RIGHT:
+//                    case UP:
+//                    case DOWN:
+//                        if (owner instanceof ColorSquare) {
+//                            Node result =  processArrow((ColorSquare)owner, dir);
+//                            return result != null ? result : subsequentNode;
+//                        } else {
+//                            return subsequentNode;
+//                        }
+//                }
+//                return null;
+//            }
+//
+//            private Node processArrow(ColorSquare owner, Direction dir) {
+//                final int row = owner.index / NUM_OF_COLUMNS;
+//                final int column = owner.index % NUM_OF_COLUMNS;
+//
+//                // Adjust the direction according to color picker orientation
+//                dir = dir.getDirectionForNodeOrientation(paintPicker.getEffectiveNodeOrientation());
+//                // This returns true for all the cases which we need to override
+//                if (isAtBorder(dir, row, column, owner.isCustom)) {
+//                    // There's no other node in the direction from the square, so we need to continue on some other row
+//                    // or cycle
+//                    int subsequentRow = row;
+//                    int subsequentColumn = column;
+//                    boolean subSequentSquareCustom = owner.isCustom;
+//                    switch (dir) {
+//                        case LEFT:
+//                        case RIGHT:
+//                            // The next row is either the first or the last, except when cycling in custom colors, the last row
+//                            // might have different number of columns
+//                            if (owner.isCustom) {
+//                                subsequentRow = Math.floorMod(dir == Direction.LEFT ? row - 1 : row + 1, customColorRows);
+//                                subsequentColumn = dir == Direction.LEFT ? subsequentRow == customColorRows - 1 ?
+//                                        customColorLastRowLength - 1 : NUM_OF_COLUMNS - 1 : 0;
+//                            } else {
+//                                subsequentRow = Math.floorMod(dir == Direction.LEFT ? row - 1 : row + 1, NUM_OF_ROWS);
+//                                subsequentColumn = dir == Direction.LEFT ? NUM_OF_COLUMNS - 1 : 0;
+//                            }
+//                            break;
+//                        case UP: // custom color are not handled here
+//                            subsequentRow = NUM_OF_ROWS - 1;
+//                            break;
+//                        case DOWN: // custom color are not handled here
+//                            if (customColorNumber > 0) {
+//                                subSequentSquareCustom = true;
+//                                subsequentRow = 0;
+//                                subsequentColumn = customColorRows > 1 ? column : Math.min(customColorLastRowLength - 1, column);
+//                                break;
+//                            } else {
+//                                return null; // Let the default algorith handle this
+//                            }
+//
+//                    }
+//                    if (subSequentSquareCustom) {
+//                        return customColorGrid.getChildren().get(subsequentRow * NUM_OF_COLUMNS + subsequentColumn);
+//                    } else {
+//                        return colorPickerGrid.getChildren().get(subsequentRow * NUM_OF_COLUMNS + subsequentColumn);
+//                    }
+//                }
+//                return null;
+//            }
+//
+//            private boolean isAtBorder(Direction dir, int row, int column, boolean custom) {
+//                switch (dir) {
+//                    case LEFT:
+//                        return column == 0;
+//                    case RIGHT:
+//                        return custom && row == customColorRows - 1 ?
+//                                column == customColorLastRowLength - 1 : column == NUM_OF_COLUMNS - 1;
+//                    case UP:
+//                        return !custom && row == 0;
+//                    case DOWN:
+//                        return !custom && row == NUM_OF_ROWS - 1;
+//                }
+//                return false;
+//            }
+//
+//            @Override
+//            public Node selectFirst(TraversalContext context) {
+//                return colorPickerGrid.getChildren().get(0);
+//            }
+//
+//            @Override
+//            public Node selectLast(TraversalContext context) {
+//                return customColorLink;
+//            }
+//        }));
+//    }
+//
+//    private void processSelectKey(KeyEvent ke) {
+//        if (focusedSquare != null) focusedSquare.selectColor(ke);
+//    }
+//
     public void setPopupControl(PopupControl pc) {
         this.popupControl = pc;
     }
 
-    private ColorPickerGrid getColorGrid() {
-        return colorPickerGrid;
-    }
+//    private ColorPickerGrid getColorGrid() {
+//        return colorPickerGrid;
+//    }
 
     public boolean isCustomColorDialogShowing() {
         if (customPaintControl != null) return customPaintControl.isShowing();

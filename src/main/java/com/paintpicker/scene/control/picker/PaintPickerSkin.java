@@ -24,9 +24,17 @@
  */
 
 package com.paintpicker.scene.control.picker;
+import static javafx.scene.paint.Color.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import com.paintpicker.scene.control.behavior.PaintPickerBehavior;
 import com.paintpicker.scene.control.picker.mode.Mode;
-import com.paintpicker.utils.ColorEncoder;
 import com.sun.javafx.css.StyleManager;
 import com.sun.javafx.css.converters.BooleanConverter;
 import com.sun.javafx.css.converters.SizeConverter;
@@ -34,9 +42,15 @@ import com.sun.javafx.css.converters.StringConverter;
 import com.sun.javafx.scene.control.skin.ComboBoxBaseSkin;
 import com.sun.javafx.scene.control.skin.ComboBoxPopupControl;
 import com.sun.javafx.scene.control.skin.resources.ControlResources;
-import javafx.beans.property.BooleanProperty;
+
 import javafx.beans.property.StringProperty;
-import javafx.css.*;
+import javafx.css.CssMetaData;
+import javafx.css.StyleOrigin;
+import javafx.css.Styleable;
+import javafx.css.StyleableBooleanProperty;
+import javafx.css.StyleableDoubleProperty;
+import javafx.css.StyleableProperty;
+import javafx.css.StyleableStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -44,18 +58,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-
-import java.util.*;
-
-import static javafx.scene.paint.Color.*;
 import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Paint;
 import javafx.scene.paint.RadialGradient;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
  */
+@SuppressWarnings("restriction")
 public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
 
     private Label displayNode;
@@ -63,10 +74,10 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
     private final Rectangle colorRect;
     private PaintPalette popupContent;
 
-    BooleanProperty colorLabelVisible = new StyleableBooleanProperty(true) {
+    StyleableProperty<Boolean> colorLabelVisible = new StyleableBooleanProperty(true) {
         @Override public void invalidated() {
             if (displayNode != null) {
-                if (colorLabelVisible.get()) {
+                if (colorLabelVisible.getValue()) {
                     displayNode.setText(colorDisplayName((Color) getSkinnable().getValue()));
                 } else {
                     displayNode.setText("");
@@ -190,7 +201,7 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
 
 
     @Override protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        if (!colorLabelVisible.get()) {
+        if (!colorLabelVisible.getValue()) {
             return super.computePrefWidth(height, topInset, rightInset, bottomInset, leftInset);
         }
         String displayNodeText = displayNode.getText();
@@ -199,7 +210,7 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
             displayNode.setText(name);
             width = Math.max(width, super.computePrefWidth(height, topInset, rightInset, bottomInset, leftInset));
         }
-        displayNode.setText(ColorEncoder.encodeColor(Color.BLACK)); // #000000
+        displayNode.setText(formatHexString(Color.BLACK)); // #000000
         width = Math.max(width, super.computePrefWidth(height, topInset, rightInset, bottomInset, leftInset));
         displayNode.setText(displayNodeText);
         return width;
@@ -213,7 +224,6 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
          //   setMode(Mode.SPLITBUTTON);
         }
     }
-
 
     protected void setMode() {
         setMode();
@@ -402,7 +412,7 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
         if (c != null) {
             String displayName = COLOR_NAME_MAP.get(c);
             if (displayName == null) {
-                displayName = ColorEncoder.encodeColor(c);
+                displayName = formatHexString(c);
             }
             return displayName;
         } else {
@@ -434,17 +444,27 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
             return null;
         }
     }
-
+    
     static String formatHexString(Color c) {
-        if (c != null) {
-            return String.format((Locale) null, "#%02x%02x%02x",
-                                 Math.round(c.getRed() * 255),
-                                 Math.round(c.getGreen() * 255),
-                                 Math.round(c.getBlue() * 255));
-        } else {
-            return null;
-        }
-    }
+		if (c != null) {
+			final int red, green, blue, alpha;
+			final String result;
+
+			red = (int) Math.round(c.getRed() * 255.0);
+			green = (int) Math.round(c.getGreen() * 255.0);
+			blue = (int) Math.round(c.getBlue() * 255.0);
+			alpha = (int) Math.round(c.getOpacity() * 255.0);
+
+			if (alpha == 255) {
+				result = String.format((Locale) null, "#%02x%02x%02x", red, green, blue);
+			} else {
+				result = String.format((Locale) null, "#%02x%02x%02x%02x", red, green, blue, alpha);
+			}
+			return result.toUpperCase();
+		} else {
+			return null;
+		}
+	}
 
     @Override protected Node getPopupContent() {
         if (popupContent == null) {
@@ -489,13 +509,13 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
         final PaintPicker colorPicker = (PaintPicker) getSkinnable();
         if (colorPicker.getValue() instanceof LinearGradient
                 || colorPicker.getValue() instanceof RadialGradient) {
-            if (colorLabelVisible.get()) {
+            if (colorLabelVisible.getValue()) {
                 displayNode.setText("Gradient");
             }
         } else {
             colorRect.setFill(colorPicker.getValue());
 
-            if (colorLabelVisible.get()) {
+            if (colorLabelVisible.getValue()) {
                 displayNode.setText(colorDisplayName((Color) colorPicker.getValue()));
             } else {
                 displayNode.setText("");
@@ -573,13 +593,14 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
                     @Override
                     public boolean isSettable(PaintPicker n) {
                         final PaintPickerSkin skin = (PaintPickerSkin) n.getSkin();
-                        return skin.colorLabelVisible == null || !skin.colorLabelVisible.isBound();
+                        return skin.colorLabelVisible == null || !skin.colorLabelVisible.getValue();
                     }
 
                     @Override
                     public StyleableProperty<Boolean> getStyleableProperty(PaintPicker n) {
                         final PaintPickerSkin skin = (PaintPickerSkin) n.getSkin();
-                        return (StyleableProperty<Boolean>) skin.colorLabelVisible;
+                        StyleableProperty<Boolean> isVisible = skin.colorLabelVisible;
+                        return isVisible;
                     }
                 });
         private static final CssMetaData<PaintPicker,Number> COLOR_RECT_WIDTH =

@@ -49,15 +49,7 @@ public class ColorEncoder implements SyntaxConstants {
     
     public static String encodeColor(Color color) {
         final String colorName = getStandardColorNames().get(color);
-        final String result;
-        
-        if (colorName != null) {
-            result = colorName;
-        } else {
-            result = makeColorEncoding(color);
-        }
-        
-        return result;
+        return colorName != null? colorName : makeColorEncoding(color);
     }
 
     private static synchronized Map<String, Color> getStandardColors() {
