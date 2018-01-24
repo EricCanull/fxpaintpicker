@@ -90,7 +90,7 @@ public class PaintPalette extends Region {
 
     public PaintPalette(final PaintPicker paintPicker) {
         getStyleClass().add("color-palette-region");
-        getStylesheets().add(PaintPalette.class.getResource("/styles/paint-pallette.css").toExternalForm());
+       // getStylesheets().add(PaintPalette.class.getResource("/styles/paint-pallette.css").toExternalForm());
 
         this.paintPicker = paintPicker;
         colorPickerGrid = new ColorPickerGrid();

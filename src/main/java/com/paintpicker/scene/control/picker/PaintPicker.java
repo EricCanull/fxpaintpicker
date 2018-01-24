@@ -50,7 +50,7 @@ public class PaintPicker extends ComboBoxBase<Paint> {
         return customColors;
     }
 
-     private final Mode mode;
+    private final Mode mode;
 
     /**
      * Creates a default ColorPicker instance with a selected color set to white.

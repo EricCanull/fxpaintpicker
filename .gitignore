@@ -13,3 +13,14 @@ hs_err_pid*
 /paintpicker/target/
 /target/
 /bin/
+/.classpath
+/nbactions.xml
+/nbactions-release-profile.xml
+/paintpicker.iml
+/nb-configuration.xml
+/.idea/
+/.settings/
+classes/
+lib/
+src/main/java/com/paintpicker/scene/control/animations/
+src/test/

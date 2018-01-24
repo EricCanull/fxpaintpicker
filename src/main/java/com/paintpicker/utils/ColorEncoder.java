@@ -278,11 +278,11 @@ public class ColorEncoder implements SyntaxConstants {
 
         double startX = round(linearGradient.getStartX());
         double startY = round(linearGradient.getStartY());
-        double endX =   round(linearGradient.getEndX());
-        double endY =   round(linearGradient.getEndY());
+        double endX   = round(linearGradient.getEndX());
+        double endY   = round(linearGradient.getEndY());
 
         String fromUnit = linear_proportional ? FROMPERCENTUNIT : FROMPIXELUNIT;
-        String toUnit = linear_proportional   ? TOPERCENTUNIT : TOPIXELUNIT;
+        String toUnit   = linear_proportional ? TOPERCENTUNIT   : TOPIXELUNIT;
 
         StringBuilder sb = new StringBuilder(BGLINEAR);
         sb.append(FROM);
@@ -481,16 +481,16 @@ public class ColorEncoder implements SyntaxConstants {
     }
 
     public static String getColorString(Color color) {
-        final int red = (int) (color.getRed()*255);
-        final int green = (int)(color.getGreen()*255);
-        final int blue = (int)(color.getBlue()*255);
+        final int red   = (int) (color.getRed()   * 255);
+        final int green = (int) (color.getGreen() * 255);
+        final int blue  = (int) (color.getBlue()  * 255);
         return String.format("#%02X%02X%02X R:%d G:%d B:%d", red, green, blue, red, green, blue);
     }
 
     public static String getWebColor(Color color) {
-        final int red =   (int) (color.getRed() * 255);
+        final int red   = (int) (color.getRed()   * 255);
         final int green = (int) (color.getGreen() * 255);
-        final int blue =  (int) (color.getBlue() * 255);
+        final int blue  = (int) (color.getBlue()  * 255);
         return String.format("#%02X%02X%02X", red, green, blue);
     }
 }

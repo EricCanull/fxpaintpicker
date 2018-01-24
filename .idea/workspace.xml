@@ -2,30 +2,19 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/main/resources/styles/paint-picker.css" description="-fx-font-family: &quot;Arial&quot;;" line="12" />
-    <bookmark url="file://$PROJECT_DIR$/src/main/resources/styles/fxml-dialog.css" description=".slider .thumb" line="141" />
-    <bookmark url="file://$PROJECT_DIR$/src/main/resources/styles/fxml-dialog.css" description=".slider .thumb" line="140" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50313f52-50e1-4d45-a23f-d4b22849a9c8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__de_jensd_fontawesomefx_8_9.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/gradientpicker/GradientPicker.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/gradientpicker/GradientControl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/GradientPopover.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/gradientpicker/GradientDialog.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintDialogController.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/CustomPaintDialog.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/comboboxmode/Mode.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/mode/Mode.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/fxml/FXMLPaintDialog.fxml" afterPath="$PROJECT_DIR$/src/main/resources/fxml/FXMLCustomPaintControl.fxml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/FXExperienceTools_1_0_SNAPSHOT.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nb-configuration.xml" afterPath="$PROJECT_DIR$/nb-configuration.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paintpicker.iml" afterPath="$PROJECT_DIR$/paintpicker.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/app/DemoApp.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/app/DemoApp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/app/FXMLController.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/app/FXMLController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/behavior/PaintPickerBehavior.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/behavior/PaintPickerBehavior.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/gradientpicker/GradientPickerStop.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/gradientpicker/GradientPickerStop.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/gradientslider/GradientSlider.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/gradientslider/GradientSlider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/ColorSquare.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/ColorSquare.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/CustomPaintControl.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/CustomPaintControl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPalette.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPalette.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPicker.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPicker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPickerSkin.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPickerSkin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/paintpicker/utils/ColorEncoder.java" afterPath="$PROJECT_DIR$/src/main/java/com/paintpicker/utils/ColorEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/styles/custom-dialog.css" afterPath="$PROJECT_DIR$/src/main/resources/styles/custom-dialog.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/styles/custom-paint-control.css" afterPath="$PROJECT_DIR$/src/main/resources/styles/custom-paint-control.css" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,18 +29,20 @@
       <file leaf-file-name="PaintPicker.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPicker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="57" column="5" lean-forward="false" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
+            <state relative-caret-position="828">
+              <caret line="79" column="5" lean-forward="false" selection-start-line="79" selection-start-column="5" selection-end-line="79" selection-end-column="5" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#746#747#0" expanded="true" />
-                <element signature="e#781#782#0" expanded="true" />
-                <element signature="e#938#939#0" expanded="true" />
-                <element signature="e#984#985#0" expanded="true" />
-                <element signature="e#1801#1802#0" expanded="true" />
-                <element signature="e#1828#1829#0" expanded="true" />
-                <element signature="e#1924#1925#0" expanded="true" />
-                <element signature="e#1972#1973#0" expanded="true" />
+                <marker date="1516652749678" expanded="true" signature="2024:2117" ph="/**...*/" />
+                <marker date="1516652749678" expanded="true" signature="2142:2153" ph=" { " />
+                <marker date="1516652749678" expanded="true" signature="2184:2190" ph=" }" />
+                <marker date="1516652749678" expanded="true" signature="2196:2401" ph="/**...*/" />
+                <marker date="1516652749678" expanded="true" signature="2449:2557" ph="{...}" />
+                <marker date="1516652749678" expanded="true" signature="2563:2979" ph="/**...*/" />
+                <marker date="1516652749678" expanded="true" signature="3005:3016" ph=" { " />
+                <marker date="1516652749678" expanded="true" signature="3028:3034" ph=" }" />
+                <marker date="1516652749678" expanded="true" signature="3040:3072" ph="/**...*/" />
+                <marker date="1516652749678" expanded="true" signature="3128:3139" ph=" { " />
+                <marker date="1516652749678" expanded="true" signature="3172:3178" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -60,18 +51,60 @@
       <file leaf-file-name="CustomPaintControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/CustomPaintControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8820">
-              <caret line="556" column="5" lean-forward="false" selection-start-line="556" selection-start-column="5" selection-end-line="556" selection-end-column="5" />
-              <folding />
+            <state relative-caret-position="10710">
+              <caret line="709" column="5" lean-forward="false" selection-start-line="709" selection-start-column="5" selection-end-line="709" selection-end-column="5" />
+              <folding>
+                <marker date="1516789280091" expanded="true" signature="15278:15284" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="15398:15631" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="15455:15625" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="15702:15935" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="15759:15929" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="16009:16242" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="16066:16236" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="16314:16548" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="16371:16542" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="16623:16857" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="16680:16851" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="16931:17165" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="16988:17159" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="17239:17473" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="17296:17467" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="17511:17997" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="18033:18555" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="18601:19570" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="19576:19752" ph="/**...*/" />
+                <marker date="1516789280091" expanded="true" signature="19813:20316" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="20350:20928" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="20934:21152" ph="/**...*/" />
+                <marker date="1516789280091" expanded="true" signature="21187:22021" ph="{...}" />
+                <marker date="1516789280091" expanded="false" signature="22065:22076" ph=" { " />
+                <marker date="1516789280091" expanded="false" signature="22110:22116" ph=" }" />
+                <marker date="1516789280091" expanded="true" signature="22122:22149" ph="/**...*/" />
+                <marker date="1516789280091" expanded="true" signature="22215:22370" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="22376:22407" ph="/**...*/" />
+                <marker date="1516789280091" expanded="true" signature="22473:22562" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="22568:22606" ph="/**...*/" />
+                <marker date="1516789280091" expanded="true" signature="22674:22819" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="22859:23591" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="22954:23312" ph="//..." />
+                <marker date="1516789280091" expanded="true" signature="23367:23575" ph="//..." />
+                <marker date="1516789280091" expanded="true" signature="23597:23643" ph="/**...*/" />
+                <marker date="1516789280091" expanded="false" signature="23689:23700" ph=" { " />
+                <marker date="1516789280091" expanded="false" signature="23745:23751" ph=" }" />
+                <marker date="1516789280091" expanded="true" signature="23804:24170" ph="{...}" />
+                <marker date="1516789280091" expanded="true" signature="24176:24222" ph="/**...*/" />
+                <marker date="1516789280091" expanded="false" signature="24271:24282" ph=" { " />
+                <marker date="1516789280091" expanded="false" signature="24347:24353" ph=" }" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="574">
-              <caret line="84" column="62" lean-forward="true" selection-start-line="84" selection-start-column="62" selection-end-line="84" selection-end-column="62" />
+            <state relative-caret-position="238">
+              <caret line="84" column="62" lean-forward="false" selection-start-line="84" selection-start-column="62" selection-end-line="84" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -90,14 +123,14 @@
       <file leaf-file-name="hs_err_pid31225.log" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hs_err_pid31225.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2717">
+            <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -203,9 +236,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/paintpicker/app/MainApp.java" />
         <option value="$PROJECT_DIR$/src/main/resources/fxml/FXMLPaintDialog.fxml" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPicker.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintDialogController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/CustomPaintControl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPicker.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -236,10 +270,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -250,24 +280,6 @@
             <path>
               <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
               <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-              <item name="paintpicker_jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -275,62 +287,15 @@
               <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="fields" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="gradientpicker" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="gradientslider" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintpicker" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="picker" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintpicker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -338,7 +303,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
@@ -507,8 +472,8 @@
       <envs />
     </configuration>
     <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Application.MainApp" />
-      <item index="1" class="java.lang.String" itemvalue="Application.DemoApp" />
+      <item index="0" class="java.lang.String" itemvalue="Application.DemoApp" />
+      <item index="1" class="java.lang.String" itemvalue="Application.MainApp" />
     </list>
     <recent_temporary>
       <list size="1">
@@ -582,11 +547,12 @@
       <workItem from="1514604905944" duration="72000" />
       <workItem from="1514605682801" duration="13457000" />
       <workItem from="1515316481043" duration="345000" />
+      <workItem from="1516788483256" duration="1086000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="407567000" />
+    <option name="totallyTimeSpent" value="408653000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -599,7 +565,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="84" y="0" width="1836" height="1080" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32982087" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -614,7 +579,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32982087" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30726257" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31117317" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -670,13 +635,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/slider/PaintSliderSkin.java</url>
-          <properties />
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
@@ -684,13 +642,13 @@
   <component name="editorHistoryManager">
     <entry file="jar:///usr/jdk/jdk1.8.0_144/src.zip!/java/lang/reflect/Type.java" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/FXMLGradientPickerStop.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
           <caret line="53" column="32" lean-forward="false" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/styles/gradient_picker.css">
@@ -730,13 +688,7 @@
     </entry>
     <entry file="jar:///usr/jdk/jdk1.8.0_144/javafx-src.zip!/javafx/scene/Node.java" />
     <entry file="jar:///usr/jdk/jdk1.8.0_144/javafx-src.zip!/com/sun/javafx/scene/control/skin/ComboBoxPopupControl.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/app/FXMLController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="23" column="92" lean-forward="false" selection-start-line="23" selection-start-column="92" selection-end-line="23" selection-end-column="92" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/app/FXMLController.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/comboboxmode/Mode.java" />
     <entry file="jar:///usr/jdk/jdk1.8.0_144/javafx-src.zip!/javafx/beans/value/WritableObjectValue.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPickerSkinBeta.java" />
@@ -766,9 +718,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
           <caret line="32" column="34" lean-forward="true" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#3075#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -807,14 +757,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/styles/fxml-dialog.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="216" column="25" lean-forward="false" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/styles/fxml-dialog.css" />
     <entry file="file://$PROJECT_DIR$/.idea/libraries/de_jensd_fontawesomefx_commons_9_1_2.xml" />
     <entry file="file://$PROJECT_DIR$/.idea/libraries/de_jensd_fontawesomefx_fontawesome_4_7_0_9_1_2.xml" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPickerSkin.java">
@@ -828,7 +771,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="27" lean-forward="false" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -869,36 +811,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/jdk/jdk1.8.0_151/src.zip!/java/lang/ClassLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="762" column="0" lean-forward="false" selection-start-line="762" selection-start-column="0" selection-end-line="762" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar:///usr/jdk/jdk1.8.0_151/src.zip!/java/lang/ClassLoader.java" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/FXMLPaintDialog.fxml" />
-    <entry file="jar:///usr/jdk/jdk1.8.0_151/src.zip!/java/net/URLClassLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="360" column="0" lean-forward="false" selection-start-line="360" selection-start-column="0" selection-end-line="360" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar:///usr/jdk/jdk1.8.0_151/src.zip!/java/net/URLClassLoader.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintDialogController.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/PaintPicker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="57" column="5" lean-forward="false" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
+        <state relative-caret-position="828">
+          <caret line="79" column="5" lean-forward="false" selection-start-line="79" selection-start-column="5" selection-end-line="79" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#746#747#0" expanded="true" />
-            <element signature="e#781#782#0" expanded="true" />
-            <element signature="e#938#939#0" expanded="true" />
-            <element signature="e#984#985#0" expanded="true" />
-            <element signature="e#1801#1802#0" expanded="true" />
-            <element signature="e#1828#1829#0" expanded="true" />
-            <element signature="e#1924#1925#0" expanded="true" />
-            <element signature="e#1972#1973#0" expanded="true" />
+            <marker date="1516652749678" expanded="true" signature="2024:2117" ph="/**...*/" />
+            <marker date="1516652749678" expanded="true" signature="2142:2153" ph=" { " />
+            <marker date="1516652749678" expanded="true" signature="2184:2190" ph=" }" />
+            <marker date="1516652749678" expanded="true" signature="2196:2401" ph="/**...*/" />
+            <marker date="1516652749678" expanded="true" signature="2449:2557" ph="{...}" />
+            <marker date="1516652749678" expanded="true" signature="2563:2979" ph="/**...*/" />
+            <marker date="1516652749678" expanded="true" signature="3005:3016" ph=" { " />
+            <marker date="1516652749678" expanded="true" signature="3028:3034" ph=" }" />
+            <marker date="1516652749678" expanded="true" signature="3040:3072" ph="/**...*/" />
+            <marker date="1516652749678" expanded="true" signature="3128:3139" ph=" { " />
+            <marker date="1516652749678" expanded="true" signature="3172:3178" ph=" }" />
           </folding>
         </state>
       </provider>
@@ -915,14 +847,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hs_err_pid31225.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2717">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
@@ -931,16 +855,66 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/paintpicker/scene/control/picker/CustomPaintControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8820">
-          <caret line="556" column="5" lean-forward="false" selection-start-line="556" selection-start-column="5" selection-end-line="556" selection-end-column="5" />
-          <folding />
+        <state relative-caret-position="10710">
+          <caret line="709" column="5" lean-forward="false" selection-start-line="709" selection-start-column="5" selection-end-line="709" selection-end-column="5" />
+          <folding>
+            <marker date="1516789280091" expanded="true" signature="15278:15284" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="15398:15631" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="15455:15625" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="15702:15935" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="15759:15929" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="16009:16242" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="16066:16236" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="16314:16548" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="16371:16542" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="16623:16857" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="16680:16851" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="16931:17165" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="16988:17159" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="17239:17473" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="17296:17467" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="17511:17997" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="18033:18555" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="18601:19570" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="19576:19752" ph="/**...*/" />
+            <marker date="1516789280091" expanded="true" signature="19813:20316" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="20350:20928" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="20934:21152" ph="/**...*/" />
+            <marker date="1516789280091" expanded="true" signature="21187:22021" ph="{...}" />
+            <marker date="1516789280091" expanded="false" signature="22065:22076" ph=" { " />
+            <marker date="1516789280091" expanded="false" signature="22110:22116" ph=" }" />
+            <marker date="1516789280091" expanded="true" signature="22122:22149" ph="/**...*/" />
+            <marker date="1516789280091" expanded="true" signature="22215:22370" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="22376:22407" ph="/**...*/" />
+            <marker date="1516789280091" expanded="true" signature="22473:22562" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="22568:22606" ph="/**...*/" />
+            <marker date="1516789280091" expanded="true" signature="22674:22819" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="22859:23591" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="22954:23312" ph="//..." />
+            <marker date="1516789280091" expanded="true" signature="23367:23575" ph="//..." />
+            <marker date="1516789280091" expanded="true" signature="23597:23643" ph="/**...*/" />
+            <marker date="1516789280091" expanded="false" signature="23689:23700" ph=" { " />
+            <marker date="1516789280091" expanded="false" signature="23745:23751" ph=" }" />
+            <marker date="1516789280091" expanded="true" signature="23804:24170" ph="{...}" />
+            <marker date="1516789280091" expanded="true" signature="24176:24222" ph="/**...*/" />
+            <marker date="1516789280091" expanded="false" signature="24271:24282" ph=" { " />
+            <marker date="1516789280091" expanded="false" signature="24347:24353" ph=" }" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="84" column="62" lean-forward="true" selection-start-line="84" selection-start-column="62" selection-end-line="84" selection-end-column="62" />
+        <state relative-caret-position="238">
+          <caret line="84" column="62" lean-forward="false" selection-start-line="84" selection-start-column="62" selection-end-line="84" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -433,18 +433,13 @@ public class CustomPaintControl extends AnchorPane {
                 gradientPicker);
     }
 
-    private final Property[] boundProperties = new Property[7];
+   
 
     private void bindControlsValue(int index, int maxValue, Property<Number> prop) {
-
-        if (boundProperties[index] != null) {
-            sliders[index].valueProperty().unbindBidirectional(boundProperties[index]);
-        }
 
         sliders[index].valueProperty().bindBidirectional(prop);
         sliders[index].setMax(maxValue);
 
-        boundProperties[index] = prop;
     }
 
     private boolean changeIsLocal = false;
