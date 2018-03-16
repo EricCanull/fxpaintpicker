@@ -11,6 +11,8 @@ classes/
 lib/
 src/main/java/com/paintpicker/scene/control/animations/
 src/test/
+.project
+.classpath
 
 ### Java template
 *.class
