@@ -178,6 +178,8 @@ public class PaintPalette extends Region {
 
         hoverSquare.setMouseTransparent(true);
         hoverSquare.getStyleClass().addAll("hover-square");
+        hoverSquare.setLayoutY(14);
+       hoverSquare.setLayoutX(14);
         setFocusedSquare(null);
         getChildren().addAll(paletteBox, hoverSquare);
     }
@@ -203,6 +205,8 @@ public class PaintPalette extends Region {
 
         double x = b.getMinX();
         double y = b.getMinY();
+        System.out.println(y);
+        System.out.println(x);
 
         double xAdjust;
         double scaleAdjust = hoverSquare.getScaleX() == 1.0 ? 0 : hoverSquare.getWidth() / 4.0;
