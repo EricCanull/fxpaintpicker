@@ -205,8 +205,6 @@ public class PaintPalette extends Region {
 
         double x = b.getMinX();
         double y = b.getMinY();
-        System.out.println(y);
-        System.out.println(x);
 
         double xAdjust;
         double scaleAdjust = hoverSquare.getScaleX() == 1.0 ? 0 : hoverSquare.getWidth() / 4.0;
