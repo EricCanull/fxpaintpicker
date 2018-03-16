@@ -2,7 +2,7 @@
 /target/
 /bin/
 /.classpath
-/nbactions.xml
+#/nbactions.xml
 /nbactions-release-profile.xml
 /paintpicker.iml
 /nb-configuration.xml
