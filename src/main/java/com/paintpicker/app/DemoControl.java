@@ -21,21 +21,25 @@ import javafx.scene.paint.Color;
  * @author andje22
  */
 public class DemoControl implements Initializable {
-    
        
-    @FXML StackPane rootPane;
-    @FXML HBox menuBar;
-    private PaintPicker paintPicker; 
+    @FXML private StackPane rootPane;
+    @FXML private HBox menuBar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        paintPicker = new PaintPicker(Color.web("#1A4C9C"), Mode.GRADIENT);
+        PaintPicker paintPicker = new PaintPicker(Color.web("#1A4C9C"), Mode.GRADIENT);
+//Sets the split-menu-button
+//paintPicker.getStyleClass().add("color-picker");
+//Sets the button
+//        paintPicker.setStyle("-fx-background-color: transparent;");
 
         menuBar.getChildren().add(paintPicker);
         
         rootPane.backgroundProperty().bind(Bindings.createObjectBinding(()->
-                new Background(new BackgroundFill(paintPicker.getValue(),
-                        CornerRadii.EMPTY, Insets.EMPTY)), paintPicker.valueProperty()));
+                new Background(
+                new BackgroundFill(paintPicker.getValue(),
+                    CornerRadii.EMPTY, Insets.EMPTY)), 
+                    paintPicker.valueProperty()));
     }
 }

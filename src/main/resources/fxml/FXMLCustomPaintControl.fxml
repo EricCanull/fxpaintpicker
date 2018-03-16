@@ -89,7 +89,7 @@
             </StackPane>
             <AnchorPane GridPane.columnSpan="4" GridPane.rowIndex="9">
                <children>
-                  <HBox minWidth="-Infinity" prefWidth="180.0" styleClass="transparent-pattern">
+                  <HBox minWidth="-Infinity" prefWidth="180.0" styleClass="transparent-pattern" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Region fx:id="currentColorRect" minWidth="-Infinity" prefWidth="90.0" style="-fx-background-color: black;" styleClass="current-color-rect" HBox.hgrow="ALWAYS" />
                         <Region fx:id="previousColorRect" minWidth="-Infinity" prefWidth="90.0" style="-fx-background-color: white;" styleClass="previous-color-rect" HBox.hgrow="ALWAYS" />

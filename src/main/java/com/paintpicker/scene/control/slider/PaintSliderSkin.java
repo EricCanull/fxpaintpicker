@@ -29,6 +29,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+@SuppressWarnings("restriction")
 public class PaintSliderSkin extends SliderSkin {
     private final StackPane track;
     private final StackPane thumb;

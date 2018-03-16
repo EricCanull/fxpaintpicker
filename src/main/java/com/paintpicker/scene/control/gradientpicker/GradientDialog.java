@@ -1,4 +1,3 @@
-package com.paintpicker.scene.control.gradientpicker;
 /*
  * Copyright (c) 2012, 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -23,6 +22,8 @@ package com.paintpicker.scene.control.gradientpicker;
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
+package com.paintpicker.scene.control.gradientpicker;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.EventHandler;
@@ -30,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -53,6 +55,13 @@ public class GradientDialog {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(true);
         stage.addEventHandler(KeyEvent.ANY, keyEventListener);
+       
+        
+        stage.getOwner().widthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                stage.setWidth(newValue.doubleValue());
+            }
+        });
      
         stage.getOwner().xProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -66,7 +75,8 @@ public class GradientDialog {
         });
 
         customScene = new Scene((Parent) node);
-        
+        customScene.setFill(Color.web("#31363B"));
+                
         stage.setScene(customScene);
     }
 
@@ -110,6 +120,11 @@ public class GradientDialog {
         Window window = stage.getOwner();
         double x = window.getX();
         double y = window.getHeight() + window.getY();
+        double width = window.getWidth();
+        stage.setWidth(width);
+        window.setX(x);
+        window.setY(y-window.getHeight());
+      
         stage.setX(x);
         stage.setY(y);
     }

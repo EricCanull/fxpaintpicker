@@ -32,6 +32,8 @@ import com.paintpicker.scene.control.gradientpicker.GradientControl;
 import com.paintpicker.scene.control.gradientpicker.GradientPickerStop;
 import com.paintpicker.scene.control.picker.mode.Mode;
 import com.paintpicker.scene.control.slider.PaintSlider;
+import com.paintpicker.utils.ScreenUtil;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,24 +90,15 @@ import javafx.stage.WindowEvent;
 public class CustomPaintControl extends AnchorPane {
     
     @FXML private GridPane colorPickerGrid;
-    @FXML private IntegerField hueTextField;
-    @FXML private IntegerField satTextField;
-    @FXML private IntegerField brightTextField;
-    @FXML private IntegerField redTextField;
-    @FXML private IntegerField greenTextField;
-    @FXML private IntegerField blueTextField;
+    @FXML private IntegerField hueTextField, satTextField, brightTextField,
+                               redTextField, greenTextField, blueTextField, 
+                               alphaTextField;
     @FXML private WebColorField hexTextField;
-    @FXML private IntegerField alphaTextField;
+    @FXML private StackPane colorRect, alphaPane;
     @FXML private Pane hueBar;
-    @FXML private Region hueBarHandle;
-    @FXML private StackPane colorRect;
-    @FXML private StackPane alphaPane;
-    @FXML private Pane colorRectHue;
-    @FXML private Pane colorRectOverlayOne;
-    @FXML private Pane colorRectOverlayTwo;
-    @FXML private Region circleHandle;
-    @FXML private Region previousColorRect;
-    @FXML private Region currentColorRect;
+    @FXML private Pane colorRectHue, colorRectOverlayOne, colorRectOverlayTwo;
+    @FXML private Region hueBarHandle, circleHandle;
+    @FXML private Region previousColorRect, currentColorRect;
     
     Runnable onSave;
     private Runnable onSelect;
@@ -282,7 +275,8 @@ public class CustomPaintControl extends AnchorPane {
 
     private void fixPosition() {
         Window w = stage.getOwner();
-        Screen s = com.sun.javafx.util.Utils.getScreen(w);
+        
+        Screen s = ScreenUtil.getScreen(w);
         Rectangle2D sb = s.getBounds();
         double xR = w.getX() + w.getWidth();
         double xL = w.getX() - stage.getWidth();
@@ -294,7 +288,7 @@ public class CustomPaintControl extends AnchorPane {
         } else {
             x = Math.max(sb.getMinX(), sb.getMaxX() - stage.getWidth());
         }
-        y = Math.max(sb.getMinY(), Math.min(sb.getMaxY() - stage.getHeight(), w.getY()));
+        y = Math.max(sb.getMinY(), Math.min(sb.getMaxY() - stage.getHeight() - 345, w.getY()));
         stage.setX(x);
         stage.setY(y);
     }
@@ -433,13 +427,9 @@ public class CustomPaintControl extends AnchorPane {
                 gradientPicker);
     }
 
-   
-
     private void bindControlsValue(int index, int maxValue, Property<Number> prop) {
-
         sliders[index].valueProperty().bindBidirectional(prop);
         sliders[index].setMax(maxValue);
-
     }
 
     private boolean changeIsLocal = false;

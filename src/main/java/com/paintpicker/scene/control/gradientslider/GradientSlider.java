@@ -66,13 +66,13 @@ public class GradientSlider extends GridPane {
      * Private
      */
     private void initialize(String text, double min, double max, double initVal) {
-
-        final FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(GradientSlider.class.getResource("/fxml/FXMLGradientSlider.fxml")); //NOI18N
-        loader.setController(this);
-        loader.setRoot(this);
         try {
+            final FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(GradientSlider.class.getResource("/fxml/FXMLGradientSlider.fxml")); //NOI18N
+            loader.setController(this);
+            loader.setRoot(this);
             loader.load();
+
         } catch (IOException ex) {
             Logger.getLogger(GradientControl.class.getName()).log(Level.SEVERE, null, ex);
         }

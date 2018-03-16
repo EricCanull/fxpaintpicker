@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox stylesheets="@../styles/paint-picker.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.paintpicker.app.DemoControl">
+<VBox prefHeight="320.0" prefWidth="420.0" stylesheets="@../styles/demo_controller.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.paintpicker.app.DemoControl">
    <children>
-      <HBox fx:id="menuBar" alignment="TOP_RIGHT" spacing="10.0">
-         <VBox.margin>
-            <Insets left="5.0" />
-         </VBox.margin>
-         <padding>
-            <Insets bottom="10.0" />
-         </padding>
+      <HBox fx:id="menuBar" alignment="CENTER" prefHeight="40.0">
+         <children>
+            <Label text="-fx-background-color: " />
+         </children>
       </HBox>
-      <StackPane fx:id="rootPane" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: #424344;" stylesheets="@../styles/paint-picker.css" />
+      <AnchorPane VBox.vgrow="ALWAYS">
+         <children>
+            <StackPane fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #424344;" stylesheets="@../styles/paint-picker.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0" />
+         </children>
+      </AnchorPane>
    </children>
-   <padding>
-      <Insets bottom="10.0" top="10.0" />
-   </padding>
 </VBox>

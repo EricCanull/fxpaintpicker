@@ -34,7 +34,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.paintpicker.scene.control.behavior.PaintPickerBehavior;
-import com.paintpicker.scene.control.picker.mode.Mode;
 import com.sun.javafx.css.StyleManager;
 import com.sun.javafx.css.converters.BooleanConverter;
 import com.sun.javafx.css.converters.SizeConverter;
@@ -94,6 +93,7 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
             return StyleableProperties.COLOR_LABEL_VISIBLE.get();
         }
     };
+    
     public StringProperty imageUrlProperty() { return imageUrl; }
     private final StyleableStringProperty imageUrl = new StyleableStringProperty() {
         @Override public void applyStyle(StyleOrigin origin, String v) {
@@ -116,7 +116,7 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
         @Override public String getName() {
             return "imageUrl";
         }
-        @Override public CssMetaData<PaintPicker,String> getCssMetaData() {
+        @Override public CssMetaData<PaintPicker, String> getCssMetaData() {
             return StyleableProperties.GRAPHIC;
         }
     };
@@ -224,13 +224,6 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
          //   setMode(Mode.SPLITBUTTON);
         }
     }
-
-    protected void setMode() {
-        setMode();
-    }
-
-    protected void setMode(Mode mode) { setMode(mode); }
-
 
     private static final Map<Paint, String> COLOR_NAME_MAP = new HashMap<>(24);
     private static final Map<Paint, String> CSS_NAME_MAP = new HashMap<>(139);
@@ -446,25 +439,25 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
     }
     
     static String formatHexString(Color c) {
-		if (c != null) {
-			final int red, green, blue, alpha;
-			final String result;
+        if (c != null) {
+            final int red, green, blue, alpha;
+            final String result;
 
-			red = (int) Math.round(c.getRed() * 255.0);
-			green = (int) Math.round(c.getGreen() * 255.0);
-			blue = (int) Math.round(c.getBlue() * 255.0);
-			alpha = (int) Math.round(c.getOpacity() * 255.0);
+            red = (int) Math.round(c.getRed() * 255.0);
+            green = (int) Math.round(c.getGreen() * 255.0);
+            blue = (int) Math.round(c.getBlue() * 255.0);
+            alpha = (int) Math.round(c.getOpacity() * 255.0);
 
-			if (alpha == 255) {
-				result = String.format((Locale) null, "#%02x%02x%02x", red, green, blue);
-			} else {
-				result = String.format((Locale) null, "#%02x%02x%02x%02x", red, green, blue, alpha);
-			}
-			return result.toUpperCase();
-		} else {
-			return null;
-		}
-	}
+            if (alpha == 255) {
+                result = String.format((Locale) null, "#%02x%02x%02x", red, green, blue);
+            } else {
+                result = String.format((Locale) null, "#%02x%02x%02x%02x", red, green, blue, alpha);
+            }
+            return result.toUpperCase();
+        } else {
+            return null;
+        }
+    }
 
     @Override protected Node getPopupContent() {
         if (popupContent == null) {

@@ -5,16 +5,18 @@
 
 package com.paintpicker.scene.control.behavior;
 
+import static javafx.scene.input.KeyCode.ENTER;
+import static javafx.scene.input.KeyCode.ESCAPE;
+import static javafx.scene.input.KeyCode.SPACE;
+import static javafx.scene.input.KeyEvent.KEY_PRESSED;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.paintpicker.scene.control.picker.PaintPicker;
 import com.paintpicker.scene.control.picker.PaintPickerSkin;
 import com.sun.javafx.scene.control.behavior.ComboBoxBaseBehavior;
 import com.sun.javafx.scene.control.behavior.KeyBinding;
-import static javafx.scene.input.KeyCode.*;
-import static javafx.scene.input.KeyEvent.*;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javafx.scene.paint.Paint;
 
@@ -22,6 +24,7 @@ import javafx.scene.paint.Paint;
  * 
  * @author 
  */
+@SuppressWarnings("restriction")
 public class PaintPickerBehavior extends ComboBoxBaseBehavior<Paint> {
 
     /***************************************************************************

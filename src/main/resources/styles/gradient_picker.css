@@ -63,7 +63,6 @@
 
 }
 
-
 .separator-gradient {
     -fx-border-style: solid;
     -fx-border-width: 1 0 1 0;
@@ -78,8 +77,8 @@
                     #041626fa 100.0% );
 }
 
-.gradient-rect {
-    -fx-fill: radial-gradient(
+.preview-rect {
+    -fx-background-color: radial-gradient(
                     focus-angle 0.0deg,
                     focus-distance 0.0%,
                     center 50.0%  50.0%,
@@ -87,13 +86,19 @@
                     #42b0fe 0.0%,
                     #42b0fe 1.0%,
                     #041626fa 100.0%);
-
 }
 
 .small-label {
     -fx-font-size: 0.925em;
     -fx-text-fill: derive(rgb(147, 147, 147), 25%);
     -fx-padding: 0;
+}
+
+.transparent-pattern {
+	 -fx-border-color: -fx-box-border, #63607e;
+    -fx-background-image:  url("../images/chequers.png");
+    -fx-background-repeat: repeat;
+    -fx-background-size: auto;
 }
 
 .gradient-background {

@@ -7,7 +7,7 @@ and open the template in the editor.
     Created on : Oct 21, 2017, 4:40:47 AM
     Author     : andje22
 */
-.root {
+/*.root {
      -fx-font-family: "Segoe UI";
     -fx-font-size: 1em;
     -fx-base: #31363B;
@@ -19,10 +19,14 @@ and open the template in the editor.
     -fx-outer-border: derive(-fx-color,56%);
     -fx-shadow-highlight-color: derive(-fx-background,-26.0%);
     
-}
-.color-picker {
-    -fx-background-color:
-         linear-gradient(from 100.0% 0.0% to 100.0% 100.0% , REPEAT, #363B40 0.0% , #363B40 1.0% ,  #31363b 100.0% );
+}*/
+/*.color-picker {*/
+/*    -fx-background-color:
+         linear-gradient(from 100.0% 0.0% to 100.0% 100.0% , REPEAT, #363B40 0.0% , #363B40 1.0% ,  #31363b 100.0% );*/
+/*    -fx-background-color: transparent;
+}*/
+/*.color-picker .arrow-icon-right {
+  
 }
 
 
@@ -48,4 +52,4 @@ and open the template in the editor.
 
 .label {
     -fx-text-fill: #C2C2C3;
-}
+}*/

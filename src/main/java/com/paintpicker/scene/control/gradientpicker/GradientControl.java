@@ -1,5 +1,11 @@
 package com.paintpicker.scene.control.gradientpicker;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * Copyright (c) 2012, 2014, Oracle and/or its affiliates.
  * All rights reserved. Use is subject to license terms.
@@ -36,26 +42,38 @@ import com.paintpicker.scene.control.gradientslider.GradientSlider;
 import com.paintpicker.scene.control.picker.CustomPaintControl;
 import com.paintpicker.scene.control.rotator.RotatorControl;
 import com.paintpicker.utils.ColorEncoder;
+
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.*;
-import javafx.scene.shape.Rectangle;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.geometry.Insets;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Paint;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Controller class for the gradient part of the paint editor.
@@ -65,7 +83,10 @@ public class GradientControl extends VBox {
         LINEAR, RADIAL
     }
     @FXML private Pane track_pane;
-    @FXML private Rectangle preview_rect;
+    //@FXML private AnchorPane previewAnchorPane;
+//    @FXML private ImageView alphaImageView;
+    @FXML private StackPane preview_rect;
+    
     @FXML private StackPane slider_container;
     @FXML private VBox radial_container;
     @FXML private Slider startX_slider;
@@ -123,16 +144,15 @@ public class GradientControl extends VBox {
             Logger.getLogger(GradientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-
-        assert proportional_checkbox != null;
-        assert cycleMethod_choicebox != null;
-        assert startX_slider != null;
-        assert endX_slider != null;
-        assert startY_slider != null;
-        assert endY_slider != null;
-        assert centerX_slider != null;
-        assert centerY_slider != null;
-        assert radial_container != null;
+//        Rectangle alphaRect = new Rectangle();
+//        alphaRect.widthProperty().bind(previewAnchorPane.widthProperty());
+//		alphaRect.heightProperty().bind(previewAnchorPane.heightProperty());
+//		alphaRect.layoutXProperty().bind(previewAnchorPane.layoutXProperty().subtract(0));
+//		alphaRect.layoutYProperty().bind(previewAnchorPane.layoutYProperty().subtract(0));
+//		
+////        ImageView alphaImageView = new ImageView(new Image("/images/chequers.png"));
+//		alphaImageView.setClip(alphaRect);
+//		previewAnchorPane.getChildren().addAll(alphaImageView);
 
         // Add two default stops
         final GradientPickerStop initSelectedStop = addStop(0.0, 1.0, 0.0, Color.web("#42b0fe"));
@@ -198,12 +218,15 @@ public class GradientControl extends VBox {
     }
 
     private void onValueChange() {
-        final Paint value = getValue();
-        // Update UI
-        preview_rect.setFill(value);
-        // Update model
-        customPaintControl.customPaintProperty().set(value);
-    }
+		final Paint value = getValue();
+		// Update UI
+		preview_rect.setBackground(
+				new Background(
+			    new BackgroundFill(value, 
+			    new CornerRadii(5), Insets.EMPTY)));
+		// Update model
+		customPaintControl.customPaintProperty().set(value);
+	}
 
     public Paint getValue() {
         final Paint paint;
@@ -293,7 +316,10 @@ public class GradientControl extends VBox {
     }
 
     public void updatePreview(Paint value) {
-        preview_rect.setFill(value);
+    	preview_rect.setBackground(
+				new Background(
+			    new BackgroundFill(value, 
+			    new CornerRadii(5), Insets.EMPTY)));
     }
 
     @FXML
@@ -316,7 +342,10 @@ public class GradientControl extends VBox {
     void updateAngle() {
         final Paint value = getValue();
         // Update gradient preview rectangle
-        preview_rect.setFill(value);
+        preview_rect.setBackground(
+				new Background(
+			    new BackgroundFill(value, 
+			    new CornerRadii(5), Insets.EMPTY)));
         // Update paint picker 
        customPaintControl.setCustomPaint(value);
     }
