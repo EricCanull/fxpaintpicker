@@ -128,7 +128,6 @@ public class GradientPickerStop extends VBox {
     }
 
     private void initialize() {
-
         final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GradientPickerStop.class.getResource("/fxml/FXMLGradientPickerStop.fxml")); //NOI18N
         loader.setController(this);
@@ -237,6 +236,9 @@ public class GradientPickerStop extends VBox {
 
     private void showHUD() {
         offset_textfield.setText(String.format("%.2f", offset));
+      //  offset_textfield.setStyle("-fx-max-height: 36px; -fx-pref-height: 36px;");
+      context_menu.setOpacity(.7);
+        context_menu.setStyle(" -fx-padding: -1; -fx-insets: -1; -fx-background-radius: 10; -fx-pref-height: 35px;");
         context_menu.show(this, Side.BOTTOM, 0, 5); // better way to center?
     }
 

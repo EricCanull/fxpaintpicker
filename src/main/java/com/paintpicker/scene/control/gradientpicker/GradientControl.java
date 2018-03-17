@@ -1,11 +1,5 @@
 package com.paintpicker.scene.control.gradientpicker;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /*
  * Copyright (c) 2012, 2014, Oracle and/or its affiliates.
  * All rights reserved. Use is subject to license terms.
@@ -43,10 +37,16 @@ import com.paintpicker.scene.control.picker.CustomPaintControl;
 import com.paintpicker.scene.control.rotator.RotatorControl;
 import com.paintpicker.utils.ColorEncoder;
 
-import javafx.beans.binding.Bindings;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -55,11 +55,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -73,7 +70,6 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
 
 /**
  * Controller class for the gradient part of the paint editor.
@@ -154,21 +150,21 @@ public class GradientControl extends VBox {
 //		alphaImageView.setClip(alphaRect);
 //		previewAnchorPane.getChildren().addAll(alphaImageView);
 
-        // Add two default stops
+        // Add two stops
         final GradientPickerStop initSelectedStop = addStop(0.0, 1.0, 0.0, Color.web("#42b0fe"));
         addStop(0.0, 1.0, 1.0, Color.web("#041626"));
         
-        // Select first default stop
+        // Select default selected stop
         setSelectedStop(initSelectedStop);
         
         proportional_checkbox.setSelected(true);
         proportional_checkbox.setOnAction(Event::consume);
-        proportional_checkbox.selectedProperty().addListener(observable -> onValueChange());
+        proportional_checkbox.selectedProperty().addListener(this::onValueChange);
 
         cycleMethod_choicebox.setItems(FXCollections.observableArrayList(CycleMethod.values()));
         cycleMethod_choicebox.getSelectionModel().selectFirst();
         cycleMethod_choicebox.setOnAction(Event::consume);
-        cycleMethod_choicebox.getSelectionModel().selectedItemProperty().addListener(observable -> onValueChange());
+        cycleMethod_choicebox.getSelectionModel().selectedItemProperty().addListener(this::onValueChange);
 
         gradient_choicebox.setItems(FXCollections.observableArrayList(GradientType.values()));
         gradient_choicebox.setValue(GradientType.LINEAR);
@@ -200,16 +196,16 @@ public class GradientControl extends VBox {
             }
         });
 
-        startX_slider.valueProperty().addListener(o -> onValueChange());
-        startY_slider.valueProperty().addListener(o -> onValueChange());
-        endX_slider.valueProperty().addListener(o -> onValueChange());
-        endY_slider.valueProperty().addListener(o -> onValueChange());
+        startX_slider.valueProperty().addListener(this::onValueChange);
+        startY_slider.valueProperty().addListener(this::onValueChange);
+        endX_slider.valueProperty().addListener(this::onValueChange);
+        endY_slider.valueProperty().addListener(this::onValueChange);
 
-        centerX_slider.valueProperty().addListener(o -> onValueChange());
-        centerY_slider.valueProperty().addListener(o -> onValueChange());
-        focusAngleRotator.rotationProperty().addListener(o -> onValueChange());
-        focusDistanceSlider.getSlider().valueProperty().addListener(o -> onValueChange());
-        radiusSlider.getSlider().valueProperty().addListener(o -> onValueChange());
+        centerX_slider.valueProperty().addListener(this::onValueChange);
+        centerY_slider.valueProperty().addListener(this::onValueChange);
+        focusAngleRotator.rotationProperty().addListener(this::onValueChange);
+        focusDistanceSlider.getSlider().valueProperty().addListener(this::onValueChange);
+        radiusSlider.getSlider().valueProperty().addListener(this::onValueChange);
 
         gradientControlGrid.add(radiusSlider, 1, 1, 2, 1);
         gradientControlGrid.add(focusDistanceSlider, 1, 2, 2, 1);
@@ -217,16 +213,15 @@ public class GradientControl extends VBox {
         gradientControlGrid.visibleProperty().bind(centerY_slider.visibleProperty());
     }
 
-    private void onValueChange() {
-		final Paint value = getValue();
-		// Update UI
-		preview_rect.setBackground(
-				new Background(
-			    new BackgroundFill(value, 
-			    new CornerRadii(5), Insets.EMPTY)));
-		// Update model
-		customPaintControl.customPaintProperty().set(value);
-	}
+    private void onValueChange(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+        final Paint value = getValue();
+        // Update UI
+        preview_rect.setBackground(new Background(new BackgroundFill(
+                value, new CornerRadii(5), Insets.EMPTY)));
+
+        // Update model
+        customPaintControl.customPaintProperty().set(value);
+    }
 
     public Paint getValue() {
         final Paint paint;
@@ -249,6 +244,7 @@ public class GradientControl extends VBox {
                 double radius = radiusSlider.getSlider().getValue();
                 boolean radial_proportional = proportional_checkbox.isSelected();
                 final CycleMethod radial_cycleMethod = cycleMethod_choicebox.getValue();
+               
                 paint = new RadialGradient(focusAngle, focusDistance, centerX, centerY, radius,
                         radial_proportional, radial_cycleMethod, getStops());
                 break;
@@ -316,10 +312,8 @@ public class GradientControl extends VBox {
     }
 
     public void updatePreview(Paint value) {
-    	preview_rect.setBackground(
-				new Background(
-			    new BackgroundFill(value, 
-			    new CornerRadii(5), Insets.EMPTY)));
+        preview_rect.setBackground(new Background(new BackgroundFill(value,
+                new CornerRadii(5), Insets.EMPTY)));
     }
 
     @FXML
@@ -341,13 +335,13 @@ public class GradientControl extends VBox {
 
     void updateAngle() {
         final Paint value = getValue();
+
         // Update gradient preview rectangle
-        preview_rect.setBackground(
-				new Background(
-			    new BackgroundFill(value, 
-			    new CornerRadii(5), Insets.EMPTY)));
+        preview_rect.setBackground(new Background(new BackgroundFill(value,
+                new CornerRadii(5), Insets.EMPTY)));
+        
         // Update paint picker 
-       customPaintControl.setCustomPaint(value);
+        customPaintControl.setCustomPaint(value);
     }
 
     GradientPickerStop addStop(double min, double max, double value, Color color) {

@@ -1,5 +1,6 @@
-package com.paintpicker.scene.control.fields;
+package com.paintpicker.scene.control.fields.skins;
 
+import com.paintpicker.scene.control.fields.IntegerField;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;

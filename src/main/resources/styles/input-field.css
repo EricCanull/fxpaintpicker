@@ -16,7 +16,7 @@
 }
 
 .input-field {
-    -fx-skin: "com.paintpicker.scene.control.fields.InputFieldSkin";
+    -fx-skin: "com.paintpicker.scene.control.fields.skins.InputFieldSkin";
     -fx-background-color: #606468, -fx-text-box-border, -fx-control-inner-background;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 3, 2, 2;
@@ -36,7 +36,7 @@
 }
 
 .integer-field {
-    -fx-skin: "com.paintpicker.scene.control.fields.IntegerFieldSkin";
+    -fx-skin: "com.paintpicker.scene.control.fields.skins.IntegerFieldSkin";
     -fx-background-color: -fx-focus-color, -fx-text-box-border, -fx-control-inner-background;
     -fx-text-fill: #C2C2C3;
     -fx-background-insets: 0, 1, 2;
@@ -57,7 +57,7 @@
 }
 
 .double-field {
-    -fx-skin: "com.paintpicker.scene.control.fields.DoubleFieldSkin";
+    -fx-skin: "com.paintpicker.scene.control.fields.skins.DoubleFieldSkin";
     -fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, -fx-control-inner-background;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 3, 2, 2;
@@ -79,7 +79,7 @@
 
 
 .webcolor-field {
-    -fx-skin: "com.paintpicker.scene.control.fields.WebColorFieldSkin";
+    -fx-skin: "com.paintpicker.scene.control.fields.skins.WebColorFieldSkin";
     -fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, -fx-control-inner-background;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 3, 2, 2;

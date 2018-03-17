@@ -30,38 +30,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.paintpicker.scene.control.fields;
+package com.paintpicker.scene.control.fields.skins;
 
-import com.paintpicker.utils.ColorEncoder;
+
+import com.paintpicker.scene.control.fields.DoubleField;
+import com.paintpicker.scene.control.fields.skins.InputFieldSkin;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.RadialGradient;
 
 /**
  */
-public class WebColorFieldSkin extends InputFieldSkin {
-    private final InvalidationListener integerFieldValueListener;
+public class DoubleFieldSkin extends InputFieldSkin {
+    private final InvalidationListener doubleFieldValueListener;
 
     /**
-     * Create a new IntegerFieldSkin.
-     * @param control The IntegerField
+     * Create a new DoubleFieldSkin.
+     * @param control The DoubleField
      */
-    public WebColorFieldSkin(final WebColorField control) {
+    public DoubleFieldSkin(final DoubleField control) {
         super(control);
 
         // Whenever the value changes on the control, we need to update the text
         // in the TextField. The only time this is not the case is when the update
         // to the control happened as a result of an update in the text textField.
-        control.valueProperty().addListener(integerFieldValueListener = (Observable observable) -> {
+        control.valueProperty().addListener(doubleFieldValueListener = (Observable observable) -> {
             updateText();
         });
     }
 
-    @Override public WebColorField getSkinnable() {
-        return (WebColorField) control;
+    @Override public DoubleField getSkinnable() {
+        return (DoubleField) control;
     }
 
     @Override public Node getNode() {
@@ -76,48 +76,45 @@ public class WebColorFieldSkin extends InputFieldSkin {
      * should return null following a call to dispose. Calling dispose twice
      * has no effect.
      */
-    @Override public void dispose() {
-        ((WebColorField) control).valueProperty().removeListener(integerFieldValueListener);
+    @Override
+    public void dispose() {
+        ((DoubleField) control).valueProperty().removeListener(doubleFieldValueListener);
         super.dispose();
     }
 
     @Override
     protected boolean accept(String text) {
         if (text.length() == 0) return true;
-        return text.matches("#[A-F0-9]{6}") || text.matches("#[A-F0-9]{8}");
+        if (text.matches("[0-9\\.]*")) {
+            try {
+                Double.parseDouble(text);
+                return true;
+            } catch (NumberFormatException ex) { }
+        }
+        return false;
     }
 
     @Override
     protected void updateText() {
-        if (((WebColorField) control).getValue() instanceof LinearGradient
-                || ((WebColorField) control).getValue() instanceof RadialGradient) {
-            getTextField().setText("Gradient");
-        } else {
-            Color color = (Color) ((WebColorField) control).getValue();
-            if (color == null) {
-                color = Color.BLACK;
-            }
-            getTextField().setText(ColorEncoder.encodeColor(color));
-        }
+        getTextField().setText("" + ((DoubleField) control).getValue());
     }
 
     @Override
     protected void updateValue() {
-        if (((WebColorField) control).getValue() instanceof LinearGradient
-                || ((WebColorField) control).getValue() instanceof RadialGradient) {
-            return;
-        }
-        Color value = (Color) ((WebColorField) control).getValue();
-        String text = getTextField().getText() == null ? "" : getTextField().getText().trim().toUpperCase();
-        if (text.matches("#[A-F0-9]{6}") || text.matches("#[A-F0-9]{8}")) {
-            try {
-                Color newValue = Color.web(text);
-                if (!newValue.equals(value)) {
-                    ((WebColorField) control).setValue(newValue);
-                }
-            } catch (java.lang.IllegalArgumentException ex) {
-                System.out.println("Failed to parse [" + text + "]");
+        double value = ((DoubleField) control).getValue();
+        double newValue;
+        String text = getTextField().getText() == null ? "" : getTextField().getText().trim();
+        try {
+            newValue = Double.parseDouble(text);
+            if (newValue != value) {
+                ((DoubleField) control).setValue(newValue);
             }
+        } catch (NumberFormatException ex) {
+            // Empty string most likely
+            ((DoubleField) control).setValue(0);
+            Platform.runLater(() -> {
+                getTextField().positionCaret(1);
+            });
         }
     }
 }

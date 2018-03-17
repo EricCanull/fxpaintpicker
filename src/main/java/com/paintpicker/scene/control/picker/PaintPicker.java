@@ -108,12 +108,12 @@ public class PaintPicker extends ComboBoxBase<Paint> {
     public static final String STYLE_CLASS_SPLIT_BUTTON = "split-button";
 
     /**
-     * The style class to specify a SplitMenuButton like appearance of ColorPicker control.
+     * The style class to specify a default mode.
      */
     public static final String SINGLE_MODE = "default-mode";
 
     /**
-     * The style class to specify a SplitMenuButton like appearance of ColorPicker control.
+     * The style class to specify a gradient mode.
      */
     public static final String GRADIENT_MODE = "gradient-mode";
 

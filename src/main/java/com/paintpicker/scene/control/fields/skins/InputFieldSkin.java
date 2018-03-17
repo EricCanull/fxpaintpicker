@@ -30,8 +30,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.paintpicker.scene.control.fields;
+package com.paintpicker.scene.control.fields.skins;
 
+import com.paintpicker.scene.control.fields.InputField;
 import com.sun.javafx.event.EventDispatchChainImpl;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
