@@ -25,7 +25,8 @@
 
 package com.paintpicker.scene.control.picker;
 
-import static com.paintpicker.scene.control.picker.PaintPickerSkin.getString;
+import com.paintpicker.scene.control.picker.skins.PaintPickerSkin;
+import static com.paintpicker.scene.control.picker.skins.PaintPickerSkin.getString;
 
 import java.util.List;
 

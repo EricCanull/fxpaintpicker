@@ -23,7 +23,7 @@
  * questions.
  */
 
-package com.paintpicker.scene.control.picker;
+package com.paintpicker.scene.control.picker.skins;
 import static javafx.scene.paint.Color.*;
 
 import java.util.ArrayList;
@@ -34,6 +34,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.paintpicker.scene.control.behavior.PaintPickerBehavior;
+import com.paintpicker.scene.control.picker.PaintPalette;
+import com.paintpicker.scene.control.picker.PaintPicker;
+import com.paintpicker.utils.ColorEncoder;
 import com.sun.javafx.css.StyleManager;
 import com.sun.javafx.css.converters.BooleanConverter;
 import com.sun.javafx.css.converters.SizeConverter;
@@ -413,7 +416,7 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
         }
     }
 
-    static String tooltipString(Paint p) {
+    public static String tooltipString(Paint p) {
         if(p instanceof LinearGradient ||
                 p instanceof RadialGradient) {
             return "Gradient";
@@ -500,20 +503,20 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
 
     private void updateColor() {
         final PaintPicker colorPicker = (PaintPicker) getSkinnable();
-        if (colorPicker.getValue() instanceof LinearGradient
-                || colorPicker.getValue() instanceof RadialGradient) {
-            if (colorLabelVisible.getValue()) {
-                displayNode.setText("Gradient");
+        if (colorLabelVisible.getValue()) {
+            if (colorPicker.getValue() instanceof LinearGradient) {
+                displayNode.setText("Linear Gradient");
+               // displayNode.setText(ColorEncoder.encodeLinearToCSS(colorPicker.getValue()));
+            } else if (colorPicker.getValue() instanceof RadialGradient) {
+                  displayNode.setText("Radial Gradient");
+               // displayNode.setText(ColorEncoder.encodeRadialToCSS(colorPicker.getValue()));
+            } else {
+                displayNode.setText(colorDisplayName((Color) colorPicker.getValue()));
             }
         } else {
-            colorRect.setFill(colorPicker.getValue());
-
-            if (colorLabelVisible.getValue()) {
-                displayNode.setText(colorDisplayName((Color) colorPicker.getValue()));
-            } else {
-                displayNode.setText("");
-            }
+            displayNode.setText("");
         }
+        colorRect.setFill(colorPicker.getValue());
     }
     public void syncWithAutoUpdate() {
         if (!getPopup().isShowing() && getSkinnable().isShowing()) {
@@ -529,7 +532,7 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
         super.layoutChildren(x,y,w,h);
     }
 
-    static String getString(String key) {
+    public static String getString(String key) {
         return ControlResources.getString("ColorPicker."+key);
     }
 

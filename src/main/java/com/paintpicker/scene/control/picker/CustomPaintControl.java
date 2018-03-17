@@ -185,6 +185,7 @@ public class CustomPaintControl extends AnchorPane {
         blueTextField.valueProperty().bindBidirectional(sliders[5].valueProperty());
         alphaTextField.valueProperty().bindBidirectional(sliders[6].valueProperty());
         hexTextField.valueProperty().bindBidirectional(customColorProperty);
+        hexTextField.setEditable(true);
 
         customColorProperty.addListener(observable -> colorChanged());
         

@@ -137,11 +137,19 @@ public class GradientPickerStop extends VBox {
         } catch (IOException ex) {
             Logger.getLogger(GradientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         assert offset_textfield != null;
         assert chip_rect != null;
-
+       
+        context_menu.setStyle(
+                  "-fx-opacity: 0.8;"
+                + "-fx-padding: -1; "
+                + "-fx-insets: -1; "
+                + "-fx-background-radius: 10; "
+                + "-fx-pref-height: 35px;");
+    
         offset_textfield.setText("" + offset); //NOI18N
+        
 
         chip_rect.setFill(color);
         gradientPicker.setSelectedStop(this);
@@ -236,9 +244,6 @@ public class GradientPickerStop extends VBox {
 
     private void showHUD() {
         offset_textfield.setText(String.format("%.2f", offset));
-      //  offset_textfield.setStyle("-fx-max-height: 36px; -fx-pref-height: 36px;");
-      context_menu.setOpacity(.7);
-        context_menu.setStyle(" -fx-padding: -1; -fx-insets: -1; -fx-background-radius: 10; -fx-pref-height: 35px;");
         context_menu.show(this, Side.BOTTOM, 0, 5); // better way to center?
     }
 

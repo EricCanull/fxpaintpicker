@@ -39,6 +39,7 @@ import javafx.beans.Observable;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Paint;
 import javafx.scene.paint.RadialGradient;
 
 /**
@@ -85,16 +86,21 @@ public class WebColorFieldSkin extends InputFieldSkin {
     @Override
     protected boolean accept(String text) {
         if (text.length() == 0) return true;
-        return text.matches("#[A-F0-9]{6}") || text.matches("#[A-F0-9]{8}");
+        return true;
+       // return text.matches("#[A-F0-9]{6}") || text.matches("#[A-F0-9]{8}");
     }
 
     @Override
     protected void updateText() {
-        if (((WebColorField) control).getValue() instanceof LinearGradient
-                || ((WebColorField) control).getValue() instanceof RadialGradient) {
-            getTextField().setText("Gradient");
+        Paint paint = (Color) ((WebColorField) control).getValue();
+        if (paint instanceof LinearGradient) {
+            getTextField().setText("Linear Gradient");
+           // getTextField().setText(ColorEncoder.encodeLinearToCSS(paint));
+        } else if (paint instanceof RadialGradient) {
+             getTextField().setText("Radial Gradient");
+           // getTextField().setText(ColorEncoder.encodeRadialToCSS(paint));
         } else {
-            Color color = (Color) ((WebColorField) control).getValue();
+            Color color = (Color) paint;
             if (color == null) {
                 color = Color.BLACK;
             }

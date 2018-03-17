@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.paintpicker.scene.control.picker.mode.Mode;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -29,10 +30,13 @@ public class DemoControl implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         PaintPicker paintPicker = new PaintPicker(Color.web("#1A4C9C"), Mode.GRADIENT);
-//Sets the split-menu-button
-//paintPicker.getStyleClass().add("color-picker");
-//Sets the button
-//        paintPicker.setStyle("-fx-background-color: transparent;");
+        
+        menuBar.widthProperty().addListener((observable, oldValue, newValue) -> {
+            if((double) newValue > 0) {
+                paintPicker.setPrefWidth((double) newValue);
+            }
+        });
+       
 
         menuBar.getChildren().add(paintPicker);
         

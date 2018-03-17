@@ -1,4 +1,4 @@
-package com.paintpicker.scene.control.picker;
+package com.paintpicker.scene.control.picker.skins;
 
 import com.sun.javafx.scene.control.behavior.ComboBoxBaseBehavior;
 import com.sun.javafx.scene.control.skin.ComboBoxPopupControl;

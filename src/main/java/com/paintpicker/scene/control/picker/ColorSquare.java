@@ -1,5 +1,6 @@
 package com.paintpicker.scene.control.picker;
 
+import com.paintpicker.scene.control.picker.skins.PaintPickerSkin;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;

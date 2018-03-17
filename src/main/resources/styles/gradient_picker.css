@@ -50,8 +50,8 @@
 
 .css-button{
     -fx-border-color: derive(-fx-base, 48%);
-    /*    -fx-background-insets: -0.2, 1, 1.6;
-        -fx-background-radius: 3, 2, 1;*/
+/*  -fx-background-insets: -0.2, 1, 1.6;
+    -fx-background-radius: 3, 2, 1;*/
     -fx-background-radius: 20px;
     -fx-border-radius: 20px;
 }
@@ -60,7 +60,6 @@
 .css-button:hover {
     -fx-background-color: #464951;
     -fx-border-color: -fx-focus-color;
-
 }
 
 .separator-gradient {

@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : andje22
 */
 .root {
-     -fx-font-family: "Segoe UI";
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 1em;
     -fx-base: #31363B;
     -fx-background: #31363B;
@@ -25,7 +25,7 @@ and open the template in the editor.
 }
 
 .color-picker {
-     -fx-skin: "com.paintpicker.scene.control.picker.PaintPickerSkin";
+     -fx-skin: "com.paintpicker.scene.control.picker.skins.PaintPickerSkin";
     -fx-background-color: transparent; 
 }
 

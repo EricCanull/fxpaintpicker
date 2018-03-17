@@ -24,6 +24,7 @@
  */
 package com.paintpicker.scene.control.picker;
 
+import com.paintpicker.scene.control.picker.skins.PaintPickerSkin;
 import com.paintpicker.scene.control.picker.mode.Mode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

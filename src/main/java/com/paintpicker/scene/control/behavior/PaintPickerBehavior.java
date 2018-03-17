@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.paintpicker.scene.control.picker.PaintPicker;
-import com.paintpicker.scene.control.picker.PaintPickerSkin;
+import com.paintpicker.scene.control.picker.skins.PaintPickerSkin;
 import com.sun.javafx.scene.control.behavior.ComboBoxBaseBehavior;
 import com.sun.javafx.scene.control.behavior.KeyBinding;
 
