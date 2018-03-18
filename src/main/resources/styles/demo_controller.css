@@ -37,3 +37,8 @@ and open the template in the editor.
 .color-picker .color-picker-label .text {
     -fx-fill: #ccc;
 }
+.transparent-pattern {
+    -fx-background-image:  url("../images/chequers.png");
+    -fx-background-repeat: repeat;
+    -fx-background-size: auto;
+}

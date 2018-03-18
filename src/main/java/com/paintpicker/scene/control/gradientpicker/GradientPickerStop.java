@@ -40,7 +40,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -64,7 +63,6 @@ public class GradientPickerStop extends VBox {
     @FXML private ImageView indicator_image;
     @FXML private TextField offset_textfield;
     @FXML private ContextMenu context_menu;
-    @FXML private CustomMenuItem custom_menu_item;
     @FXML private Button stop_button;
 
     private final double min;
@@ -176,7 +174,7 @@ public class GradientPickerStop extends VBox {
         final CustomPaintControl paintPicker
                 = gradientPicker.getCustomPaintControl();
         final Paint value = gradientPicker.getValue();
-        gradientPicker.updatePreview(value);
+        gradientPicker.updatePreviewRect(value);
         // Update model
        // paintPicker.outputPaintProperty.set(value);
     }
@@ -191,7 +189,7 @@ public class GradientPickerStop extends VBox {
             final CustomPaintControl paintPicker
                     = gradientPicker.getCustomPaintControl();
             final Paint value = gradientPicker.getValue();
-            gradientPicker.updatePreview(value);
+            gradientPicker.updatePreviewRect(value);
             // Update model
             paintPicker.customColorProperty().set(this.getColor());
           //  paintPicker.outputPaintProperty.set(getColor());
@@ -237,9 +235,10 @@ public class GradientPickerStop extends VBox {
         final CustomPaintControl paintPicker
                 = gradientPicker.getCustomPaintControl();
         final Paint value = gradientPicker.getValue();
-        gradientPicker.updatePreview(value);
+        
+        gradientPicker.updatePreviewRect(value);
         // Update model
-//      paintPicker.outputPaintProperty.set(value);
+        paintPicker.setCustomPaint(value);
     }
 
     private void showHUD() {

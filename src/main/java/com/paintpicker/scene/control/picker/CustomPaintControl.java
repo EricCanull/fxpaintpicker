@@ -571,7 +571,7 @@ public class CustomPaintControl extends AnchorPane {
                     gradientPickerStop.setColor(newColor);
                     // Update gradient preview
                     final Paint paint = gradientPicker.getValue();
-                    gradientPicker.updatePreview(paint);
+                    gradientPicker.updatePreviewRect(paint);
                 }
             }
         }

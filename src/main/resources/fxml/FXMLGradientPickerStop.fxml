@@ -50,7 +50,7 @@
       <contextMenu>
         <ContextMenu fx:id="context_menu" autoHide="false" consumeAutoHidingEvents="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="65.0">
           <items>
-            <CustomMenuItem fx:id="custom_menu_item" hideOnClick="false" mnemonicParsing="false" text="Unspecified Action">
+            <CustomMenuItem hideOnClick="false" mnemonicParsing="false" text="Unspecified Action">
               <content>
                 <DoubleTextField fx:id="offset_textfield" onAction="#stopAction" prefColumnCount="3" prefWidth="-1.0" styleClass="hud-textfield" />
               </content>

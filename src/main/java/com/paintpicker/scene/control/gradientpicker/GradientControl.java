@@ -165,9 +165,8 @@ public class GradientControl extends VBox {
         gradient_choicebox.setItems(FXCollections.observableArrayList(GradientType.values()));
         gradient_choicebox.setValue(GradientType.LINEAR);
         gradient_choicebox.setOnAction(event -> {
-          setGradientType(gradient_choicebox.getSelectionModel().getSelectedItem());
-            final Paint value = getValue();
-            updatePreview(value);
+            setGradientType(gradient_choicebox.getSelectionModel().getSelectedItem());
+            updateUI();
         });
 
         centerX_slider.visibleProperty().bind(centerY_slider.visibleProperty());
@@ -210,13 +209,7 @@ public class GradientControl extends VBox {
     }
 
     private void onValueChange(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-        final Paint value = getValue();
-        // Update UI
-        preview_rect.setBackground(new Background(new BackgroundFill(
-                value, new CornerRadii(5), Insets.EMPTY)));
-
-        // Update model
-        customPaintControl.customPaintProperty().set(value);
+        updateUI();
     }
 
     public Paint getValue() {
@@ -250,8 +243,13 @@ public class GradientControl extends VBox {
                 break;
         }
         
-         customPaintControl.setCustomPaint(paint);
         return paint;
+    }
+    
+     private void updateUI() {
+        final Paint value = getValue();            // get new paint value
+        updatePreviewRect(value);                  // update preview rectangle
+        customPaintControl.setCustomPaint(value);  // update custom paint
     }
 
     public boolean isGradientStopsEmpty() {
@@ -272,44 +270,9 @@ public class GradientControl extends VBox {
         return selectedThumb;
     }
 
-    public void updateUI(Paint value) {
-        assert value instanceof LinearGradient || value instanceof RadialGradient;
-        if (value instanceof LinearGradient) {
-            final LinearGradient linear = (LinearGradient) value;
-            startX_slider.setValue(linear.getStartX());
-            startY_slider.setValue(linear.getStartY());
-            endX_slider.setValue(linear.getEndX());
-            endY_slider.setValue(linear.getEndY());
-            proportional_checkbox.setSelected(linear.isProportional());
-            cycleMethod_choicebox.setValue(linear.getCycleMethod());
-            // clear first
-            removeAllStops();
-            linear.getStops().forEach((stop) ->
-                // Update stops
-                addStop(0.0, 1.0, stop.getOffset(), stop.getColor()));
-        } else {
-            final RadialGradient radial = (RadialGradient) value;
-            centerX_slider.setValue(radial.getCenterX());
-            centerY_slider.setValue(radial.getCenterY());
-            focusAngleRotator.setRotationProperty(radial.getFocusAngle());
-            focusDistanceSlider.getSlider().setValue(radial.getFocusDistance());
-            radiusSlider.getSlider().setValue(radial.getRadius());
-            proportional_checkbox.setSelected(radial.isProportional());
-            cycleMethod_choicebox.setValue(radial.getCycleMethod());
-            // clear first
-            removeAllStops();
-            radial.getStops().forEach((stop) -> {
-                // Update stops
-                addStop(0.0, 1.0, stop.getOffset(), stop.getColor());
-            });
-        }
-        updatePreview(value);
-        customPaintControl.setCustomPaint(value);
-    }
-
-    public void updatePreview(Paint value) {
+    public void updatePreviewRect(Paint value) {
         preview_rect.setBackground(new Background(new BackgroundFill(value,
-                new CornerRadii(5), Insets.EMPTY)));
+                new CornerRadii(0), Insets.EMPTY)));
     }
 
     @FXML
@@ -317,27 +280,16 @@ public class GradientControl extends VBox {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
                 double percentH = ((100.0 / track_pane.getWidth()) * event.getX()) / 100;
-                final Color color = customPaintControl.getCurrentColor();
+                final Color color = customPaintControl.getCustomColor();
                 addStop(0.0, 1.0, percentH, color);
-                updateAngle();
+                updateUI();
             }
         }
     }
 
     @FXML
     void onSliderDragged(MouseEvent event) {
-        updateAngle();
-    }
-
-    void updateAngle() {
-        final Paint value = getValue();
-
-        // Update gradient preview rectangle
-        preview_rect.setBackground(new Background(new BackgroundFill(value,
-                new CornerRadii(5), Insets.EMPTY)));
-        
-        // Update paint picker 
-        customPaintControl.setCustomPaint(value);
+        updateUI();
     }
 
     GradientPickerStop addStop(double min, double max, double value, Color color) {
