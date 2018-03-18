@@ -83,6 +83,7 @@ public class WebColorFieldSkin extends InputFieldSkin {
         super.dispose();
     }
 
+    // Useless method ?
     @Override
     protected boolean accept(String text) {
         if (text.length() == 0) return true;

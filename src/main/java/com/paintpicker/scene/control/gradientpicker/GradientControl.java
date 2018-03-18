@@ -79,12 +79,8 @@ public class GradientControl extends VBox {
         LINEAR, RADIAL
     }
     @FXML private Pane track_pane;
-    //@FXML private AnchorPane previewAnchorPane;
-//    @FXML private ImageView alphaImageView;
     @FXML private StackPane preview_rect;
-    
-    @FXML private StackPane slider_container;
-    @FXML private VBox radial_container;
+        
     @FXML private Slider startX_slider;
     @FXML private Slider endX_slider;
     @FXML private Slider startY_slider;
@@ -171,7 +167,7 @@ public class GradientControl extends VBox {
         gradient_choicebox.setOnAction(event -> {
           setGradientType(gradient_choicebox.getSelectionModel().getSelectedItem());
             final Paint value = getValue();
-            updateUI(value);
+            updatePreview(value);
         });
 
         centerX_slider.visibleProperty().bind(centerY_slider.visibleProperty());

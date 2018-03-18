@@ -239,7 +239,7 @@ public class GradientPickerStop extends VBox {
         final Paint value = gradientPicker.getValue();
         gradientPicker.updatePreview(value);
         // Update model
-//        paintPicker.outputPaintProperty.set(value);
+//      paintPicker.outputPaintProperty.set(value);
     }
 
     private void showHUD() {

@@ -102,7 +102,7 @@
               </StackPane>
               <Slider fx:id="endY_slider" max="1.0" onMouseDragged="#onSliderDragged" orientation="VERTICAL" rotate="180.0" styleClass="gradient-slider" value="1.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
               <Slider fx:id="endX_slider" max="1.0" onMouseDragged="#onSliderDragged" styleClass="gradient-slider" value="1.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                <StackPane fx:id="slider_container" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="280.0" style="" styleClass="track-background" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
+                <StackPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="280.0" style="" styleClass="track-background" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
                   <children>
                     <Label styleClass="small-label" text="Double click to add stop" StackPane.alignment="TOP_CENTER">
                       <StackPane.margin>
