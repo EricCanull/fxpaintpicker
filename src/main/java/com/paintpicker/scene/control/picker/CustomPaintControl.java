@@ -570,8 +570,8 @@ public class CustomPaintControl extends AnchorPane {
                 if (gradientPickerStop != null) {
                     gradientPickerStop.setColor(newColor);
                     // Update gradient preview
-                    final Paint paint = gradientPicker.getValue();
-                    gradientPicker.updatePreviewRect(paint);
+                    gradientPicker.updatePreviewRect(gradientPicker.getPaint());
+                    setCustomPaint(gradientPicker.getPaint());
                 }
             }
         }
@@ -628,7 +628,8 @@ public class CustomPaintControl extends AnchorPane {
     @FXML
     private void onGradientButtonAction(ActionEvent e) {
         if (gradientDialog.isShowing() == false) {
-            gradientDialog.show();
+            gradientDialog.show();    
+             gradientPicker.updatePreviewRect(gradientPicker.getPaint());
         } else {
             gradientDialog.hide();
         }

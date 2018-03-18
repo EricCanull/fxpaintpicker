@@ -173,7 +173,7 @@ public class GradientPickerStop extends VBox {
         // - update model
         final CustomPaintControl paintPicker
                 = gradientPicker.getCustomPaintControl();
-        final Paint value = gradientPicker.getValue();
+        final Paint value = gradientPicker.getPaint();
         gradientPicker.updatePreviewRect(value);
         // Update model
        // paintPicker.outputPaintProperty.set(value);
@@ -188,7 +188,7 @@ public class GradientPickerStop extends VBox {
             // - update model
             final CustomPaintControl paintPicker
                     = gradientPicker.getCustomPaintControl();
-            final Paint value = gradientPicker.getValue();
+            final Paint value = gradientPicker.getPaint();
             gradientPicker.updatePreviewRect(value);
             // Update model
             paintPicker.customColorProperty().set(this.getColor());
@@ -234,7 +234,7 @@ public class GradientPickerStop extends VBox {
         // - update model
         final CustomPaintControl paintPicker
                 = gradientPicker.getCustomPaintControl();
-        final Paint value = gradientPicker.getValue();
+        final Paint value = gradientPicker.getPaint();
         
         gradientPicker.updatePreviewRect(value);
         // Update model

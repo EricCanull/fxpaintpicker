@@ -73,7 +73,7 @@ public class GradientDialog {
                 stage.setY(newValue.doubleValue() + stage.getOwner().getHeight());
             }
         });
-
+        
         customScene = new Scene((Parent) node);
         customScene.setFill(Color.web("#31363B"));
                 

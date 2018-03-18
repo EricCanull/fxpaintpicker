@@ -78,6 +78,7 @@ public class GradientControl extends VBox {
     public enum GradientType {
         LINEAR, RADIAL
     }
+    
     @FXML private Pane track_pane;
     @FXML private StackPane preview_rect;
         
@@ -135,32 +136,15 @@ public class GradientControl extends VBox {
         } catch (IOException ex) {
             Logger.getLogger(GradientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-//        Rectangle alphaRect = new Rectangle();
-//        alphaRect.widthProperty().bind(previewAnchorPane.widthProperty());
-//		alphaRect.heightProperty().bind(previewAnchorPane.heightProperty());
-//		alphaRect.layoutXProperty().bind(previewAnchorPane.layoutXProperty().subtract(0));
-//		alphaRect.layoutYProperty().bind(previewAnchorPane.layoutYProperty().subtract(0));
-//		
-////        ImageView alphaImageView = new ImageView(new Image("/images/chequers.png"));
-//		alphaImageView.setClip(alphaRect);
-//		previewAnchorPane.getChildren().addAll(alphaImageView);
 
-        // Add two stops
-        final GradientPickerStop initSelectedStop = addStop(0.0, 1.0, 0.0, Color.web("#42b0fe"));
-        addStop(0.0, 1.0, 1.0, Color.web("#041626"));
-        
-        // Select default selected stop
-        setSelectedStop(initSelectedStop);
-        
         proportional_checkbox.setSelected(true);
         proportional_checkbox.setOnAction(Event::consume);
-        proportional_checkbox.selectedProperty().addListener(this::onValueChange);
+        proportional_checkbox.selectedProperty().addListener(this::onPaintChange);
 
         cycleMethod_choicebox.setItems(FXCollections.observableArrayList(CycleMethod.values()));
         cycleMethod_choicebox.getSelectionModel().selectFirst();
         cycleMethod_choicebox.setOnAction(Event::consume);
-        cycleMethod_choicebox.getSelectionModel().selectedItemProperty().addListener(this::onValueChange);
+        cycleMethod_choicebox.getSelectionModel().selectedItemProperty().addListener(this::onPaintChange);
 
         gradient_choicebox.setItems(FXCollections.observableArrayList(GradientType.values()));
         gradient_choicebox.setValue(GradientType.LINEAR);
@@ -191,28 +175,35 @@ public class GradientControl extends VBox {
             }
         });
 
-        startX_slider.valueProperty().addListener(this::onValueChange);
-        startY_slider.valueProperty().addListener(this::onValueChange);
-        endX_slider.valueProperty().addListener(this::onValueChange);
-        endY_slider.valueProperty().addListener(this::onValueChange);
+        startX_slider.valueProperty().addListener(this::onPaintChange);
+        startY_slider.valueProperty().addListener(this::onPaintChange);
+        endX_slider.valueProperty().addListener(this::onPaintChange);
+        endY_slider.valueProperty().addListener(this::onPaintChange);
 
-        centerX_slider.valueProperty().addListener(this::onValueChange);
-        centerY_slider.valueProperty().addListener(this::onValueChange);
-        focusAngleRotator.rotationProperty().addListener(this::onValueChange);
-        focusDistanceSlider.getSlider().valueProperty().addListener(this::onValueChange);
-        radiusSlider.getSlider().valueProperty().addListener(this::onValueChange);
+        centerX_slider.valueProperty().addListener(this::onPaintChange);
+        centerY_slider.valueProperty().addListener(this::onPaintChange);
+        focusAngleRotator.rotationProperty().addListener(this::onPaintChange);
+        focusDistanceSlider.getSlider().valueProperty().addListener(this::onPaintChange);
+        radiusSlider.getSlider().valueProperty().addListener(this::onPaintChange);
 
         gradientControlGrid.add(radiusSlider, 1, 1, 2, 1);
         gradientControlGrid.add(focusDistanceSlider, 1, 2, 2, 1);
         gradientControlGrid.add(focusAngleRotator, 1, 3, 2, 1);
         gradientControlGrid.visibleProperty().bind(centerY_slider.visibleProperty());
+        
+         // Add two stops
+        final GradientPickerStop initSelectedStop = addStop(0.0, 1.0, 0.0, Color.web("#42b0fe"));
+        addStop(0.0, 1.0, 1.0, Color.web("#041626"));
+        
+        // Select default selected stop
+        setSelectedStop(initSelectedStop);
     }
 
-    private void onValueChange(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+    private void onPaintChange(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
         updateUI();
     }
 
-    public Paint getValue() {
+    public Paint getPaint() {
         final Paint paint;
         switch (GRADIENT_TYPE.get()) {
             case LINEAR:
@@ -247,7 +238,7 @@ public class GradientControl extends VBox {
     }
     
      private void updateUI() {
-        final Paint value = getValue();            // get new paint value
+        final Paint value = getPaint();            // get new paint value
         updatePreviewRect(value);                  // update preview rectangle
         customPaintControl.setCustomPaint(value);  // update custom paint
     }
@@ -337,9 +328,9 @@ public class GradientControl extends VBox {
     @FXML
     private void copyCSSAction() {
         if (GRADIENT_TYPE.get().equals(GradientType.RADIAL)) {
-            System.out.println(ColorEncoder.encodeRadialToCSS(getValue()));
+            System.out.println(ColorEncoder.encodeRadialToCSS(getPaint()));
         } else {
-            System.out.println(ColorEncoder.encodeLinearToCSS(getValue()));
+            System.out.println(ColorEncoder.encodeLinearToCSS(getPaint()));
         }
     }
 }
