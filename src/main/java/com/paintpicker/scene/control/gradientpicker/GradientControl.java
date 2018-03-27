@@ -39,6 +39,7 @@ import com.paintpicker.utils.ColorEncoder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +56,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -327,10 +330,13 @@ public class GradientControl extends VBox {
 
     @FXML
     private void copyCSSAction() {
-        if (GRADIENT_TYPE.get().equals(GradientType.RADIAL)) {
-            System.out.println(ColorEncoder.encodeRadialToCSS(getPaint()));
-        } else {
-            System.out.println(ColorEncoder.encodeLinearToCSS(getPaint()));
-        }
+        final String css = GRADIENT_TYPE.get().equals(GradientType.RADIAL)
+                ? ColorEncoder.encodeRadialToCSS(getPaint())
+                : ColorEncoder.encodeLinearToCSS(getPaint());
+
+        System.out.println(css);
+        Clipboard.getSystemClipboard().setContent(
+                Collections.singletonMap(DataFormat.PLAIN_TEXT, css));
+        //    displayStatusAlert("Code has been copied to the clipboard.");
     }
 }
