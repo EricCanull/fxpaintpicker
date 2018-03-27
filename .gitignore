@@ -4,14 +4,11 @@
 /.classpath
 #/nbactions.xml
 /nbactions-release-profile.xml
-/paintpicker.iml
 /nb-configuration.xml
-.settings/
 classes/
 lib/
 src/main/java/com/paintpicker/scene/control/animations/
 src/test/
-.project
 .classpath
 
 ### Java template

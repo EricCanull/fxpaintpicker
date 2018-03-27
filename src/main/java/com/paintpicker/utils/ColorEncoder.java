@@ -481,8 +481,7 @@ public class ColorEncoder implements SyntaxConstants {
     }
 
     private static double round(double value) {
-        double doubleRounded = Math.round(value * 100);
-        return doubleRounded;
+        return Math.round(value * 100);
     }
 
     public static String getColorString(Color color) {

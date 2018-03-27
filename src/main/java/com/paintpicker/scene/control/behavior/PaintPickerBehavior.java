@@ -24,7 +24,7 @@ import javafx.scene.paint.Paint;
  * 
  * @author 
  */
-@SuppressWarnings("restriction")
+
 public class PaintPickerBehavior extends ComboBoxBaseBehavior<Paint> {
 
     /***************************************************************************

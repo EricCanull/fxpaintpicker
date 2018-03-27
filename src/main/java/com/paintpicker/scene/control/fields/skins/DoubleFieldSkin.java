@@ -35,10 +35,13 @@ package com.paintpicker.scene.control.fields.skins;
 
 import com.paintpicker.scene.control.fields.DoubleField;
 import com.paintpicker.scene.control.fields.skins.InputFieldSkin;
+import com.sun.istack.internal.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.scene.Node;
+
+import java.util.logging.Level;
 
 /**
  */
@@ -85,11 +88,13 @@ public class DoubleFieldSkin extends InputFieldSkin {
     @Override
     protected boolean accept(String text) {
         if (text.length() == 0) return true;
-        if (text.matches("[0-9\\.]*")) {
+        if (text.matches("[0-9.]*")) {
             try {
                 Double.parseDouble(text);
                 return true;
-            } catch (NumberFormatException ex) { }
+            } catch (NumberFormatException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
         return false;
     }

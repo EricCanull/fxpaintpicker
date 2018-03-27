@@ -84,7 +84,7 @@ public class PaintPalette extends Region {
     private ColorSquare focusedSquare;
     private ContextMenu contextMenu = null;
 
-    private Color mouseDragColor = null;
+    private Paint mouseDragColor = null;
     private boolean dragDetected = false;
 
     // Metrics for custom colors
@@ -554,7 +554,8 @@ public class PaintPalette extends Region {
             setOnMouseDragged(t -> {
                 if (!dragDetected) {
                     dragDetected = true;
-                    mouseDragColor = (Color) paintPicker.getValue();
+                    // check for gradient
+                    mouseDragColor = paintPicker.getValue();
                 }
                 int xIndex = clamp(0,
                         (int)t.getX()/(SQUARE_SIZE + 1), NUM_OF_COLUMNS - 1);

@@ -52,7 +52,7 @@
     -fx-min-width: 30;
     -fx-max-width: 30;
     -fx-min-height: 30;
-    -fx-min-height: 30;
+    -fx-max-height: 30;
 }
 
 .rotation-dial {

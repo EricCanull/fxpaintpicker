@@ -25,15 +25,14 @@
 
 package com.paintpicker.scene.control.picker;
 
-import com.paintpicker.scene.control.gradientpicker.GradientDialog;
 import com.paintpicker.scene.control.fields.IntegerField;
 import com.paintpicker.scene.control.fields.WebColorField;
 import com.paintpicker.scene.control.gradientpicker.GradientControl;
+import com.paintpicker.scene.control.gradientpicker.GradientDialog;
 import com.paintpicker.scene.control.gradientpicker.GradientPickerStop;
 import com.paintpicker.scene.control.picker.mode.Mode;
 import com.paintpicker.scene.control.slider.PaintSlider;
 import com.paintpicker.utils.ScreenUtil;
-
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,6 +57,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.PopupControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -95,10 +95,10 @@ public class CustomPaintControl extends AnchorPane {
                                alphaTextField;
     @FXML private WebColorField hexTextField;
     @FXML private StackPane colorRect, alphaPane;
-    @FXML private Pane hueBar;
-    @FXML private Pane colorRectHue, colorRectOverlayOne, colorRectOverlayTwo;
+    @FXML private Pane hueBar, hueRect, hueRectOverlayOne, hueRectOverlayTwo;
     @FXML private Region hueBarHandle, circleHandle;
     @FXML private Region previousColorRect, currentColorRect;
+    @FXML private Button gradientButton;
     
     Runnable onSave;
     private Runnable onSelect;
@@ -136,6 +136,7 @@ public class CustomPaintControl extends AnchorPane {
         });
 
         if (mode.equals(Mode.GRADIENT)) {
+            gradientButton.setVisible(true);
             createGradientDialog();
         }
     }
@@ -189,12 +190,12 @@ public class CustomPaintControl extends AnchorPane {
 
         customColorProperty.addListener(observable -> colorChanged());
         
-        colorRectHue.backgroundProperty().bind(Bindings.createObjectBinding(()->
+        hueRect.backgroundProperty().bind(Bindings.createObjectBinding(()->
                 new Background(
                 new BackgroundFill(Color.hsb(hue.getValue(), 1.0, 1.0),
                         CornerRadii.EMPTY, Insets.EMPTY)), hue));
 
-        colorRectOverlayOne.setBackground(
+        hueRectOverlayOne.setBackground(
                 new Background(
                 new BackgroundFill(
                 new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
@@ -209,15 +210,15 @@ public class CustomPaintControl extends AnchorPane {
             bright.set(100 - (clamp(y / colorRect.getHeight()) * 100));
         };
 
-        colorRectOverlayTwo.setBackground(
+        hueRectOverlayTwo.setBackground(
                 new Background(
                 new BackgroundFill(
                 new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                 new Stop(0, Color.rgb(0, 0, 0, 0)),
                 new Stop(1, Color.rgb(0, 0, 0, 1))),
                 CornerRadii.EMPTY, Insets.EMPTY)));
-        colorRectOverlayTwo.setOnMouseDragged(rectMouseHandler);
-        colorRectOverlayTwo.setOnMousePressed(rectMouseHandler);
+        hueRectOverlayTwo.setOnMouseDragged(rectMouseHandler);
+        hueRectOverlayTwo.setOnMousePressed(rectMouseHandler);
 
         // hueProperty bar
         hueBar.setBackground(
@@ -289,7 +290,7 @@ public class CustomPaintControl extends AnchorPane {
         } else {
             x = Math.max(sb.getMinX(), sb.getMaxX() - stage.getWidth());
         }
-        y = Math.max(sb.getMinY(), Math.min(sb.getMaxY() - stage.getHeight() - 345, w.getY()));
+        y = Math.max(sb.getMinY(), Math.min(sb.getMaxY() - stage.getHeight(), w.getY()));
         stage.setX(x);
         stage.setY(y);
     }
@@ -423,6 +424,7 @@ public class CustomPaintControl extends AnchorPane {
     private void createGradientDialog() {
         if (gradientPicker == null) {
             gradientPicker = new GradientControl(this);
+            
         }
         gradientDialog = new GradientDialog(this.getScene().getWindow(),
                 gradientPicker);
@@ -629,7 +631,9 @@ public class CustomPaintControl extends AnchorPane {
     private void onGradientButtonAction(ActionEvent e) {
         if (gradientDialog.isShowing() == false) {
             gradientDialog.show();    
+            updateSelectedGradientStop(getCustomColor());
              gradientPicker.updatePreviewRect(gradientPicker.getPaint());
+             
         } else {
             gradientDialog.hide();
         }

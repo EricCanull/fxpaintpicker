@@ -62,9 +62,9 @@
                <children>
                   <StackPane fx:id="alphaPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <children>
-                        <Pane fx:id="colorRectHue" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                        <Pane fx:id="colorRectOverlayOne" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                        <Pane fx:id="colorRectOverlayTwo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                        <Pane fx:id="hueRect" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                        <Pane fx:id="hueRectOverlayOne" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                        <Pane fx:id="hueRectOverlayTwo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                      </children>
                      <styleClass>
                         <String fx:value="color-rect" />
@@ -118,7 +118,7 @@
             </StackPane>
             <HBox alignment="CENTER_LEFT" layoutX="238.0" layoutY="289.0" spacing="2.0" GridPane.columnSpan="2" GridPane.rowIndex="11">
                <children>
-                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onGradientButtonAction" prefHeight="35.0" prefWidth="85.0" text="Gradients" />
+                  <Button fx:id="gradientButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onGradientButtonAction" prefHeight="35.0" prefWidth="85.0" text="Gradients" visible="false" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="289.0" spacing="2.0" GridPane.columnIndex="7" GridPane.columnSpan="7" GridPane.rowIndex="11">

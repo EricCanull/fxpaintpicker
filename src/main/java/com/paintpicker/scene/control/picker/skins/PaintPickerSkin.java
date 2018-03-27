@@ -36,14 +36,16 @@ import java.util.Map;
 import com.paintpicker.scene.control.behavior.PaintPickerBehavior;
 import com.paintpicker.scene.control.picker.PaintPalette;
 import com.paintpicker.scene.control.picker.PaintPicker;
-import com.paintpicker.utils.ColorEncoder;
 import com.sun.javafx.css.StyleManager;
 import com.sun.javafx.css.converters.BooleanConverter;
 import com.sun.javafx.css.converters.SizeConverter;
 import com.sun.javafx.css.converters.StringConverter;
 import com.sun.javafx.scene.control.skin.ComboBoxBaseSkin;
+import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 import com.sun.javafx.scene.control.skin.ComboBoxPopupControl;
 import com.sun.javafx.scene.control.skin.resources.ControlResources;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 
 import javafx.beans.property.StringProperty;
 import javafx.css.CssMetaData;
@@ -68,7 +70,6 @@ import javafx.scene.shape.Rectangle;
 /**
  *
  */
-@SuppressWarnings("restriction")
 public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
 
     private Label displayNode;
@@ -96,6 +97,27 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
             return StyleableProperties.COLOR_LABEL_VISIBLE.get();
         }
     };
+    
+    // --- Editor
+    private TextField textField;
+    /**
+     * The editor for the ComboBox. The editor is null if the ComboBox is not
+     * {@link #editableProperty() editable}.
+     * @since JavaFX 2.2
+     */
+    private ReadOnlyObjectWrapper<TextField> editor;
+    @Override
+    public final TextField getEditor() {
+        return editorProperty().get();
+    }
+    public final ReadOnlyObjectProperty<TextField> editorProperty() {
+        if (editor == null) {
+            editor = new ReadOnlyObjectWrapper<>(this, "editor");
+            textField = new ComboBoxListViewSkin.FakeFocusTextField();
+            editor.set(textField);
+        }
+        return editor.getReadOnlyProperty();
+    }
     
     public StringProperty imageUrlProperty() { return imageUrl; }
     private final StyleableStringProperty imageUrl = new StyleableStringProperty() {
@@ -151,6 +173,7 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
             return "colorRectHeight";
         }
     };
+   
     private final StyleableDoubleProperty colorRectX =  new StyleableDoubleProperty(0) {
         @Override protected void invalidated() {
             if(pickerColorBox!=null) pickerColorBox.requestLayout();
@@ -184,6 +207,13 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
         super(paintPicker, new PaintPickerBehavior(paintPicker));
         updateComboBoxMode();
         registerChangeListener(paintPicker.valueProperty(), "VALUE");
+        this.getSkinnable().setEditable(true);
+       
+        textField = getEditor();
+        textField.setText("Default");
+        textField.setManaged(false);
+        
+       
 
         // create displayNode
         displayNode = new Label();
@@ -476,8 +506,8 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
 
     @Override public void show() {
         super.show();
-        final PaintPicker colorPicker = (PaintPicker)getSkinnable();
-        popupContent.updateSelection(colorPicker.getValue());
+        final PaintPicker paintPicker = (PaintPicker)getSkinnable();
+        popupContent.updateSelection(paintPicker.getValue());
     }
 
     @Override protected void handleControlPropertyChanged(String p) {
@@ -506,10 +536,10 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
         if (colorLabelVisible.getValue()) {
             if (colorPicker.getValue() instanceof LinearGradient) {
                 displayNode.setText("Linear Gradient");
-               // displayNode.setText(ColorEncoder.encodeLinearToCSS(colorPicker.getValue()));
+               // displayNode.setText(ColorEncoder.encodeLinearToCSS(paintPicker.getValue()));
             } else if (colorPicker.getValue() instanceof RadialGradient) {
                   displayNode.setText("Radial Gradient");
-               // displayNode.setText(ColorEncoder.encodeRadialToCSS(colorPicker.getValue()));
+               // displayNode.setText(ColorEncoder.encodeRadialToCSS(paintPicker.getValue()));
             } else {
                 displayNode.setText(colorDisplayName((Color) colorPicker.getValue()));
             }
@@ -595,8 +625,7 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
                     @Override
                     public StyleableProperty<Boolean> getStyleableProperty(PaintPicker n) {
                         final PaintPickerSkin skin = (PaintPickerSkin) n.getSkin();
-                        StyleableProperty<Boolean> isVisible = skin.colorLabelVisible;
-                        return isVisible;
+                        return  skin.colorLabelVisible;
                     }
                 });
         private static final CssMetaData<PaintPicker,Number> COLOR_RECT_WIDTH =
@@ -687,12 +716,12 @@ public class PaintPickerSkin extends ComboBoxPopupControl<Paint> {
     @Override protected javafx.util.StringConverter<Paint> getConverter() {
         return null;
     }
-
-    /**
-     * ColorPicker does not use a main text field.
-     * @return 
-     */
-    @Override protected TextField getEditor() {
-        return null;
-    }
+//
+//    /**
+//     * ColorPicker does not use a main text field.
+//     * @return 
+//     */
+//    @Override protected TextField getEditor() {
+//        return null;
+//    }
 }
